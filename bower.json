@@ -1,0 +1,21 @@
+{
+  "name": "content-card",
+  "version": "1.0.0",
+  "description": "\n    \n    \n    \n  ",
+  "main": "content-card.html",
+  "keywords": [
+    "polymer",
+    "web-components"
+  ],
+  "dependencies": {
+    "polymer": "polymer/polymer#~1.7.1",
+    "iron-image": "PolymerElements/iron-image#~1.2.5",
+    "polymer-quill": "chuckh/polymer-quill#~1.2.0",
+    "paper-tabbed-pages": "marcus7777/paper-tabbed-pages#17ecf85f31",
+    "paper-dialog": "*"
+  },
+  "devDependencies": {
+    "iron-test-helpers": "*",
+    "web-component-tester": "^5.0.0"
+  }
+}

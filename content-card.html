@@ -1,0 +1,56 @@
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-tabbed-pages/paper-tabbed-pages.html">
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer-quill/polymer-quill.html">
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-image/iron-image.html">
+<link rel="import" href="../polymer/polymer.html">
+<!--
+  `<content-card></content-card>` svg
+  @demo demo.html
+-->
+<dom-module id="content-card">
+  <template>
+    <div on-tap="open">
+      <template is="dom-if" if="[[image]]">
+        <iron-image contain src="[[image]]"></iron-image>
+      </template>
+      <h2>[[title]]</h2>
+      <h3>[[desc]]</h3>
+    </div>
+    <paper-dialog id="dialog">
+      <template is="dom-if" if="[[edit]]">
+        <paper-tabbed-pages tabs='["preview","edit","stats"]'>
+          <preview-tab>
+            <div inner-h-t-m-l="{{a}}"></div>
+          </preview-tab>
+          <edit-tab>
+            <polymer-quill content="{{value}}" html="{{a}}"></polymer-quill>
+          </edit-tab>
+          <stats-tab>
+            no stats 
+          </stats-tab>
+        </paper-tabbed-pages>
+      </template>
+      <polymer-quill hidden content="[[value]]" html="{{a}}"></polymer-quill>
+      <template is="dom-if" if="[[!edit]]">
+        <div inner-h-t-m-l="{{a}}"></div>
+      </template>
+    </paper-dialog>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "content-card",
+    properties:{
+      edit:{
+        type:Boolean,
+        value:false,
+      },
+    },
+    open: function(undefined){
+      this.$.dialog.open() 
+    },
+  })
+</script>
