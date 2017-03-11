@@ -9,12 +9,28 @@
 -->
 <dom-module id="content-card">
   <template>
+    <style>
+      h2 {
+        font-weight: 300;
+        font-size: 18px;
+        margin: 0px;
+        display: block;
+        width: 180px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin: 0px 10px;
+      }
+      .container {
+        text-align: center;
+      }
+    </style>
     <div on-tap="open">
       <template is="dom-if" if="[[image]]">
         <iron-image contain src="[[image]]"></iron-image>
       </template>
-      <span style="text-align: center">[[title]]</span>
-      <div>[[desc]]</div>
+      <h2 style="text-align: center">[[title]]</h2>
+      <div class="container">[[desc]]</div>
     </div>
     <paper-dialog id="dialog">
       <template is="dom-if" if="[[edit]]">
