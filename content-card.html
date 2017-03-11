@@ -49,9 +49,17 @@
         type:Object,
         notify:true,
       },
+      locked:{
+        type:Boolean,
+        value:false,
+      },
     },
-    open: function(undefined){
-      this.$.dialog.open() 
+    open: function(){
+      if (!this.locked) {
+        this.$.dialog.open()
+      } else {
+        this.fire("open","content-card")
+      }
     },
   })
 </script>
