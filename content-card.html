@@ -70,11 +70,12 @@
         value:false,
       },
       _updateFirebase:{
-        computed:"updateFirebase(value,path)"
+        computed:"updateFirebase(value,__key)"
       },
     },
-    updateFirebase: function(value, path){
+    updateFirebase: function(value, key){
       if (firebase) {
+        var path = "Cards/" + key
         var updates = {}
         updates[path+"/value"] = value
         return firebase.database().ref().update(updates)
