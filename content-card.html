@@ -81,7 +81,10 @@
         var that = this
         var path = "Cards/" + key
         return firebase.database().ref(path+"/value").on('value', function(snapshot) {
-          that.value = snapshot.val()
+          var val = snapshot.val()
+          if (val && JSON.stringify(val) !== JSON.stringify(that.value)) {
+            that.value = val
+          }
         })
       }
     },
