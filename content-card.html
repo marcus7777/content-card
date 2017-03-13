@@ -92,8 +92,10 @@
       if (firebase) {
         var path = "Cards/" + key
         var updates = {}
-        updates[path+"/value"] = value
-        return firebase.database().ref().update(updates)
+        if (value) {
+          updates[path+"/value"] = value
+          return firebase.database().ref().update(updates)
+        }
       }
     },
     open: function(){
