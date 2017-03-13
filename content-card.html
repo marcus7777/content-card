@@ -72,6 +72,18 @@
       _updateFirebase:{
         computed:"updateFirebase(value,__key)"
       },
+      _loadValue: {
+        computed:"loadFirebase(__key)"
+      },
+    },
+    loadFirebase: function(key){
+      if (firebase) {
+        var that = this
+        var path = "Cards/" + key
+        return firebase.database().ref(path+"/value").on('value', function(snapshot) {
+          that.value = snapshot.val())
+        })
+      }
     },
     updateFirebase: function(value, key){
       if (firebase) {
