@@ -39,7 +39,6 @@
             <div inner-h-t-m-l="{{a}}"></div>
           </preview-tab>
           <edit-tab>
-            <h1>[[__key]]</h1>
             <polymer-quill content="{{value}}" html="{{a}}"></polymer-quill>
           </edit-tab>
           <stats-tab>
@@ -71,10 +70,10 @@
         value:false,
       },
       _updateFirebase:{
-        computed:"updateFirebase(value,__key)"
+        computed:"updateFirebase(value,key)"
       },
       _loadValue: {
-        computed:"loadFirebase(__key)"
+        computed:"loadFirebase(key)"
       },
     },
     loadFirebase: function(key){
@@ -87,7 +86,6 @@
       }
     },
     updateFirebase: function(value, key){
-      console.log("value",value)
       if (firebase) {
         var path = "Cards/" + key
         var updates = {}
