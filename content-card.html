@@ -69,6 +69,16 @@
         type:Boolean,
         value:false,
       },
+      _updateFirebase:{
+        computed:"updateFirebase(value,path)"
+      },
+    },
+    updateFirebase: function(value, path){
+      if (firebase) {
+        var updates = {}
+        updates[path+"/value"] = value
+        return firebase.database().ref().update(updates)
+      }
     },
     open: function(){
       if (!this.locked) {
