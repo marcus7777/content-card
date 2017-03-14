@@ -49,8 +49,8 @@
           </stats-tab>
         </paper-tabbed-pages>
       </template>
+      <polymer-quill hidden content="[[fbValue]]" html="{{a}}"></polymer-quill>
       <template is="dom-if" if="[[!edit]]">
-        <polymer-quill hidden content="[[fbValue]]" html="{{a}}"></polymer-quill>
         <div inner-h-t-m-l="{{a}}"></div>
       </template>
     </paper-dialog>
