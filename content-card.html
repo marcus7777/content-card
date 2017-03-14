@@ -83,8 +83,14 @@
         return firebase.database().ref(path+"/value").on('value', function(snapshot) {
           var val = snapshot.val()
           if (val && JSON.stringify(val) !== JSON.stringify(that.value)) {
-            that.value = val
-            that.fbValue = val
+            if (typeof val === 'string') {
+              that.value   = JSON.parse(val)
+              that.fbValue = JSON.parse(val)
+            } else {
+              that.value   = val
+              that.fbValue = val
+            }
+           
           }
         })
       }
