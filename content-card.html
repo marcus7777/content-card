@@ -84,12 +84,13 @@
           var val = snapshot.val()
           if (val && JSON.stringify(val) !== JSON.stringify(that.value)) {
             that.value = val
+            that.fbValue = val
           }
         })
       }
     },
     updateFirebase: function(value, key){
-      if (firebase && value) {
+      if (firebase && value && JSON.stringify(value) !== JSON.stringify(this.fbValue)) {
         var path = "Cards/" + key
         var updates = {}
         updates[path+"/value"] = value
