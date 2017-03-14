@@ -11,8 +11,9 @@
     "polymer": "polymer/polymer#~1.7.1",
     "iron-image": "PolymerElements/iron-image#~1.2.5",
     "polymer-quill": "chuckh/polymer-quill#~1.2.0",
-    "paper-tabbed-pages": "marcus7777/paper-tabbed-pages#17ecf85f31",
-    "paper-dialog": "*"
+    "paper-tabbed-pages": "marcus7777/paper-tabbed-pages",
+    "paper-dialog": "PolymerElements/paper-dialog",
+    "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable"
   },
   "devDependencies": {
     "iron-test-helpers": "*",
