@@ -1,3 +1,4 @@
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
 <link rel="import" href="../paper-tabbed-pages/paper-tabbed-pages.html">
 <link rel="import" href="../polymer-quill/polymer-quill.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
@@ -36,7 +37,9 @@
       <template is="dom-if" if="[[edit]]">
         <paper-tabbed-pages style="padding:0" tabs='["preview","edit"]'>
           <preview-tab>
-            <div inner-h-t-m-l="{{a}}"></div>
+            <paper-dialog-scrollable>
+              <div inner-h-t-m-l="{{a}}"></div>
+            </paper-dialog-scrollable>
           </preview-tab>
           <edit-tab>
             <polymer-quill content="{{value}}" toolbar-type="full" html="{{a}}"></polymer-quill>
