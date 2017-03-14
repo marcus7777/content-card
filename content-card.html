@@ -46,8 +46,8 @@
           </stats-tab>
         </paper-tabbed-pages>
       </template>
-      <polymer-quill hidden content="[[value]]" html="{{a}}"></polymer-quill>
       <template is="dom-if" if="[[!edit]]">
+        <polymer-quill hidden content="[[value]]" html="{{a}}"></polymer-quill>
         <div inner-h-t-m-l="{{a}}"></div>
       </template>
     </paper-dialog>
@@ -70,10 +70,10 @@
         value:false,
       },
       _updateFirebase:{
-        computed:"updateFirebase(value,key)"
+        computed:"updateFirebase(value,key)",
       },
       _loadValue: {
-        computed:"loadFirebase(key)"
+        computed:"loadFirebase(key)",
       },
     },
     loadFirebase: function(key){
@@ -89,13 +89,11 @@
       }
     },
     updateFirebase: function(value, key){
-      if (firebase) {
+      if (firebase && value) {
         var path = "Cards/" + key
         var updates = {}
-        if (value) {
-          updates[path+"/value"] = value
-          return firebase.database().ref().update(updates)
-        }
+        updates[path+"/value"] = value
+        return firebase.database().ref().update(updates)
       }
     },
     open: function(){
