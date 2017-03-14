@@ -84,11 +84,11 @@
           var val = snapshot.val()
           if (val && JSON.stringify(val) !== JSON.stringify(that.value)) {
             if (typeof val === 'string') {
-              that.value   = JSON.parse(val)
               that.fbValue = JSON.parse(val)
+              that.value   = JSON.parse(val)
             } else {
-              that.value   = val
               that.fbValue = val
+              that.value   = val
             }
            
           }
