@@ -93,7 +93,11 @@
               that.fbValue = val
               that.value   = val
             }
-           
+            that.tab = "edit"
+          } else {
+            if (that.edit) {
+              that.tab = "edit"
+            }
           }
         })
       }
