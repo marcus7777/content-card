@@ -37,6 +37,10 @@
       <template is="dom-if" if="[[image]]">
         <iron-image contain src="[[image]]"></iron-image>
       </template>
+      <template is="dom-if" if="[[!image]]">
+        <div style="height:100px"></div>
+      </template>
+      
       <h2 style="text-align: center">[[title]]</h2>
       <div>[[desc]]</div>
     </div>
