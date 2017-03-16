@@ -43,11 +43,8 @@
             </paper-dialog-scrollable>
           </preview-tab>
           <edit-tab>
-            <polymer-quill content="{{value}}" toolbar-type="full" html="{{a}}"></polymer-quill>
+            <polymer-quill  style="min-height: 300px;min-width: 500px" content="{{value}}" toolbar-type="full" html="{{a}}"></polymer-quill>
           </edit-tab>
-          <stats-tab>
-            no stats 
-          </stats-tab>
         </paper-tabbed-pages>
       </template>
       <polymer-quill hidden content="[[fbValue]]" html="{{a}}"></polymer-quill>
