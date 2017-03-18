@@ -10,7 +10,11 @@
 -->
 <dom-module id="content-card">
   <template>
-    <style>
+    <style is="custom-style">
+      polymer-quill {
+        --polymer-quill-editor-max-height: 400px;
+        --polymer-quill-editor-min-height: 300px;
+      }
       :host {
         display:block;
         color:#505050;
