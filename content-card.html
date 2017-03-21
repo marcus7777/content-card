@@ -97,10 +97,11 @@
       },
     },
     getDecks: function(title,edit) {
+      //TODO DRY
       if (edit) {
-        return [{view:true},{name:"edit " + title,edit:true}]
+        return [{view:true,color:"#f2d123",name: title},{name:"edit " + title,edit:true,color:"#1d1e30"}]
       } else {
-        return [{view:true}]
+        return [{view:true,color:"#f2d123",name: title}]
       }
     },
     loadFirebase: function(key){
