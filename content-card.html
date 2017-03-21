@@ -71,7 +71,7 @@
         value:false,
       },
       deck:{
-        value:{view:true}
+        value:{view:true,color:"#f2d123",name: "View"}
       },
       decks:{
         computed:"getDecks(title,edit)",
@@ -135,7 +135,7 @@
       }
     },
     open: function(){
-      this.fire("open","content-card")
+      this.fire("open",this)
     },
   })
 </script>
