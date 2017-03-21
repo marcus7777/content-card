@@ -135,11 +135,7 @@
       }
     },
     open: function(){
-      if (!this.locked) {
-        this.$.dialog.open()
-      } else {
-        this.fire("open","content-card")
-      }
+      this.fire("open","content-card")
     },
   })
 </script>
