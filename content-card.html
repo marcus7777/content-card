@@ -56,9 +56,7 @@
           <div inner-h-t-m-l="{{a}}"></div>
         </paper-dialog-scrollable>
       </template>
-      <template is="dom-if" if="[[pillar.edit]]" restamp>
-        <polymer-quill style="min-height: 300px;min-width: 500px" content="{{value}}" toolbar-type="full"></polymer-quill>
-      </template>
+      <polymer-quill hidden="[[!pillar.edit]]" style="min-height: 300px;min-width: 500px" content="{{value}}" toolbar-type="full"></polymer-quill>
     </template>  
   </template>
 </dom-module>
