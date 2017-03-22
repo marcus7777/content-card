@@ -104,7 +104,7 @@
       if (firebase) {
         var that = this
         var path = "Cards/" + key
-        return firebase.database().ref(path+"/value").on('value', function(snapshot) {
+        return firebase.database().ref(path+"/value").once('value', function(snapshot) {
           var val = snapshot.val()
           if (val && JSON.stringify(val) !== JSON.stringify(that.value)) {
             if (typeof val !== 'string') {
@@ -123,7 +123,9 @@
         var path = "Cards/" + key
         var updates = {}
         updates[path+"/value"] = value
-        return firebase.database().ref().update(updates)
+        var refb = firebase.database().ref().update(updates)
+        this.loadFirebase(key)
+        return refb
       }
     },
     open: function(){
