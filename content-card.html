@@ -99,7 +99,7 @@
     getDecks: function(title,edit) {
       //TODO DRY
       if (edit) {
-        return [{view:true,color:"#f2d123",name: "View"},{name: "Edit",edit:true,color:"#1d1e30"}]
+        return [{view: true,selected: true,color: "#f2d123",name: "View"},{name: "Edit",edit: true,color: "#1d1e30"}]
       } else {
         return [{view:true,color:"#f2d123",name: title}]
       }
