@@ -52,7 +52,7 @@
     <template is="dom-if" if="[[opened]]">
       <polymer-quill hidden content="[[fbValue]]" html="{{a}}"></polymer-quill>
       <template is="dom-if" if="[[pillar.view]]">
-        <paper-dialog-scrollable style="height: 100%;width: 100%;min-height: 300px;min-width: 500px">
+        <paper-dialog-scrollable style="min-height: 95vh; touch-action: auto;">
           <div inner-h-t-m-l="{{a}}"></div>
         </paper-dialog-scrollable>
       </template>
@@ -99,7 +99,7 @@
       if (edit) {
         return [{view: true,selected: true,color: "#f2d123",name: "View"},{name: "Edit",edit: true,color: "#1d1e30"}]
       } else {
-        return [{view:true,color:"#f2d123",name: title}]
+        return [{view:true,selected: true,color:"#f2d123",name: title}]
       }
     },
     loadFirebase: function(key){
