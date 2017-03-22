@@ -45,12 +45,12 @@
       </div>
     </template>
     <template is="dom-if" if="[[opened]]">
+      <polymer-quill hidden="[[!pillar.edit]]" content="{{value}}" toolbar-type="full" html="{{a}}"></polymer-quill>
       <template is="dom-if" if="[[pillar.view]]">
         <paper-dialog-scrollable style="min-height: 95vh">
           <div inner-h-t-m-l="{{a}}"></div>
         </paper-dialog-scrollable>
       </template>
-      <polymer-quill hidden="[[!pillar.edit]]" content="{{value}}" toolbar-type="full" html="{{a}}"></polymer-quill>
     </template>  
   </template>
 </dom-module>
@@ -69,7 +69,6 @@
       },
       value:{
         type:Object,
-        notify:true,
       },
       opened:{
         type:Boolean,
@@ -91,7 +90,7 @@
       if (edit) {
         return [{view: true,selected: true,color: "#f2d123",name: "View"},{name: "Edit",edit: true,color: "#1d1e30"}]
       } else {
-        return [{view:true,selected: true,color:"#f2d123",name: title}]
+        return [{view: true,selected: true,color: "#f2d123",name: title}]
       }
     },
     loadFirebase: function(key, opened){
