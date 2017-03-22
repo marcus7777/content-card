@@ -86,10 +86,10 @@
         value:false,
       },
       _updateFirebase:{
-        computed:"updateFirebase(value,key)",
+        computed:"updateFirebase(value,key,opened)",
       },
       _loadValue:{
-        computed:"loadFirebase(key)",
+        computed:"loadFirebase(key,opened)",
       },
     },
     getDecks: function(title,edit) {
@@ -100,8 +100,8 @@
         return [{view:true,selected: true,color:"#f2d123",name: title}]
       }
     },
-    loadFirebase: function(key){
-      if (firebase) {
+    loadFirebase: function(key, opened){
+      if (firebase && opened) {
         var that = this
         var path = "Cards/" + key
         return firebase.database().ref(path+"/value").once('value', function(snapshot) {
@@ -118,8 +118,8 @@
         })
       }
     },
-    updateFirebase: function(value, key){
-      if (firebase && value && JSON.stringify(value) !== JSON.stringify(this.fbValue)) {
+    updateFirebase: function(value, key, opened){
+      if (opened && firebase && value && JSON.stringify(value) !== JSON.stringify(this.fbValue)) {
         var path = "Cards/" + key
         var updates = {}
         updates[path+"/value"] = value
