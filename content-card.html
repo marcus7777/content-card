@@ -11,15 +11,10 @@
 <dom-module id="content-card">
   <template>
     <style is="custom-style">
-      polymer-quill {
-        --polymer-quill-editor-max-height: 400px;
-        --polymer-quill-editor-min-height: 300px;
-      }
       :host {
         display:block;
         color:#505050;
         font-family: Roboto, Arial, Helvetica, sans-serif;
-        min-height: 225px;
       }
       h2 {
         font-weight: 300;
@@ -55,7 +50,7 @@
           <div inner-h-t-m-l="{{a}}"></div>
         </paper-dialog-scrollable>
       </template>
-      <polymer-quill hidden="[[!pillar.edit]]" style="min-height: 300px;min-width: 500px" content="{{value}}" toolbar-type="full" html="{{a}}"></polymer-quill>
+      <polymer-quill hidden="[[!pillar.edit]]" content="{{value}}" toolbar-type="full" html="{{a}}"></polymer-quill>
     </template>  
   </template>
 </dom-module>
