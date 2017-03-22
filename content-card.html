@@ -51,12 +51,12 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <polymer-quill hidden content="[[fbValue]]" html="{{a}}"></polymer-quill>
-      <template is="dom-if" if="[[deck.view]]">
+      <template is="dom-if" if="[[pillar.view]]">
         <paper-dialog-scrollable style="height: 100%;width: 100%;min-height: 300px;min-width: 500px">
           <div inner-h-t-m-l="{{a}}"></div>
         </paper-dialog-scrollable>
       </template>
-      <template is="dom-if" if="[[deck.edit]]">
+      <template is="dom-if" if="[[pillar.edit]]">
         <polymer-quill style="min-height: 300px;min-width: 500px" content="{{value}}" toolbar-type="full"></polymer-quill>
       </template>
     </template>  
@@ -70,7 +70,7 @@
         type:Boolean,
         value:false,
       },
-      deck:{
+      pillar:{
         value:{view:true,color:"#f2d123",name: "View"}
       },
       decks:{
