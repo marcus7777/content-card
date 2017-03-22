@@ -45,7 +45,7 @@
       </div>
     </template>
     <template is="dom-if" if="[[opened]]">
-      <polymer-quill hidden="[[!pillar.edit]]" content="{{value}}" toolbar-type="full" html="{{a}}"></polymer-quill>
+      <polymer-quill hidden="[[!pillar.edit]]" content="{{fbValue}}" toolbar-type="full" html="{{a}}"></polymer-quill>
       <template is="dom-if" if="[[pillar.view]]">
         <paper-dialog-scrollable style="min-height: 95vh">
           <div inner-h-t-m-l="{{a}}"></div>
@@ -79,7 +79,7 @@
         value:false,
       },
       _updateFirebase:{
-        computed:"updateFirebase(value,key,opened)",
+        computed:"updateFirebase(fbValue,key,opened)",
       },
       _loadValue:{
         computed:"loadFirebase(key,opened)",
@@ -102,10 +102,8 @@
           if (val && JSON.stringify(val) !== JSON.stringify(that.value)) {
             if (typeof val !== 'string') {
               that.fbValue = JSON.stringify(val)
-              that.value   = JSON.stringify(val)
             } else {
               that.fbValue = val
-              that.value   = val
             }
           }
         })
