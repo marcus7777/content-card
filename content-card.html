@@ -52,11 +52,11 @@
     <template is="dom-if" if="[[opened]]">
       <polymer-quill hidden content="[[fbValue]]" html="{{a}}"></polymer-quill>
       <template is="dom-if" if="[[pillar.view]]">
-        <paper-dialog-scrollable style="min-height: 95vh; touch-action: auto;">
+        <paper-dialog-scrollable style="min-height: 95vh">
           <div inner-h-t-m-l="{{a}}"></div>
         </paper-dialog-scrollable>
       </template>
-      <template is="dom-if" if="[[pillar.edit]]">
+      <template is="dom-if" if="[[pillar.edit]]" restamp>
         <polymer-quill style="min-height: 300px;min-width: 500px" content="{{value}}" toolbar-type="full"></polymer-quill>
       </template>
     </template>  
@@ -115,10 +115,6 @@
             } else {
               that.fbValue = val
               that.value   = val
-            }
-          } else {
-            if (that.edit) {
-              that.tab = "edit"
             }
           }
         })
