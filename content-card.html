@@ -106,13 +106,13 @@
         var path = "Cards/" + key
         return firebase.database().ref(path+"/value").once('value', function(snapshot) {
           var val = snapshot.val()
-          if (val && JSON.stringify(val) !== JSON.stringify(that.fbValue)) {
+          if (val && val !== that.fbValue) {
             if (typeof val !== 'string') {
-              that.fbValue = JSON.stringify(val)
               that.value = JSON.stringify(val)
+              that.fbValue = JSON.stringify(val)
             } else {
-              that.fbValue = val
               that.value = val
+              that.fbValue = val
             }
           }
         })
@@ -124,7 +124,7 @@
         var updates = {}
         updates[path+"/value"] = value
         var refb = firebase.database().ref().update(updates)
-        this.loadFirebase(key)
+        this.loadFirebase(key, opened)
         return refb
       }
     },
