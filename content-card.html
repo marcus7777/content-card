@@ -32,7 +32,6 @@
         text-align: center;
       }
       polymer-quill {
-        --polymer-quill-editor-max-height: 300px;
         --polymer-quill-editor-min-height: 95%;
         --polymer-quill-editor-min-width: 95%;
       };
@@ -51,7 +50,7 @@
       </div>
     </template>
     <template is="dom-if" if="[[opened]]">
-      <div style="float:right">
+      <div style="width: 100%;float:right">
         <polymer-quill hidden="[[!pillar.edit]]" content="{{fbValue}}" toolbar-type="full" html="{{a}}"></polymer-quill>
       </div>
       <template is="dom-if" if="[[pillar.view]]">
