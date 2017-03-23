@@ -51,7 +51,9 @@
       </div>
     </template>
     <template is="dom-if" if="[[opened]]">
-      <polymer-quill hidden="[[!pillar.edit]]" content="{{fbValue}}" toolbar-type="full" html="{{a}}"></polymer-quill>
+      <div style="float:right">
+        <polymer-quill hidden="[[!pillar.edit]]" content="{{fbValue}}" toolbar-type="full" html="{{a}}"></polymer-quill>
+      </div>
       <template is="dom-if" if="[[pillar.view]]">
         <paper-dialog-scrollable style="min-height: 95vh">
           <div inner-h-t-m-l="{{a}}"></div>
