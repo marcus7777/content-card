@@ -109,15 +109,17 @@
           if (val && JSON.stringify(val) !== JSON.stringify(that.value)) {
             if (typeof val !== 'string') {
               that.fbValue = JSON.stringify(val)
+              that.value = JSON.stringify(val)
             } else {
               that.fbValue = val
+              that.value = val
             }
           }
         })
       }
     },
     updateFirebase: function(value, key, opened){
-      if (opened && firebase && value && JSON.stringify(value) !== JSON.stringify(this.fbValue)) {
+      if (opened && firebase && value && value !== this.fbValue) {
         var path = "Cards/" + key
         var updates = {}
         updates[path+"/value"] = value
