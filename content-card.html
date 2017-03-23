@@ -127,9 +127,9 @@
     },
     open: function(){
       if (this.locked) {
-        this.fire("open",this)
-      } else {
         this.fire("open","content-card")
+      } else {
+        this.fire("open",this)
       }
     },
   })
