@@ -104,7 +104,7 @@
       if (firebase && opened) {
         var that = this
         var path = "Cards/" + key
-        return firebase.database().ref(path+"/value").once('value', function(snapshot) {
+        return firebase.database().ref(path+"/value").on('value', function(snapshot) {
           var val = snapshot.val()
           if (val && val !== that.fbValue) {
             if (typeof val !== 'string') {
