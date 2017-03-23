@@ -75,7 +75,7 @@
         notify:true,
       },
       value:{
-        type:Object,
+        type:String,
       },
       opened:{
         type:Boolean,
@@ -106,7 +106,7 @@
         var path = "Cards/" + key
         return firebase.database().ref(path+"/value").once('value', function(snapshot) {
           var val = snapshot.val()
-          if (val && JSON.stringify(val) !== JSON.stringify(that.value)) {
+          if (val && JSON.stringify(val) !== JSON.stringify(that.fbValue)) {
             if (typeof val !== 'string') {
               that.fbValue = JSON.stringify(val)
               that.value = JSON.stringify(val)
