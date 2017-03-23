@@ -126,7 +126,11 @@
       }
     },
     open: function(){
-      this.fire("open",this)
+      if (this.locked) {
+        this.fire("open",this)
+      } else {
+        this.fire("open","content-card")
+      }
     },
   })
 </script>
