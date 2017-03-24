@@ -118,8 +118,10 @@
           if (val && val !== that.fbValue) {
             if (typeof val !== 'string') {
               that.fbValue = JSON.stringify(val)
+              that.value = JSON.stringify(val)
             } else {
               that.fbValue = val
+              that.value = val
             }
           }
         })
