@@ -122,7 +122,7 @@
       if (opened && firebase && value && value !== this.value) {
         var path = "Cards/" + key
         var updates = {}
-        updates[path+"/value"] = value
+        updates[path+"/value"] = JSON.purse(value)
         var refb = firebase.database().ref().update(updates)
         this.loadFirebase(key, opened)
         return refb
