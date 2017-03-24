@@ -50,15 +50,18 @@
       </div>
     </template>
     <template is="dom-if" if="[[opened]]">
-      <polymer-quill hidden content="[[value]]" toolbar-type="full" html="{{a}}"></polymer-quill>
+      <polymer-quill hidden content="[[fbValue]]" toolbar-type="full" html="{{html}}"></polymer-quill>
       <template is="dom-if" if="[[pillar.edit]]">
         <div style="width: 100%;float:right">
           <polymer-quill content="{{fbValue}}" toolbar-type="full"></polymer-quill>
         </div>
       </template>
       <template is="dom-if" if="[[pillar.view]]">
+        <template is="dom-if" if="[[!html]]">
+          loading ...
+        </template>
         <paper-dialog-scrollable style="min-height: 95vh">
-          <div inner-h-t-m-l="[[a]]"></div>
+          <div inner-h-t-m-l="[[html]]"></div>
         </paper-dialog-scrollable>
       </template>
     </template>  
@@ -71,6 +74,9 @@
       edit:{
         type:Boolean,
         value:false,
+      },
+      html: {
+        value:""
       },
       pillar:Object,
       decks:{
@@ -89,7 +95,7 @@
         value:false,
       },
       _updateFirebase:{
-        computed:"updateFirebase(fbValue,key,opened)",
+        computed:"updateFirebase(value,key,opened)",
       },
       _loadValue:{
         computed:"loadFirebase(key,opened)",
@@ -111,18 +117,18 @@
           var val = snapshot.val()
           if (val && val !== that.fbValue) {
             if (typeof val !== 'string') {
-              that.value = JSON.stringify(val)
               that.fbValue = JSON.stringify(val)
+              that.value = JSON.stringify(val)
             } else {
-              that.value = val
               that.fbValue = val
+              that.value = val
             }
           }
         })
       }
     },
     updateFirebase: function(value, key, opened){
-      if (opened && firebase && value && value !== this.value) {
+      if (opened && firebase && value && value !== this.fbValue) {
         var path = "Cards/" + key
         var updates = {}
         updates[path+"/value"] = value
