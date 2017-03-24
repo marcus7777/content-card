@@ -53,7 +53,7 @@
       <polymer-quill hidden content="[[fbValue]]" toolbar-type="full" html="{{html}}"></polymer-quill>
       <template is="dom-if" if="[[pillar.edit]]">
         <div style="width: 100%;float:right">
-          <polymer-quill content="{{value}}" toolbar-type="full"></polymer-quill>
+          <polymer-quill content="{{value}}" toolbar-type="full" html="{{html}}"></polymer-quill>
         </div>
       </template>
       <template is="dom-if" if="[[pillar.view]]">
@@ -118,10 +118,8 @@
           if (val && val !== that.fbValue) {
             if (typeof val !== 'string') {
               that.fbValue = JSON.stringify(val)
-              that.value = JSON.stringify(val)
             } else {
               that.fbValue = val
-              that.value = val
             }
           }
         })
