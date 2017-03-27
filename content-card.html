@@ -49,9 +49,12 @@
       </div>
     </template>
     <template is="dom-if" if="[[opened]]">
+      
       <div hidden="[[!pillar.edit]]" style="width: 100%;float:right">
         <card-meta-edit></card-meta-edit>
-        <polymer-quill id="editor" syntax content="{{value}}" toolbar-type="full"></polymer-quill>
+        <template is="dom-if" if="[[value]]">
+          <polymer-quill syntax content="{{value}}" toolbar-type="full" html="{{html}}"></polymer-quill>
+        </template>         
       </div>
       <template is="dom-if" if="[[pillar.view]]">
         <div inner-h-t-m-l="{{html}}"></div>
@@ -91,9 +94,6 @@
       },
       _loadValue:{
         computed:"loadFirebase(key,opened)",
-      },
-      html: {
-        computed: "getHTML(fbValue)"
       },
     },
     getHTML: function(fbValue) {
