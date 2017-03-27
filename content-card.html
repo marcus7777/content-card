@@ -51,7 +51,7 @@
     <template is="dom-if" if="[[opened]]">
       <template is="dom-if" if="[[pillar.edit]]">
         <div style="width: 100%;float:right">
-          <polymer-quill syntax content="{{value}}" toolbar-type="full"></polymer-quill>
+          <polymer-quill id="editor" syntax content="{{value}}" toolbar-type="full"></polymer-quill>
         </div>
       </template>
       <template is="dom-if" if="[[pillar.view]]">
@@ -93,6 +93,12 @@
       _loadValue:{
         computed:"loadFirebase(key,opened)",
       },
+      html: {
+        computed: "getHTML(fbValue)"
+      },
+    },
+    getHTML: function(fbValue) {
+      return this.$.editor.getHTML(fbValue)
     },
     getDecks: function(title,edit) {
       //TODO DRY
