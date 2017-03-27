@@ -50,6 +50,7 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <div hidden="[[!pillar.edit]]" style="width: 100%;float:right">
+        <card-meta-edit></card-meta-edit>
         <polymer-quill id="editor" syntax content="{{value}}" toolbar-type="full"></polymer-quill>
       </div>
       <template is="dom-if" if="[[pillar.view]]">
