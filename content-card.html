@@ -33,7 +33,6 @@
         text-align: center;
       }
       polymer-quill {
-        --polymer-quill-editor-min-height: 95vh;
         --polymer-quill-editor-min-width: 95%;
       };
 
@@ -52,7 +51,7 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <div hidden="[[!pillar.edit]]" style="width: 100%;float:right">
-        <card-meta-edit></card-meta-edit>
+        <card-meta-edit value="{{meta}}"></card-meta-edit>
         <template is="dom-if" if="[[value]]">
           <polymer-quill syntax content="{{value}}" toolbar-type="full" html="{{html}}"></polymer-quill>
         </template>         
@@ -82,6 +81,18 @@
       value: {
         type:String,
       },
+      meta:{
+        value: {}
+      },
+      _metai: {
+        computed:"setMetaImage(image)",
+      },
+      _metat: {
+        computed:"setMetaTitle(title)",
+      },
+      _metad: {
+        computed:"setMetaDesc(desc)",
+      },
       opened: {
         type:Boolean,
         value:false,
@@ -99,6 +110,15 @@
       _updateFirebaseCardMeta: {
         computed: "updateFirebaseCardMeta(meta,deck,key,opened)"
       },
+    },
+    setMetaImage: function(image) {
+      this.meta.image = image
+    },
+    setMetaTitle: function(title) {
+      this.meta.title = title
+    },
+    setMetaDesc: function(desc) {
+      this.meta.desc = desc
     },
     getPillars: function(title,edit) {
       //TODO DRY
