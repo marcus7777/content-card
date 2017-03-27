@@ -85,13 +85,7 @@
         value: {}
       },
       _metai: {
-        computed:"setMetaImage(image,meta)",
-      },
-      _metat: {
-        computed:"setMetaTitle(title,meta)",
-      },
-      _metad: {
-        computed:"setMetaDesc(desc,meta)",
+        computed:"setMeta(image,title,desc,cardType,meta)",
       },
       opened: {
         type:Boolean,
@@ -111,19 +105,20 @@
         computed: "updateFirebaseCardMeta(meta,deck,key,opened,meta.*)"
       },
     },
-    setMetaImage: function(image) {
-      if (!this.meta.image) {
-        this.meta.image = image
-      }
-    },
-    setMetaTitle: function(title) {
-      if (!this.meta.title) {
-        this.meta.title = title
-      }
-    },
-    setMetaDesc: function(desc) {
-      if (!this.meta.desc) {
-        this.meta.desc = desc
+    setMeta: function(image,title,desc,cardType) {
+      if (this.meta) {
+        if (!this.meta.cardType) {
+          this.meta.cardType = cardType
+        }
+        if (!this.meta.desc) {
+          this.meta.desc = desc
+        }
+        if (!this.meta.title) {
+          this.meta.title = title
+        }
+        if (!this.meta.image) {
+          this.meta.image = image
+        }
       }
     },
     getPillars: function(title,edit) {
