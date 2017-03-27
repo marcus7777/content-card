@@ -67,7 +67,7 @@
   Polymer({
     is: "content-card",
     properties:{
-      edit:{
+      edit: {
         type:Boolean,
         value:false,
       },
@@ -75,26 +75,29 @@
         value:""
       },
       pillar:Object,
-      pillars:{
+      pillars: {
         computed:"getPillars(title,edit)",
         notify:true,
       },
-      value:{
+      value: {
         type:String,
       },
-      opened:{
+      opened: {
         type:Boolean,
         value:false,
       },
-      locked:{
+      locked: {
         type:Boolean,
         value:false,
       },
-      _updateFirebase:{
-        computed:"updateFirebase(value,key,opened)",
+      _updateFirebase: {
+        computed: "updateFirebase(value,key,opened)",
       },
-      _loadValue:{
-        computed:"loadFirebase(key,opened)",
+      _loadValue: {
+        computed: "loadFirebase(key,opened)",
+      },
+      _updateFirebaseCardMeta: {
+        computed: "updateFirebaseCardMeta(meta,deck,key,opened)"
       },
     },
     getPillars: function(title,edit) {
@@ -106,7 +109,7 @@
       }
     },
     loadFirebase: function(key, opened){
-      if (firebase && opened) {
+      if (firebase && opened && !this.fbValue) {
         var that = this
         var path = "Cards/" + key
         return firebase.database().ref(path+"/value").on('value', function(snapshot) {
@@ -121,6 +124,15 @@
             }
           }
         })
+      }
+    },
+    updateFirebaseCardMeta: function(meta,deck,key,opened){
+      if (opened && firebase && meta && deck) {
+        var path = "/Decks/" + deck + "/cards/" + key +"/"
+        var updates = {}
+        updates[path] = meta
+        var refb = firebase.database().ref().update(updates)
+        return refb
       }
     },
     updateFirebase: function(value, key, opened){
