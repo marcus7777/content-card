@@ -16,7 +16,7 @@
         display:block;
         color:#505050;
         font-family: Roboto, Arial, Helvetica, sans-serif;
-      }
+      };
       h2 {
         font-weight: 300;
         font-size: 18px;
@@ -27,15 +27,14 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         margin: 0px 10px;
-      }
+      };
       .container {
         min-height: 225px;
         text-align: center;
-      }
+      };
       polymer-quill {
         --polymer-quill-editor-min-width: 95%;
       };
-
     </style>
     <template is="dom-if" if="[[!opened]]">
       <div on-tap="open" class="container">
