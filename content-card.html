@@ -49,11 +49,9 @@
       </div>
     </template>
     <template is="dom-if" if="[[opened]]">
-      <template is="dom-if" if="[[pillar.edit]]">
-        <div style="width: 100%;float:right">
-          <polymer-quill id="editor" syntax content="{{value}}" toolbar-type="full"></polymer-quill>
-        </div>
-      </template>
+      <div hidden="[[!pillar.edit]]" style="width: 100%;float:right">
+        <polymer-quill id="editor" syntax content="{{value}}" toolbar-type="full"></polymer-quill>
+      </div>
       <template is="dom-if" if="[[pillar.view]]">
         <div inner-h-t-m-l="{{html}}"></div>
       </template>
