@@ -85,13 +85,13 @@
         value: {}
       },
       _metai: {
-        computed:"setMetaImage(image)",
+        computed:"setMetaImage(image,meta)",
       },
       _metat: {
-        computed:"setMetaTitle(title)",
+        computed:"setMetaTitle(title,meta)",
       },
       _metad: {
-        computed:"setMetaDesc(desc)",
+        computed:"setMetaDesc(desc,meta)",
       },
       opened: {
         type:Boolean,
@@ -112,13 +112,19 @@
       },
     },
     setMetaImage: function(image) {
-      this.meta.image = image
+      if (!this.meta.image) {
+        this.meta.image = image
+      }
     },
     setMetaTitle: function(title) {
-      this.meta.title = title
+      if (!this.meta.title) {
+        this.meta.title = title
+      }
     },
     setMetaDesc: function(desc) {
-      this.meta.desc = desc
+      if (!this.meta.desc) {
+        this.meta.desc = desc
+      }
     },
     getPillars: function(title,edit) {
       //TODO DRY
