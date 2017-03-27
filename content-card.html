@@ -75,8 +75,8 @@
         value:""
       },
       pillar:Object,
-      decks:{
-        computed:"getDecks(title,edit)",
+      pillars:{
+        computed:"getPillars(title,edit)",
         notify:true,
       },
       value:{
@@ -97,10 +97,7 @@
         computed:"loadFirebase(key,opened)",
       },
     },
-    getHTML: function(fbValue) {
-      return this.$.editor.innerHTML
-    },
-    getDecks: function(title,edit) {
+    getPillars: function(title,edit) {
       //TODO DRY
       if (edit) {
         return [{view: true,selected: true,color: "#f2d123",name: "View"},{name: "Edit",edit: true,color: "#1d1e30"}]
