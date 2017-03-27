@@ -85,7 +85,7 @@
         value: {}
       },
       _metai: {
-        computed:"setMeta(image,title,desc,cardType,meta)",
+        computed:"setMeta(image,title,desc,cardType)",
       },
       opened: {
         type:Boolean,
@@ -102,24 +102,8 @@
         computed: "loadFirebase(key,opened)",
       },
       _updateFirebaseCardMeta: {
-        computed: "updateFirebaseCardMeta(meta,deck,key,opened,meta.*)"
+        computed: "updateFirebaseCardMeta(deck,key,opened,image,title,desc,cardType)"
       },
-    },
-    setMeta: function(image,title,desc,cardType) {
-      if (this.meta) {
-        if (!this.meta.cardType) {
-          this.meta.cardType = cardType
-        }
-        if (!this.meta.desc) {
-          this.meta.desc = desc
-        }
-        if (!this.meta.title) {
-          this.meta.title = title
-        }
-        if (!this.meta.image) {
-          this.meta.image = image
-        }
-      }
     },
     getPillars: function(title,edit) {
       //TODO DRY
@@ -147,11 +131,14 @@
         })
       }
     },
-    updateFirebaseCardMeta: function(meta,deck,key,opened){
-      if (opened && firebase && meta && deck) {
-        var path = "/Decks/" + deck + "/cards/" + key +"/"
+    updateFirebaseCardMeta: function(deck,key,opened,image,title,desc,cardType){
+      if (opened && firebase && deck && cardType) {
+        var path = "/Decks/" + deck + "/cards/" + key 
         var updates = {}
-        updates[path] = meta
+        updates[path+"/image/"] = image
+        updates[path+"/title/"] = title
+        updates[path+"/desc/"] = desc
+        updates[path+"/cardType/"] = cardType
         var refb = firebase.database().ref().update(updates)
         return refb
       }
