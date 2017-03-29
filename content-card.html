@@ -51,9 +51,7 @@
     <template is="dom-if" if="[[opened]]">
       <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
         <card-meta-edit title="{{title}}" image="{{image}}" desc="{{desc}}"></card-meta-edit>
-        <template is="dom-if" if="[[value]]">
-          <polymer-quill syntax content="{{value}}" toolbar-type="full" html="{{html}}"></polymer-quill>
-        </template>         
+        <polymer-quill syntax content="{{value}}" toolbar-type="full" html="{{html}}"></polymer-quill>
       </div>
       <template is="dom-if" if="[[pillar.view]]">
         <polymer-quill-html-render content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
