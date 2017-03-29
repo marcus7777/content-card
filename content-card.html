@@ -118,7 +118,7 @@
       if (opened && firebase && deck) {
         var path = "/Decks/" + deck + "/cards/" + key 
         var updates = {}
-        updates[path+"/image/"] = image
+        updates[path+"/Image/"] = image
         return firebase.database().ref().update(updates)
       }
     },
