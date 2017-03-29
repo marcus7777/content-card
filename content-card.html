@@ -104,9 +104,39 @@
       desc: {
         value: "",
       },
-      _updateFirebaseCardMeta: {
-        computed: "updateFirebaseCardMeta(deck,key,opened,image,title,desc,cardType)"
+      _updateFirebaseCardImage: {
+        computed: "updateFirebaseCardImage(deck,key,opened,image)"
       },
+      _updateFirebaseCardTitle: {
+        computed: "updateFirebaseCardTitle(deck,key,opened,title)"
+      },
+      _updateFirebaseCardDecs: {
+        computed: "updateFirebaseCardDecs(deck,key,opened,decs)"
+      },
+    },
+    updateFirebaseCardImage: function(deck,key,opened,image){
+      if (opened && firebase && deck) {
+        var path = "/Decks/" + deck + "/cards/" + key 
+        var updates = {}
+        updates[path+"/image/"] = image
+        return firebase.database().ref().update(updates)
+      }
+    },
+    updateFirebaseCardTitle: function(deck,key,opened,title){
+      if (opened && firebase && deck) {
+        var path = "/Decks/" + deck + "/cards/" + key 
+        var updates = {}
+        updates[path+"/title/"] = title
+        return firebase.database().ref().update(updates)
+      }
+    },
+    updateFirebaseCardDecs: function(deck,key,opened,desc){
+     if (opened && firebase && deck) {
+        var path = "/Decks/" + deck + "/cards/" + key 
+        var updates = {}
+        updates[path+"/desc/"] = desc
+        return firebase.database().ref().update(updates)
+      }
     },
     getPillars: function(title,edit) {
       //TODO DRY
@@ -132,18 +162,6 @@
             }
           }
         })
-      }
-    },
-    updateFirebaseCardMeta: function(deck,key,opened,image,title,desc,cardType){
-      if (opened && firebase && deck && cardType) {
-        var path = "/Decks/" + deck + "/cards/" + key 
-        var updates = {}
-        updates[path+"/image/"] = image
-        updates[path+"/title/"] = title
-        updates[path+"/desc/"] = desc
-        updates[path+"/cardType/"] = cardType
-        var refb = firebase.database().ref().update(updates)
-        return refb
       }
     },
     updateFirebase: function(value, key, opened){
