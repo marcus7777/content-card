@@ -160,6 +160,9 @@
           return firebase.database().ref(path+"/value").on('value', function(snapshot) {
             var val = snapshot.val()
             if (val && val !== that.fbValue) {
+              if (that.pillar.view) {
+                that.value = "{}"
+              }
               if (typeof val !== 'string') {
                 that.fbValue = JSON.stringify(val)
                 that.value = JSON.stringify(val)
