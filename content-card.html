@@ -150,18 +150,26 @@
       if (firebase && opened && !this.fbValue) {
         var that = this
         var path = "Cards/" + key
-        return firebase.database().ref(path+"/value").on('value', function(snapshot) {
-          var val = snapshot.val()
-          if (val && val !== that.fbValue) {
-            if (typeof val !== 'string') {
-              that.fbValue = JSON.stringify(val)
-              that.value = JSON.stringify(val)
-            } else {
-              that.fbValue = val
-              that.value = val
-            }
+        if (!this.sub || !this.sub[key]) {
+          if (!this.sub) {
+            this.sub = {}
+            this.sub[key] = true
+          } else {
+            this.sub[key] = true
           }
-        })
+          return firebase.database().ref(path+"/value").on('value', function(snapshot) {
+            var val = snapshot.val()
+            if (val && val !== that.fbValue) {
+              if (typeof val !== 'string') {
+                that.fbValue = JSON.stringify(val)
+                that.value = JSON.stringify(val)
+              } else {
+                that.fbValue = val
+                that.value = val
+              }
+            }
+          })
+        }
       }
     },
     updateFirebase: function(value, key, opened){
