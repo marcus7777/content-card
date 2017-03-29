@@ -165,7 +165,7 @@
       }
     },
     updateFirebase: function(value, key, opened){
-      if (opened && firebase && value !== this.fbValue) {
+      if (opened && firebase && value !== this.fbValue && value !== "{}") {
         var path = "Cards/" + key
         var updates = {}
         if (!value) {
