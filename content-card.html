@@ -110,8 +110,8 @@
       _updateFirebaseCardTitle: {
         computed: "updateFirebaseCardTitle(deck,key,opened,title)"
       },
-      _updateFirebaseCardDecs: {
-        computed: "updateFirebaseCardDecs(deck,key,opened,desc)"
+      _updateFirebaseCardDesc: {
+        computed: "updateFirebaseCardDesc(deck,key,opened,desc)"
       },
     },
     updateFirebaseCardImage: function(deck,key,opened,image){
@@ -130,7 +130,7 @@
         return firebase.database().ref().update(updates)
       }
     },
-    updateFirebaseCardDecs: function(deck,key,opened,desc){
+    updateFirebaseCardDesc: function(deck,key,opened,desc){
      if (opened && firebase && deck) {
         var path = "/Decks/" + deck + "/cards/" + key 
         var updates = {}
