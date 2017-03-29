@@ -51,7 +51,9 @@
     <template is="dom-if" if="[[opened]]">
       <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
         <card-meta-edit title="{{title}}" image="{{image}}" desc="{{desc}}"></card-meta-edit>
-        <polymer-quill syntax content="{{value}}" toolbar-type="full" html="{{html}}"></polymer-quill>
+        <template is="dom-if" if="[[restamp]]" restamp>
+          <polymer-quill syntax content="{{value}}" toolbar-type="full" html="{{html}}"></polymer-quill>
+        </template>
       </div>
       <template is="dom-if" if="[[pillar.view]]">
         <polymer-quill-html-render content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
@@ -63,6 +65,10 @@
   Polymer({
     is: "content-card",
     properties:{
+      restamp:{
+        type:Boolean,
+        value:true,
+      },
       edit: {
         type:Boolean,
         value:false,
@@ -160,6 +166,8 @@
             if (val && val !== that.fbValue) {
               if (that.pillar.view) {
                 that.value = "{}"
+                that.restamp = false
+                that.restamp = true
               }
               if (typeof val !== 'string') {
                 that.fbValue = JSON.stringify(val)
