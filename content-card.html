@@ -57,7 +57,7 @@
       <template is="dom-if" if="[[pillar.view]]">
         <polymer-quill-html-render content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
       </template>
-    </template>  
+    </template>
   </template>
 </dom-module>
 <script>
@@ -143,6 +143,9 @@
     },
     getPillars: function(title,edit) {
       //TODO DRY
+      if (this.profile) {
+        debugger
+      }
       if (edit) {
         return [{view: true,selected: true,color: "#f2d123",name: "View"},{name: "Edit",edit: true,color: "#1d1e30"}]
       } else {
