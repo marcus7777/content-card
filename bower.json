@@ -12,7 +12,8 @@
     "iron-image": "PolymerElements/iron-image#~1.2.5",
     "polymer-quill": "marcus7777/polymer-quill#two-way-data",
     "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable",
-    "card-meta-edit":"Hi9Here/card-meta-edit"
+    "card-meta-edit":"Hi9Here/card-meta-edit",
+    "browserify-delta":"marcus7777/browserify-delta"
   },
   "devDependencies": {
     "iron-test-helpers": "*",
