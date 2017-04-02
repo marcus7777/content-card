@@ -51,7 +51,7 @@
       <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
         <card-meta-edit title="{{title}}" image="{{image}}" desc="{{desc}}"></card-meta-edit>
         <template is="dom-if" if="[[restamp]]" restamp>
-          <polymer-quill syntax content="{{value}}" toolbar-type="full" html="{{html}}"></polymer-quill>
+          <polymer-quill syntax content="{{fbValue}}" toolbar-type="full" html="{{html}}"></polymer-quill>
         </template>
       </div>
       <template is="dom-if" if="[[pillar.view]]">
@@ -93,7 +93,7 @@
         value:false,
       },
       _updateFirebase: {
-        computed: "updateFirebase(value,key,opened)",
+        computed: "updateFirebase(fbValue,key,opened)",
       },
       _loadValue: {
         computed: "loadFirebase(key,opened)",
@@ -172,11 +172,11 @@
                 that.restamp = true
               }
               if (typeof val !== 'string') {
-                that.fbValue = JSON.stringify(val)
                 that.value = JSON.stringify(val)
+                that.fbValue = JSON.stringify(val)
               } else {
-                that.fbValue = val
                 that.value = val
+                that.fbValue = val
               }
             }
           })
@@ -184,7 +184,7 @@
       }
     },
     updateFirebase: function(value, key, opened){
-      if (opened && firebase && value !== this.fbValue && value !== "{}") {
+      if (opened && firebase && value !== this.value && value !== "{}") {
         var path = "Cards/" + key
         var updates = {}
         if (!value) {
