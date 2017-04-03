@@ -162,19 +162,18 @@
       if (firebase && opened && (!this.sub || !this.sub[key + name])) {
         var that = this
         var path = "Cards/" + key + "/" + name
-          if (!this.sub) {
-            this.sub = {}
-          } 
-          this.sub[key + name] = true
-          return firebase.database().ref(path+"/").on('value', function(snapshot) {
-            var val = snapshot.val()
-            if (val) {
-              that[name] 
-              debugger
-              that.decode(val)
-            }
-          })
-        }
+        if (!this.sub) {
+          this.sub = {}
+        } 
+        this.sub[key + name] = true
+        return firebase.database().ref(path+"/").on('value', function(snapshot) {
+          var val = snapshot.val()
+          if (val) {
+            that[name] 
+            debugger
+            that.decode(val)
+          }
+        })
       }
     },
     decode: function(val){
