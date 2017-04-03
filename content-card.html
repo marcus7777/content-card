@@ -119,16 +119,22 @@
       },
     },
     updateFirebaseCardImage: function(deck,key,opened,image){
-      if (opened && firebase && deck) {
-        
+      if (opened && firebase && deck && image && this.imageLoaded !== image) {
         var path = "/Decks/" + deck + "/cards/" + key 
         var updates = {}
         updates[path+"/Image/"] = image
-        var user    = firebase.auth().currentUser
-        var time    = firebase.database.ServerValue.TIMESTAMP
-        var profile = this.profile
-        debugger
-        return firebase.database().ref().update(updates)
+        var user = firebase.auth().currentUser
+        if (user) {
+          var time = Date.now()
+          updates["Cards/" + key + "/Image/" + time + user.uid] = {
+            value: image,
+            time: firebase.database.ServerValue.TIMESTAMP,
+            user: user.uid,
+          }
+          return firebase.database().ref().update(updates)
+        }
+      } else {
+        this.imageLoaded = image
       }
     },
     updateFirebaseCardTitle: function(deck,key,opened,title){
