@@ -102,7 +102,7 @@
         computed: "updateFirebase(fbValue,key,opened,pillar.edit)",
       },
       _loadValue: {
-        computed: "loadFirebase(key,opened,'article')",
+        computed: "loadFirebase(key,opened,'article',pillar)",
       },
       image: {
         value: "",
@@ -158,7 +158,7 @@
         return [{view: true,selected: true,color: "#f2d123",name: title}]
       }
     },
-    loadFirebase: function(key, opened, name){
+    loadFirebase: function(key, opened, name, pillar){
       if (firebase && opened && (!this.sub || !this.sub[key + name])) {
         var that = this
         var path = "Cards/" + key + "/" + name
@@ -166,12 +166,18 @@
           this.sub = {}
         } 
         this.sub[key + name] = true
-        return firebase.database().ref(path+"/").on('value', function(snapshot) {
+        var update = function(snapshot) {
           var val = snapshot.val()
           if (val) {
             that[name] = that.decode(val)
           }
-        })
+        }
+        if (pillar.view) {
+          return firebase.database().ref(path+"/").on('value', update)
+        } else {
+          return firebase.database().ref(path+"/").once('value', update)
+        }
+        
       }
     },
     decode: function(val){
