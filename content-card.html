@@ -123,14 +123,16 @@
         computed: "updateFirebase(deck,key,opened,'desc',desc)"
       },
     },
-    updateFirebase: function(deck,key,opened,name,value){
+    updateFirebase: function(deck,key,opened,name,value,cardOnly){
       if (!this.loaded) {
         this.loaded = {}
       }
       if (opened && firebase && deck && value && this.loaded[name] && this.loaded[name] !== value) {
         var path = "/Decks/" + deck + "/cards/" + key 
         var updates = {}
-        updates[path+"/" + name + "/"] = value
+        if (!cardOnly) {
+          updates[path+"/" + name + "/"] = value
+        }
         var user = firebase.auth().currentUser
         if (user) {
           var time = Date.now()
@@ -189,7 +191,7 @@
     },
     save: function(e,d){
       console.log(e,d)
-      this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta)
+      this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
     },
     open: function(){
       if (this.locked) {
