@@ -158,39 +158,29 @@
         return [{view: true,selected: true,color: "#f2d123",name: title}]
       }
     },
-    loadFirebase: function(key, opened){
-      if (firebase && opened && !this.fbValue) {
+    loadFirebase: function(key, opened, name){
+      if (firebase && opened && (!this.sub || !this.sub[key + name])) {
         var that = this
-        var path = "Cards/" + key
-        if (!this.sub || !this.sub[key]) {
+        var path = "Cards/" + key + "/" + name
           if (!this.sub) {
             this.sub = {}
-            this.sub[key] = true
-          } else {
-            this.sub[key] = true
-          }
-          return firebase.database().ref(path+"/value").on('value', function(snapshot) {
+          } 
+          this.sub[key + name] = true
+          return firebase.database().ref(path+"/").on('value', function(snapshot) {
             var val = snapshot.val()
-            if (val && val !== that.fbValue) {
-              if (that.pillar.view) {
-                that.value = "{}"
-                that.restamp = false
-                that.restamp = true
-              }
-              if (typeof val !== 'string') {
-                that.value = JSON.stringify(val)
-                that.fbValue = JSON.stringify(val)
-              } else {
-                that.value = val
-                that.fbValue = val
-              }
+            if (val) {
+              that[name] 
+              debugger
+              that.decode(val)
             }
           })
         }
       }
     },
+    decode: function(val){
+      debugger
+    },
     save: function(e,d){
-      console.log(e,d)
       this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
     },
     open: function(){
