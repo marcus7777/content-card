@@ -178,8 +178,8 @@
       debugger
       var ops = []
       for (var edit in val) {
-        for (var op in val[edit]) {
-          ops.push(val[edit][op])
+        for (var op in val[edit].value.ops) {
+          ops.push(val[edit].value.ops[op])
         }
       }
       return ops
