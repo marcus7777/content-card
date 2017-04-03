@@ -56,6 +56,11 @@
         </template>
       </div>
       <template is="dom-if" if="[[pillar.view]]">
+        <iron-image contain style="max-height:200px;float:left" src="[[image]]"></iron-image>
+        <div>
+          <h2 style="text-align:center">[[title]]</h2>
+          <div>[[desc]]</div>
+        </div>
         <polymer-quill-html-render content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
       </template>
     </template>
