@@ -119,7 +119,7 @@
       },
     },
     updateFirebaseCardImage: function(deck,key,opened,image){
-      if (opened && firebase && deck && image && this.imageLoaded !== image) {
+      if (opened && firebase && deck && image && this.imageLoaded && this.imageLoaded !== image) {
         var path = "/Decks/" + deck + "/cards/" + key 
         var updates = {}
         updates[path+"/Image/"] = image
