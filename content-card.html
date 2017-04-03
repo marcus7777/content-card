@@ -189,6 +189,7 @@
     },
     save: function(e,d){
       console.log(e,d)
+      this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta)
     },
     open: function(){
       if (this.locked) {
