@@ -190,7 +190,9 @@
       return ops
     },
     save: function(e,d){
-      this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
+      if (this.article) {
+        this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
+      }
     },
     open: function(){
       if (this.locked) {
