@@ -188,7 +188,7 @@
       var keys = Object.keys(val)
       // start at last key and work back until string
       // 
-      for (var i = keys.length;i < 0; i--) {
+      for (var i = keys.length;i > 0; i--) {
         var edit = keys[i-1]
         if (typeof val[edit].value == 'object') {
           var editOps = []
