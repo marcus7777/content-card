@@ -195,7 +195,9 @@
           for (var op in val[edit].value.ops) {
             editOps.push(val[edit].value.ops[op])
           }
-          ops.unshift(editOps)
+          if (editOps.length) {
+            ops.unshift(editOps)
+          }
         } else {
           if (typeof val[edit].value == 'string' && val[edit].value.startsWith('{"ops":[{')) {
             ops = JSON.parse(val[edit].value).ops.concat(ops)
