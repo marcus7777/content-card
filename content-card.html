@@ -191,7 +191,7 @@
             ops.push(val[edit].value.ops[op])
           }
         } else {
-          if (typeof val[edit].value == 'string' && val[edit].value.startWith('{"ops":[{')) {
+          if (typeof val[edit].value == 'string' && val[edit].value.startsWith('{"ops":[{')) {
             ops = ops.concat(JSON.parse(val[edit].value).ops)
           } else {
             ops = val[edit].value
