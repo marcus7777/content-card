@@ -168,7 +168,7 @@
         if (!this.sub) {
           this.sub = {}
         } 
-        this.sub[key + name] = true
+        
         var update = function(snapshot) {
           var val = snapshot.val()
           if (val) {
@@ -176,6 +176,7 @@
           }
         }
         if (pillar.view) {
+          this.sub[key + name] = true
           return firebase.database().ref(path+"/").on('value', update)
         } else {
           return firebase.database().ref(path+"/").once('value', update)
@@ -211,7 +212,7 @@
       return ops
     },
     save: function(e,d){
-      if (this.article && this.pillar.edit) {
+      if (this.article && this.pillar.edit && performance.now() > 30000) { 
         this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
       }
     },
