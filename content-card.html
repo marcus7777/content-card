@@ -99,7 +99,7 @@
         value:false,
       },
       _updateFirebase: {
-        computed: "updateFirebase(fbValue,key,opened,pillar.edit)",
+        computed: "updateFirebase(deck,key,opened,'article',article,pillar.edit)",
       },
       _loadValue: {
         computed: "loadFirebase(key,opened,'article',pillar)",
@@ -190,7 +190,7 @@
       return ops
     },
     save: function(e,d){
-      if (this.article) {
+      if (this.article && this.pillar.edit) {
         this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
       }
     },
