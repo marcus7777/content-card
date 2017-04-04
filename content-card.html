@@ -159,6 +159,9 @@
       }
     },
     loadFirebase: function(key, opened, name, pillar){
+      if (!name) {
+        name = "article"
+      }
       if (firebase && opened && (!this.sub || !this.sub[key + name])) {
         var that = this
         var path = "Cards/" + key + "/" + name
