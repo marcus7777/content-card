@@ -185,7 +185,11 @@
     },
     decode: function(val){
       var ops = []
-      for (var edit in val) {
+      var keys = Object.keys(val)
+      // start at last key and work back until string
+      // 
+      for (var i = keys.length;i < 0; i--) {
+        var edit = keys[i]
         if (typeof val[edit].value == 'object') {
           for (var op in val[edit].value.ops) {
             ops.push(val[edit].value.ops[op])
@@ -194,7 +198,11 @@
           if (typeof val[edit].value == 'string' && val[edit].value.startsWith('{"ops":[{')) {
             ops = ops.concat(JSON.parse(val[edit].value).ops)
           } else {
-            ops = val[edit].value
+            if (ops.length) {
+              return ops
+            } else {
+              return val[edit].value
+            }
           }
         }
       }
