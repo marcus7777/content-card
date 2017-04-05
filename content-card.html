@@ -182,27 +182,19 @@
       }
     },
     decode: function(val){
-      var ops = []
-      var keys = Object.keys(val)
-      // start at last key and work back until string
-      // 
-      for (var i = keys.length;i > 0; i--) {
-        var edit = keys[i-1]
+      var ops = new Delta()
+      for (var edit in val) {
         if (typeof val[edit].value == 'object') {
           var editOps = []
           for (var op in val[edit].value.ops) {
             editOps.push(val[edit].value.ops[op])
           }
-          ops = editOps.concat(ops)
+          ops = ops.compose(editOps)
         } else {
-          if (typeof val[edit].value == 'string' && val[edit].value.startsWith('{"ops":[{')) {
-            ops = JSON.parse(val[edit].value).ops.concat(ops)
+          if (typeof val[edit].value == 'string') {
+            return val[edit].value
           } else {
-            if (ops.length) {
-              return ops
-            } else {
-              return val[edit].value
-            }
+            console.log("error decoding ",val)
           }
         }
       }
