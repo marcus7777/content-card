@@ -79,6 +79,9 @@
         type:Boolean,
         value:false,
       },
+      online: {
+        type:Boolean,
+      },
       html: {
         value:""
       },
@@ -201,8 +204,11 @@
       return ops.ops
     },
     save: function(e,d){
-      if (this.article && this.pillar.edit && performance.now() > 1000) { 
+      if (this.article && this.pillar.edit && performance.now() > 1000 ) { 
         this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
+        if (this.online) {
+          this.saved = 
+        }
       }
     },
     open: function(){
@@ -212,5 +218,17 @@
         this.fire("open",this)
       }
     },
+    ready: function() {
+      if (this.online !== true || this.online !== false) {
+        var that = this
+        firebase.database().ref(".info/connected").on("value", function(snap) {
+          if (snap.val() === true) {
+            that.online = true
+          } else {
+            that.online = false
+          }
+        })
+      }
+    }
   })
 </script>
