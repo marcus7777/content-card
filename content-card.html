@@ -207,7 +207,7 @@
       if (this.article && this.pillar.edit && performance.now() > 1000 ) { 
         this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
         if (this.online) {
-          this.saved = 
+          this.saved = true
         }
       }
     },
