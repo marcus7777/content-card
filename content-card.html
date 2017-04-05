@@ -185,13 +185,8 @@
             that[name] = that.decode(val)
           }
         }
-        if (pillar.view) {
-          this.sub[key + name] = true
-          return firebase.database().ref(path+"/").on('value', update)
-        } else {
-          return firebase.database().ref(path+"/").once('value', update)
-        }
-        
+        this.sub[key + name] = true
+        return firebase.database().ref(path+"/").on('value', update)
       }
     },
     decode: function(val){
