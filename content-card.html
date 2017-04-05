@@ -53,6 +53,7 @@
         <card-meta-edit title="{{title}}" image="{{image}}" desc="{{desc}}"></card-meta-edit>
         <template is="dom-if" if="[[restamp]]" restamp>
           <polymer-quill syntax content="{{article}}" toolbar-type="full" html="{{html}}" on-change="save"></polymer-quill>
+          <paper-toast text="saved" opened="{{saved}}"></paper-toast>
         </template>
       </div>
       <template is="dom-if" if="[[pillar.view]]">
