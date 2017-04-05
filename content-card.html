@@ -189,7 +189,7 @@
           for (var op in val[edit].value.ops) {
             editOps.push(val[edit].value.ops[op])
           }
-          ops = ops.compose(editOps)
+          ops = ops.compose({ops: editOps})
         } else {
           if (typeof val[edit].value == 'string') {
             return val[edit].value
