@@ -201,7 +201,7 @@
       return ops.ops
     },
     save: function(e,d){
-      if (this.article && this.pillar.edit && performance.now() > 30000) { 
+      if (this.article && this.pillar.edit && performance.now() > 1000) { 
         this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
       }
     },
