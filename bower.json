@@ -13,7 +13,8 @@
     "polymer-quill": "marcus7777/polymer-quill#two-way-data",
     "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable",
     "card-meta-edit":"Hi9Here/card-meta-edit",
-    "browserify-delta":"marcus7777/browserify-delta"
+    "browserify-delta":"marcus7777/browserify-delta",
+    "paper-toast": "PolymerElements/paper-toast#~1.3.0"
   },
   "devDependencies": {
     "iron-test-helpers": "*",
