@@ -61,7 +61,8 @@
           <h2 style="text-align:center">[[title]]</h2>
           <div>[[desc]]</div>
         </div>
-        <polymer-quill-html-render content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
+        <polymer-quill hidden use-content-reset content="[[article]]" html="{{html}}"></polymer-quill>
+        <polymer-quill-html-render content="[[html]]" style="clear:both;overflow:scroll;max-height:95vh"></polymer-quill-html-render>
       </template>
     </template>
   </template>
@@ -167,8 +168,7 @@
         var path = "Cards/" + key + "/" + name
         if (!this.sub) {
           this.sub = {}
-        } 
-        
+        }
         var update = function(snapshot) {
           var val = snapshot.val()
           if (val) {
