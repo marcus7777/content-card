@@ -213,12 +213,14 @@
       return ops.ops
     },
     save: function(e,d){
-      if (this.article && this.pillar.edit) { 
+      if (this.opened && this.article && this.pillar.edit) { 
         this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
       }
     },
     apiSave: function(e,d){
-      this.apiSaved = true
+      if (this.opened && this.article && this.pillar.edit) {
+        this.apiSaved = true
+      }
     },
     open: function(){
       if (this.locked) {
