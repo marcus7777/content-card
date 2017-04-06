@@ -170,7 +170,7 @@
           updates[path + "/" + name + "/"] = value
         }
         var time = Date.now()
-        updates["Cards/" + key + "/" + name + "/" + time + "q" + user.uid] = {
+        updates["Cards/" + key + "/" + name + "/" + time + "q" + uid] = {
           value: value,
           time: firebase.database.ServerValue.TIMESTAMP,
           user: uid,
