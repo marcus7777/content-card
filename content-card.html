@@ -149,9 +149,6 @@
         computed: "updateFirebase(deck,key,opened,'desc',desc,edit,uid)"
       },
     },
-    ready:function(){
-      this.user = firebase.auth().currentUser
-    },
     getIt:function(it){
       return it
     },
@@ -250,6 +247,7 @@
       }
     },
     ready: function() {
+      this.user = firebase.auth().currentUser
       if (this.online !== true || this.online !== false) {
         var that = this
         firebase.database().ref(".info/connected").on("value", function(snap) {
