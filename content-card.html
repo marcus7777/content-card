@@ -139,7 +139,7 @@
       if (!this.loaded) {
         this.loaded = {}
       }
-      if (opened && firebase && deck && value && (this.loaded[name] && this.loaded[name] !== value || cardOnly)) {
+      if (opened && firebase && deck && value && (typeof this.loaded[name] != 'undefined' && this.loaded[name] !== value || cardOnly)) {
         var path = "/Decks/" + deck + "/cards/" + key 
         var updates = {}
         if (!cardOnly) {
