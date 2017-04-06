@@ -85,7 +85,7 @@
         computed:"isEditable(writable,user)"
       },
       user: {
-        computed:"getUser()"
+//        computed:"getUser()"
       },
       uid: {
         computed:"getIt(user.uid)"
@@ -149,8 +149,8 @@
         computed: "updateFirebase(deck,key,opened,'desc',desc,edit,uid)"
       },
     },
-    getUser:function(){
-      return firebase.auth().currentUser
+    ready:function(){
+      this.user = firebase.auth().currentUser
     },
     getIt:function(it){
       return it
