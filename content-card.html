@@ -53,8 +53,9 @@
       <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
         <card-meta-edit title="{{title}}" image="{{image}}" desc="{{desc}}"></card-meta-edit>
         <template is="dom-if" if="[[restamp]]" restamp>
-          <polymer-quill syntax content="{{article}}" toolbar-type="full" html="{{html}}" on-change="save"></polymer-quill>
-          <paper-toast text="saved" opened="{{saved}}"></paper-toast>
+          <polymer-quill syntax content="{{article}}" toolbar-type="full" html="{{html}}" on-change="save" on-update="apiSave"></polymer-quill>
+          <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
+          <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
         </template>
       </div>
       <template is="dom-if" if="[[pillar.view]]">
@@ -104,6 +105,10 @@
         type:Boolean,
         value:false,
       },
+      apiSaved:{
+        type:Boolean,
+        value:false,
+      },
       locked: {
         type:Boolean,
         value:false,
@@ -143,14 +148,13 @@
         var user = firebase.auth().currentUser
         if (user) {
           var time = Date.now()
-          updates["Cards/" + key + "/" + name + "/" + time + user.uid] = {
+          updates["Cards/" + key + "/" + name + "/" + time + "m" + user.uid] = {
             value: value,
             time: firebase.database.ServerValue.TIMESTAMP,
             user: user.uid,
           }
           if (this.online) {
             this.saved = true
-            
           }
           return firebase.database().ref().update(updates)
         }
@@ -209,9 +213,12 @@
       return ops.ops
     },
     save: function(e,d){
-      if (this.article && this.pillar.edit && performance.now() > 1000 ) { 
+      if (this.article && this.pillar.edit) { 
         this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
       }
+    },
+    apiSave: function(e,d){
+      this.apiSaved = true
     },
     open: function(){
       if (this.locked) {
