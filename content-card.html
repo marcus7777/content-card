@@ -7,7 +7,7 @@
 <link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../polymer/polymer.html">
 <!--
-  `<content-card></content-card>` svg
+  `<content-card></content-card>`
   @demo demo.html
 -->
 <dom-module id="content-card">
@@ -141,13 +141,13 @@
         value: "",
       },
       _updateFirebaseCardImage: {
-        computed: "updateFirebase(deck,key,opened,'Image',image,edit,uid)"
+        computed: "updateFirebase(deck,key,opened,'Image',image,0,edit,uid)"
       },
       _updateFirebaseCardTitle: {
-        computed: "updateFirebase(deck,key,opened,'title',title,edit,uid)"
+        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid)"
       },
       _updateFirebaseCardDesc: {
-        computed: "updateFirebase(deck,key,opened,'desc',desc,edit,uid)"
+        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid)"
       },
     },
     getIt:function(it){
