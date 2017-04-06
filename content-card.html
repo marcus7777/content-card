@@ -81,8 +81,13 @@
         value:true,
       },
       edit: {
-        type:Boolean,
-        value:false,
+        computed:"isEditable(writable,user)"
+      },
+      user: {
+        computed:"getUser()"
+      },
+      uid: {
+        computed:"getIt(user.uid)"
       },
       online: {
         type:Boolean,
@@ -134,38 +139,44 @@
         value: "",
       },
       _updateFirebaseCardImage: {
-        computed: "updateFirebase(deck,key,opened,'Image',image,writable)"
+        computed: "updateFirebase(deck,key,opened,'Image',image,edit,uid)"
       },
       _updateFirebaseCardTitle: {
-        computed: "updateFirebase(deck,key,opened,'title',title,writable)"
+        computed: "updateFirebase(deck,key,opened,'title',title,edit,uid)"
       },
       _updateFirebaseCardDesc: {
-        computed: "updateFirebase(deck,key,opened,'desc',desc,writable)"
+        computed: "updateFirebase(deck,key,opened,'desc',desc,edit,uid)"
       },
     },
-    updateFirebase: function(deck,key,opened,name,value,cardOnly,writable){
+    getUser:function(){
+      return firebase.auth().currentUser
+    },
+    getIt:function(it){
+      return it
+    },
+    isEditable: function(writable,user){
+      return (writable[user.uid] || writable.all)
+    },
+    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid){
       if (!this.loaded) {
         this.loaded = {}
       }
-      if (opened && firebase && writable && deck && value && (typeof this.loaded[name] != 'undefined' && this.loaded[name] !== value || cardOnly)) {
+      if (opened && firebase && edit && deck && value && (typeof this.loaded[name] != 'undefined' && this.loaded[name] !== value || cardOnly)) {
         var path = "/Decks/" + deck + "/cards/" + key 
         var updates = {}
         if (!cardOnly) {
           updates[path+"/" + name + "/"] = value
         }
-        var user = firebase.auth().currentUser
-        if (writable[user.uid] || writable.all) {
-          var time = Date.now()
-          updates["Cards/" + key + "/" + name + "/" + time + "q" + user.uid] = {
-            value: value,
-            time: firebase.database.ServerValue.TIMESTAMP,
-            user: user.uid,
-          }
-          if (this.online) {
-            this.saved = true
-          }
-          return firebase.database().ref().update(updates)
+        var time = Date.now()
+        updates["Cards/" + key + "/" + name + "/" + time + "q" + user.uid] = {
+          value: value,
+          time: firebase.database.ServerValue.TIMESTAMP,
+          user: uid,
         }
+        if (this.online) {
+          this.saved = true
+        }
+        return firebase.database().ref().update(updates)
       } else {
         this.loaded[name] = value
       }
@@ -222,7 +233,7 @@
     },
     save: function(e,d){
       if (this.opened && this.article && this.pillar.edit) { 
-        this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true)
+        this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true, this.edit, this.uid)
       }
     },
     apiSave: function(e,d){
