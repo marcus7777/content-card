@@ -154,6 +154,9 @@
       return it
     },
     isEditable: function(writable,user){
+      if (typeof writable === "string") {
+        writable = JSON.purse(writable)
+      }
       return (writable[user.uid] || writable.all)
     },
     updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid){
@@ -164,7 +167,7 @@
         var path = "/Decks/" + deck + "/cards/" + key 
         var updates = {}
         if (!cardOnly) {
-          updates[path+"/" + name + "/"] = value
+          updates[path + "/" + name + "/"] = value
         }
         var time = Date.now()
         updates["Cards/" + key + "/" + name + "/" + time + "q" + user.uid] = {
