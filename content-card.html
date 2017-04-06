@@ -118,6 +118,12 @@
       _loadValue: {
         computed: "loadFirebase(key,opened,'article',pillar)",
       },
+      _loadReadable: {
+        // computed: "loadFirebase(key,opened,'readable',pillar)",
+      },
+      _loadWritable: {
+        computed: "loadFirebase(key,opened,'writable',pillar)",
+      },
       image: {
         value: "",
       },
@@ -128,16 +134,16 @@
         value: "",
       },
       _updateFirebaseCardImage: {
-        computed: "updateFirebase(deck,key,opened,'Image',image)"
+        computed: "updateFirebase(deck,key,opened,'Image',image,writable)"
       },
       _updateFirebaseCardTitle: {
-        computed: "updateFirebase(deck,key,opened,'title',title)"
+        computed: "updateFirebase(deck,key,opened,'title',title,writable)"
       },
       _updateFirebaseCardDesc: {
-        computed: "updateFirebase(deck,key,opened,'desc',desc)"
+        computed: "updateFirebase(deck,key,opened,'desc',desc,writable)"
       },
     },
-    updateFirebase: function(deck,key,opened,name,value,cardOnly){
+    updateFirebase: function(deck,key,opened,name,value,cardOnly,writable){
       if (!this.loaded) {
         this.loaded = {}
       }
@@ -148,9 +154,9 @@
           updates[path+"/" + name + "/"] = value
         }
         var user = firebase.auth().currentUser
-        if (user) {
+        if (writable[user.uid] || writable.all) {
           var time = Date.now()
-          updates["Cards/" + key + "/" + name + "/" + time + "m" + user.uid] = {
+          updates["Cards/" + key + "/" + name + "/" + time + "q" + user.uid] = {
             value: value,
             time: firebase.database.ServerValue.TIMESTAMP,
             user: user.uid,
