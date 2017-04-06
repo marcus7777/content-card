@@ -41,12 +41,13 @@
       <div on-tap="open" class="container">
         <template is="dom-if" if="[[image]]">
           <iron-image contain style="max-height:150px" src="[[image]]"></iron-image>
+          <h2 style="text-align:center">[[title]]</h2>
         </template>
         <template is="dom-if" if="[[!image]]">
-          <div style="height:100px"></div>
+          <div style="height:50px"></div>
+          <h2 style="text-align:center">[[title]]</h2>
+          <div>[[desc]]</div>
         </template>
-        <h2 style="text-align:center">[[title]]</h2>
-        <div>[[desc]]</div>
       </div>
     </template>
     <template is="dom-if" if="[[opened]]">
