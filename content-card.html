@@ -141,10 +141,14 @@
       return it
     },
     isEditable: function(writable,user){
-      if (typeof writable === "string") {
-        writable = JSON.purse(writable)
+      if (user && user !== null) { 
+        if (typeof writable === "string") {
+          writable = JSON.purse(writable)
+        }
+        return writable[user.uid] || writable.all
+      } else {
+        return writable.all
       }
-      return (writable[user.uid] || writable.all)
     },
     updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
       if (!this.localData) {
@@ -154,7 +158,7 @@
         time = Date.now()
       }
       
-      if (opened && firebase && edit && deck && value && uid && uil != null && (typeof this.localData[name] != 'undefined' && this.localData[name].value !== value || cardOnly)) {
+      if (opened && firebase && edit && deck && value && uid && uid != null && (typeof this.localData[name] != 'undefined' && this.localData[name].value !== value || cardOnly)) {
         var path = "/Decks/" + deck + "/cards/" + key 
 
         var updates = {}
