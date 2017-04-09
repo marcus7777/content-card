@@ -257,7 +257,7 @@
         if (!this.localData.article) {
           this.localData.article = {}
         }
-        if (this.localData.article.value !== d.entireDelta) {
+        if (this.localData.article.value !== d.entireDelta.ops) {
           this.localData.article.value = d.entireDelta.ops
           var time = Date.now()
           this.localData.article.updated = time
