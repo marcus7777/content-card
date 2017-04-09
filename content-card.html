@@ -152,13 +152,17 @@
       }
       if (opened && firebase && edit && deck && value && uid && (typeof this.localData[name] != 'undefined' && this.localData[name] !== value || cardOnly)) {
         var path = "/Decks/" + deck + "/cards/" + key 
-        this.localData[name] = value
+        var time = Date.now()
+        
+        this.localData[name] = {}
+        this.localData[name].value = value
+        this.localData[name].updated = time
         
         var updates = {}
         if (!cardOnly) {
           updates[path + "/" + name + "/"] = value
         }
-        var time = Date.now()
+        
         updates["Cards/" + key + "/" + name + "/" + time + "q" + uid] = {
           value: value,
           time: firebase.database.ServerValue.TIMESTAMP,
@@ -196,8 +200,7 @@
             if (!that.lastupdate) {
               that.lastupdate = {}
             }
-            that[name] = that.decode(val,that.lastupdate[name])
-            that.lastupdate[name] = that.getlastupdated(val)
+            that[name] = that.decode(val,that.localData[name])
           }
         }
         this.sub[key + name] = true
