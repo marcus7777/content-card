@@ -146,18 +146,17 @@
       }
       return (writable[user.uid] || writable.all)
     },
-    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid){
+    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
       if (!this.localData) {
         this.localData = {}
       }
-      if (opened && firebase && edit && deck && value && uid && (typeof this.localData[name] != 'undefined' && this.localData[name] !== value || cardOnly)) {
+      if (!time) {
+        time = Date.now()
+      }
+      
+      if (opened && firebase && edit && deck && value && uid && (typeof this.localData[name] != 'undefined' && this.localData[name].value !== value || cardOnly)) {
         var path = "/Decks/" + deck + "/cards/" + key 
-        var time = Date.now()
-        
-        this.localData[name] = {}
-        this.localData[name].value = value
-        this.localData[name].updated = time
-        
+
         var updates = {}
         if (!cardOnly) {
           updates[path + "/" + name + "/"] = value
@@ -185,8 +184,8 @@
       }
     },
     loadFirebase: function(key, opened, name){
-      if (!name) {
-        name = "article"
+      if (!this.localData) {
+        this.localData = {}
       }
       if (firebase && opened && (!this.sub || !this.sub[key + name])) {
         var that = this
@@ -219,11 +218,11 @@
           if (+a.replace(/(^\d+)(.+$)/i,'$1') > +b.replace(/(^\d+)(.+$)/i,'$1')){return -1}
           return 0
         })
-        if (+val[keys[0]].time) {
-          return +val[keys[0]].time
-        } else if (+keys[0].replace(/(^\d+)(.+$)/i,'$1') > 1700000) {
+        if (+keys[0].replace(/(^\d+)(.+$)/i,'$1') > 1700000) {
           return +keys[0].replace(/(^\d+)(.+$)/i,'$1')
-        } else {
+        } else if (+val[keys[0]].time) {
+          return +val[keys[0]].time
+        } else  {
           return null
         }
       }
@@ -248,8 +247,19 @@
       return ops.ops
     },
     save: function(e,d){
-      if (this.opened && this.article && this.pillar.edit) { 
-        this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true, this.edit, this.uid)
+      if (this.opened && this.article && this.pillar.edit) {
+        if (!this.localData) {
+          this.localData = {}
+        }
+        if (!this.localData.article) {
+          this.localData.article = {}
+        }
+        if (this.localData.article.value !== d.entireDelta) {
+          this.localData.article.value = d.entireDelta
+          var time = Date.now()
+          this.localData.article.updated = time
+          this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true, this.edit, this.uid, time)
+        }
       }
     },
     apiSave: function(e,d){
