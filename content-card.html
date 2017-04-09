@@ -1,6 +1,7 @@
 <link rel="import" href="../card-meta-edit/card-meta-edit.html">
 <link rel="import" href="../polymer-quill/polymer-quill-html-render.html">
 <link rel="import" href="../polymer-quill/polymer-quill.html">
+<link rel="import" href="../iron-localstorage/iron-localstorage.html">
 <link rel="import" href="../browserify-delta/browserify-delta.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
@@ -59,6 +60,7 @@
         <polymer-quill-html-render content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
       </template>
     </template>
+    <iron-localstorage value="{{localData}}" name="[[key]]"></iron-localstorage>
   </template>
 </dom-module>
 <script>
@@ -145,11 +147,13 @@
       return (writable[user.uid] || writable.all)
     },
     updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid){
-      if (!this.loaded) {
-        this.loaded = {}
+      if (!this.localData) {
+        this.localData = {}
       }
-      if (opened && firebase && edit && deck && value && uid && (typeof this.loaded[name] != 'undefined' && this.loaded[name] !== value || cardOnly)) {
+      if (opened && firebase && edit && deck && value && uid && (typeof this.localData[name] != 'undefined' && this.localData[name] !== value || cardOnly)) {
         var path = "/Decks/" + deck + "/cards/" + key 
+        this.localData[name] = value
+        
         var updates = {}
         if (!cardOnly) {
           updates[path + "/" + name + "/"] = value
@@ -165,7 +169,7 @@
         }
         return firebase.database().ref().update(updates)
       } else {
-        this.loaded[name] = value
+        this.localData[name] = value
       }
     },
     getPillars: function(title,edit) {
