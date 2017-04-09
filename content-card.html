@@ -45,7 +45,7 @@
         <div style="width:100%;float:right">
           <card-meta-edit title="{{title}}" image="{{image}}" desc="{{desc}}"></card-meta-edit>
           <template is="dom-if" if="[[restamp]]" restamp>
-            <polymer-quill syntax content="{{article}}" toolbar-type="full" on-change="save" on-update="apiSave"></polymer-quill>
+            <polymer-quill syntax content="[[article]]" toolbar-type="full" on-change="save" on-update="apiSave"></polymer-quill>
             <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
             <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
           </template>
