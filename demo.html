@@ -5,6 +5,18 @@
     <title>content-card demo</title>
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="content-card.html">
+    <script src="/bower_components/firebase/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBT79W2ppUbnhG1cznsy7X12LY4XuJ9SwU",
+        authDomain: "cards-edb54.firebaseapp.com",
+        databaseURL: "https://cards-edb54.firebaseio.com",
+        storageBucket: "cards-edb54.appspot.com",
+        messagingSenderId: "526439963818"
+      }
+      firebase.initializeApp(config)
+    </script>
   </head>
   <body>
     <content-card 
