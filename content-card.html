@@ -41,22 +41,19 @@
       </div>
     </template>
     <template is="dom-if" if="[[opened]]">
-      <template is="dom-if" if="[[pillar.edit]]">
-        <div style="width:100%;float:right">
+        <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
           <card-meta-edit title="{{title}}" image="{{image}}" desc="{{desc}}"></card-meta-edit>
           <template is="dom-if" if="[[restamp]]" restamp>
-            <polymer-quill syntax content="[[article]]" toolbar-type="full" on-change="save" on-update="apiSave"></polymer-quill>
+            <polymer-quill syntax use-content-reset content="[[article]]" html="{{html}}" content="[[article]]" toolbar-type="full" on-change="save" on-update="apiSave"></polymer-quill>
             <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
             <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
           </template>
         </div>
-      </template>
       <template is="dom-if" if="[[pillar.view]]">
         <iron-image contain style="max-height:200px;float:left" src="[[image]]"></iron-image>
         <div>
           <div>[[desc]]</div>
         </div>
-        <polymer-quill hidden use-content-reset content="[[article]]" html="{{html}}"></polymer-quill>
         <polymer-quill-html-render content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
       </template>
     </template>
