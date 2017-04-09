@@ -175,7 +175,7 @@
         if (!this.localData[name]) {
           this.localData[name] = {}
         }
-        this.localData[name].value = this.decode(value,this[name])
+        this.localData[name].value = this.decode(value,this.localData[name])
       }
     },
     getPillars: function(title,edit) {
@@ -202,7 +202,7 @@
             if (!that.lastupdate) {
               that.lastupdate = {}
             }
-            that[name] = that.decode(val,that.localData[name].value,that.localData[name].time)
+            that[name] = that.decode(val,that.localData[name].value,that.localData[name].updated)
           }
         }
         this.sub[key + name] = true
