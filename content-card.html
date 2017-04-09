@@ -243,9 +243,9 @@
         if (!this.localData.article) {
           this.localData.article = {}
         }
-        var ops = new Delta(this.localData.article.value)
+        var opsLocal = new Delta(this.localData.article.value)
+        var diff = d.entireDelta.ops.diff(opsLocal)
         
-        var diff = ops.diff(new Delta(d.entireDelta.ops))
         
         if (this.localData.article.value !== d.entireDelta.ops) {
           this.localData.article.value = d.entireDelta.ops
