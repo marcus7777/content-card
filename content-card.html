@@ -211,6 +211,8 @@
               that.localData[name] = {}
             }
             that[name] = that.decode(val,that.localData[name].value,that.localData[name].updated)
+            that.localData[name].value = that[name]
+            that.localData[name].updated = Date.now()
           }
         }
         this.sub[key + name] = true
