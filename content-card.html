@@ -177,7 +177,7 @@
           this.localData[name] = {}
         }
         this.localData[name].value = this.decode(value,this.localData[name])
-        this.localData[name].time = time
+        this.localData[name].update = time
       }
     },
     getPillars: function(title,edit) {
@@ -244,8 +244,8 @@
           this.localData.article = {}
         }
         var opsLocal = new Delta(this.localData.article.value)
-        var diff = opsLocal.diff(d.entireDelta)
-        
+        var opsLocalEditor = new Delta(d.entireDelta.ops)
+        var diff = opsLocal.diff(opsLocalEditor)
         
         if (this.localData.article.value !== d.entireDelta.ops) {
           this.localData.article.value = d.entireDelta.ops
