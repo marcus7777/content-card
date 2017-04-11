@@ -244,7 +244,7 @@
           this.localData.article = {}
         }
         var opsLocal = new Delta().compose(this.localData.article.value)
-        var opsLocalEditor = new Delta(d.entireDelta.ops)
+        var opsLocalEditor = new Delta().compose(d.entireDelta.ops)
         var diff = opsLocal.diff(opsLocalEditor)
         
         if (this.localData.article.value !== d.entireDelta.ops) {
