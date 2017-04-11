@@ -248,7 +248,7 @@
         
         var diff = opsLocal.diff(opsLocalEditor)
         
-        if (this.localData.article.value !== d.entireDelta.ops) {
+        if (diff.ops.length) {
           this.localData.article.value = d.entireDelta.ops
           var time = Date.now()
           this.localData.article.updated = time
