@@ -41,14 +41,14 @@
       </div>
     </template>
     <template is="dom-if" if="[[opened]]">
-        <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
-          <card-meta-edit title="{{title}}" image="{{image}}" desc="{{desc}}"></card-meta-edit>
-          <template is="dom-if" if="[[restamp]]" restamp>
-            <polymer-quill id="editor" syntax use-content-reset content="[[article]]" html="{{html}}" content="[[article]]" toolbar-type="full" on-change="save" on-update="apiSave"></polymer-quill>
-            <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
-            <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
-          </template>
-        </div>
+      <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
+        <card-meta-edit title="{{title}}" image="{{image}}" desc="{{desc}}"></card-meta-edit>
+        <template is="dom-if" if="[[restamp]]" restamp>
+          <polymer-quill id="editor" syntax use-content-reset content="[[article]]" html="{{html}}" content="[[article]]" toolbar-type="full" on-change="save" on-update="apiSave"></polymer-quill>
+          <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
+          <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
+        </template>
+      </div>
       <template is="dom-if" if="[[pillar.view]]">
         <iron-image contain style="max-height:200px;float:left" src="[[image]]"></iron-image>
         <div>
@@ -250,7 +250,7 @@
         if (!this.localData.article) {
           this.localData.article = {}
         }
-        var diff = e..detail.delta.ops
+        var diff = e.detail.delta.ops
         if (diff.ops.length) {
           this.localData.article.value = d.entireDelta.ops
           var time = Date.now()
