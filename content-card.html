@@ -170,11 +170,11 @@
           user: uid,
         }
         if (this.localData && this.localData.article && this.localData.article.value) {
-          var opsLocal = new Delta(this.localData.article.value)
-          var opsLocalEditor = new Delta(this.$$('#editor').quill.getContents())
-          var diff = opsLocal.diff(opsLocalEditor)
+        //  var opsLocal = new Delta(this.localData.article.value)
+        //  var opsLocalEditor = new Delta(this.$$('#editor').quill.getContents())
+        //  var diff = opsLocal.diff(opsLocalEditor)
 
-          if (this.online && diff.ops.length) {
+          if (this.online) {// && diff.ops.length) {
             this.saved = true
           }
         }
