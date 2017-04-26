@@ -250,10 +250,7 @@
         if (!this.localData.article) {
           this.localData.article = {}
         }
-        var opsLocal = new Delta(this.localData.article.value)
-        var opsLocalEditor = new Delta(d.entireDelta)
-        var diff = opsLocal.diff(opsLocalEditor)
-        
+        var diff = e..detail.delta.ops
         if (diff.ops.length) {
           this.localData.article.value = d.entireDelta.ops
           var time = Date.now()
