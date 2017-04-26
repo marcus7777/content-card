@@ -155,7 +155,7 @@
         time = Date.now()
       }
       
-      if (opened && firebase && edit && deck && value && uid && uid != null && this.localData[name].value !== value || cardOnly) {
+      if (opened && firebase && edit && deck && value && uid && uid != null && (this.localData[name] && this.localData[name].value !== value || cardOnly) ) {
        
         var path = "/Decks/" + deck + "/cards/" + key 
 
