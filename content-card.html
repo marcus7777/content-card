@@ -169,12 +169,14 @@
           time: firebase.database.ServerValue.TIMESTAMP,
           user: uid,
         }
-        var opsLocal = new Delta(this.localData.article.value)
-        var opsLocalEditor = new Delta(this.$$('#editor').quill.getContents())
-        var diff = opsLocal.diff(opsLocalEditor)
+        if (this.localData && this.localData.article && this.localData.article.value) {
+          var opsLocal = new Delta(this.localData.article.value)
+          var opsLocalEditor = new Delta(this.$$('#editor').quill.getContents())
+          var diff = opsLocal.diff(opsLocalEditor)
 
-        if (this.online && diff.ops.length) {
-          this.saved = true
+          if (this.online && diff.ops.length) {
+            this.saved = true
+          }
         }
         return firebase.database().ref().update(updates)
       } else {
