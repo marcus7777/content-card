@@ -250,13 +250,13 @@
         if (!this.localData.article) {
           this.localData.article = {}
         }
-        //var diff = e.detail.delta.ops
-        //if (diff.ops.length) {
+        var diff = e.detail.delta
+        if (diff.ops.length) {
           this.localData.article.value = d.entireDelta.ops
           var time = Date.now()
           this.localData.article.updated = time
           this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true, this.edit, this.uid, time)
-        //}
+        }
       }
     },
     apiSave: function(e,d){
