@@ -135,6 +135,13 @@
         computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid)"
       },
     },
+    delete: function(){
+      var path = "/Decks/" + this.deck + "/cards/" + this.key 
+      var updates = {}
+      updates[path] = null
+      updates["/Cards/" + this.key] = null
+      firebase.database().ref().update(updates)
+    },
     getIt:function(it){
       return it
     },
