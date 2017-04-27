@@ -58,7 +58,7 @@
         <polymer-quill-html-render content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
       </template>
     </template>
-    <iron-localstorage value="{{localData}}" name="[[key]]"></iron-localstorage>
+    <!-- <iron-localstorage value="{{localData}}" name="[[key]]"></iron-localstorage> -->
   </template>
 </dom-module>
 <script>
@@ -156,22 +156,18 @@
       }
     },
     updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
-      if (!this.localData) {
-        this.localData = {}
-      }
+     // if (!this.localData) {
+     //   this.localData = {}
+     // }
       if (!time) {
         time = Date.now()
       }
-      
-      if (opened && firebase && edit && deck && value && uid && uid != null && (this.localData[name] && this.localData[name].value !== value || cardOnly) ) {
-       
-        var path = "/Decks/" + deck + "/cards/" + key 
-
+      if (opened && firebase && edit && deck && value && uid && uid != null) {
+        var path = "/Decks/" + deck + "/cards/" + key
         var updates = {}
         if (!cardOnly) {
           updates[path + "/" + name + "/"] = value
         }
-        
         updates["Cards/" + key + "/" + name + "/" + time + "q" + uid] = {
           value: value,
           time: firebase.database.ServerValue.TIMESTAMP,
