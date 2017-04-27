@@ -140,7 +140,7 @@
       var updates = {}
       updates[path] = null
       updates["/Cards/" + this.key] = null
-      firebase.database().ref().update(updates)
+      this.fire("deleted",firebase.database().ref().update(updates))
     },
     getIt:function(it){
       return it
