@@ -58,7 +58,7 @@
         <polymer-quill-html-render content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
       </template>
     </template>
-    <!-- <iron-localstorage value="{{localData}}" name="[[key]]"></iron-localstorage> -->
+    <iron-localstorage value="{{localData}}" name="[[key]]"></iron-localstorage>
   </template>
 </dom-module>
 <script>
@@ -156,9 +156,9 @@
       }
     },
     updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
-     // if (!this.localData) {
-     //   this.localData = {}
-     // }
+      if (!this.localData) {
+        this.localData = {}
+      }
       if (!time) {
         time = Date.now()
       }
@@ -173,22 +173,16 @@
           time: firebase.database.ServerValue.TIMESTAMP,
           user: uid,
         }
-        if (this.localData && this.localData.article && this.localData.article.value) {
-        //  var opsLocal = new Delta(this.localData.article.value)
-        //  var opsLocalEditor = new Delta(this.$$('#editor').quill.getContents())
-        //  var diff = opsLocal.diff(opsLocalEditor)
-
-          if (this.online) {// && diff.ops.length) {
-            this.saved = true
-          }
+        if (this.online) {// && diff.ops.length) {
+          this.saved = true
         }
         return firebase.database().ref().update(updates)
       } else {
-      //  if (!this.localData[name]) {
-      //    this.localData[name] = {}
-      //  }
-      //  this.localData[name].value = this.decode(value,this.localData[name])
-      //  this.localData[name].update = time
+        if (!this.localData[name]) {
+          this.localData[name] = {}
+        }
+        this.localData[name].value = this.decode(value,this.localData[name])
+        this.localData[name].update = time
       }
     },
     getPillars: function(title,edit) {
@@ -200,9 +194,9 @@
       }
     },
     loadFirebase: function(key, opened, name){
-      //if (!this.localData) {
-      //  this.localData = {}
-     // }
+      if (!this.localData) {
+        this.localData = {}
+      }
       if (firebase && opened && (!this.sub || !this.sub[key + name])) {
         var that = this
         var path = "Cards/" + key + "/" + name
@@ -212,15 +206,15 @@
         var update = function(snapshot) {
           var val = snapshot.val()
           if (val) {
-       //     if (!that.localData) {
-       //       that.localData = {}
-       //     }
-       //     if (!that.localData[name]) {
-        //      that.localData[name] = {}
-        //    }
+           if (!that.localData) {
+              that.localData = {}
+            }
+            if (!that.localData[name]) {
+              that.localData[name] = {}
+            }
             that[name] = that.decode(val,that.localData[name].value,that.localData[name].updated)
-        //    that.localData[name].value = that[name]
-        //    that.localData[name].updated = Date.now()
+            that.localData[name].value = that[name]
+            that.localData[name].updated = Date.now()
           }
         }
         this.sub[key + name] = true
@@ -248,15 +242,15 @@
     },
     save: function(e,d){
       if (this.opened && this.pillar.edit) {
-     //   if (!this.localData) {
-     //     this.localData = {}
-     //   }
-     //   if (!this.localData.article) {
-     //     this.localData.article = {}
-     //   }
+        if (!this.localData) {
+          this.localData = {}
+        }
+        if (!this.localData.article) {
+          this.localData.article = {}
+        }
         var diff = e.detail.delta
         if (diff.ops.length) {
-    //      this.localData.article.value = d.entireDelta.ops
+          this.localData.article.value = d.entireDelta.ops
           var time = Date.now()
           this.localData.article.updated = time
           this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true, this.edit, this.uid, time)
