@@ -45,9 +45,10 @@
         <card-meta-edit title="{{title}}" image="{{image}}" desc="{{desc}}"></card-meta-edit>
         <template is="dom-if" if="[[restamp]]" restamp>
           <polymer-quill id="editor" syntax use-content-reset content="[[article]]" html="{{html}}" content="[[article]]" toolbar-type="auto" on-change="save" on-update="apiSave"></polymer-quill>
-          <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
-          <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
         </template>
+        <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
+        <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
+        <paper-button raised on-tap="delete" style="color:red">delete</paper-button>
       </div>
       <template is="dom-if" if="[[pillar.view]]">
         <iron-image contain style="max-height:200px;float:left" src="[[image]]"></iron-image>
