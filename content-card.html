@@ -7,6 +7,8 @@
 <link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
 <!--
   `<content-card></content-card>`
   @demo demo.html
@@ -18,15 +20,52 @@
         display:block;
         color:#505050;
         font-family: Roboto, Arial, Helvetica, sans-serif;
+        font-weight: 300;
       };
       .container {
         min-height: 225px;
         text-align: center;
       };
+      .box {
+        @apply(--layout-horizontal);
+      }
+      .leftMargin {
+        @apply(--layout-flex-2);
+      }
+      .leftMarginmob {
+        @apply(--layout-flex-0);
+      }
+      .rightMargin {
+        @apply(--layout-flex-2);
+      }
+      .rightMarginmob {
+        @apply(--layout-flex-0);
+      }
+      .view {
+        @apply(--layout-flex-8);
+      }
+      .viewSection {
+       
+      }
+      .view img {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      .view #viewText {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      .view polymer-quill-html-render {
+        --calculated-polymer-quill-html-padding: 0;
+      }
       polymer-quill {
         --polymer-quill-editor-min-width: 95%;
       };
+
     </style>
+
+    <iron-media-query query="(min-width: 700px)" query-matches="{{wide}}"></iron-media-query>
+    
     <template is="dom-if" if="[[!opened]]">
       <div on-tap="open" class="container">
         <template is="dom-if" if="[[image]]">
@@ -51,11 +90,30 @@
         <paper-button raised on-tap="delete" style="color:red">delete</paper-button>
       </div>
       <template is="dom-if" if="[[pillar.view]]">
-        <iron-image contain style="max-height:200px;float:left" src="[[image]]"></iron-image>
-        <div>
-          <div>[[desc]]</div>
-        </div>
-        <polymer-quill-html-render content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
+        <!-- Desktop -->
+        <template is="dom-if" if="{{wide}}">
+          <div class="box">
+            <div class="leftMargin"></div>
+            <div class="view">
+                <img src="[[image]]" class="viewSection">
+                <div id="viewText" class="viewSection">[[desc]]</div>
+                <polymer-quill-html-render class="viewSection" content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
+            </div>
+            <div class="rightMargin"></div>
+          </div>
+        </template>
+        <!-- Mobile -->
+        <template is="dom-if" if="{{!wide}}">
+          <div class="box">
+            <div class="leftMarginmob"></div>
+            <div class="view">
+                <img src="[[image]]" class="viewSection">
+                <div id="viewText" class="viewSection">[[desc]]</div>
+                <polymer-quill-html-render class="viewSection" content="[[html]]" style="overflow:scroll;max-height:95vh"></polymer-quill-html-render>
+            </div>
+            <div class="rightMarginmob"></div>
+          </div>
+        </template>
       </template>
     </template>
     <iron-localstorage value="{{localData}}" name="[[key]]"></iron-localstorage>
