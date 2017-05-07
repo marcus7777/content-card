@@ -69,8 +69,15 @@
     <template is="dom-if" if="[[!opened]]">
       <div on-tap="open" class="container">
         <template is="dom-if" if="[[image]]">
-          <iron-image contain style="max-height:150px" src="[[image]]"></iron-image>
-          <h2 style="text-align:center;font-weight: 300; font-size: 20px">[[title]]</h2>
+          <img  style="width: 100%" src="[[image]]">
+          <!-- Desktop -->
+          <template is="dom-if" if="{{wide}}">
+            <h2 style="text-align:center;font-weight: 300; font-size: 20px; margin-top: 20px;">[[title]]</h2>
+          </template>
+          <!-- Mobile -->
+          <template is="dom-if" if="{{!wide}}">
+            <h2 style="text-align:center;font-weight: 300; font-size: 40px; margin-top: 50px">[[title]]</h2>
+          </template>
         </template>
         <template is="dom-if" if="[[!image]]">
           <div style="height:50px"></div>
