@@ -28,68 +28,67 @@
       };
       .box {
         @apply(--layout-horizontal);
-      }
+      };
       .leftMargin {
         @apply(--layout-flex-2);
-      }
+      };
       .leftMarginmob {
         @apply(--layout-flex-0);
-      }
+      };
       .rightMargin {
         @apply(--layout-flex-2);
-      }
+      };
       .rightMarginmob {
         @apply(--layout-flex-0);
-      }
+      };
       .view {
         @apply(--layout-flex-8);
-      }
+      };
       .viewSection {
         object-fit: cover;
-      }
+      };
       .view img {
         width: 100%;
         margin-bottom: 20px;
-      }
+      };
       .view #viewText {
         font-size: 24px;
         margin-bottom: 10px;
-      }
+      };
       .view polymer-quill-html-render {
         --calculated-polymer-quill-html-padding: 0;
-      }
+      };
       polymer-quill {
         --polymer-quill-editor-min-width: 95%;
       };
       img {
         object-fit: cover;
-      }
-
+      };
     </style>
 
-    <iron-media-query query="(min-width: 700px)" query-matches="{{wide}}"></iron-media-query>
+    <iron-media-query query="(min-width:700px)" query-matches="{{wide}}"></iron-media-query>
     
     <template is="dom-if" if="[[!opened]]">
       <div on-tap="open" class="container">
         <template is="dom-if" if="[[image]]">
-          <!-- Desktop -->
+          <!-- Desktop Closed -->
           <template is="dom-if" if="{{wide}}">
             <template is="dom-if" if="[[image]]">
               <img style="max-width:100%;max-height:120px" src="[[image]]">
             </template>
             <h2 style="text-align:center;font-weight: 300; font-size: 20px; margin-top: 20px;">[[title]]</h2>
           </template>
-          <!-- Mobile -->
+          <!-- Mobile Closed -->
           <template is="dom-if" if="{{!wide}}">
             <template is="dom-if" if="[[image]]">
               <img style="max-width:100%;max-height:200px;" src="[[image]]">
             </template>
-            <h2 style="text-align:center;font-weight: 300; font-size: 40px; margin-top: 40px">[[title]]</h2>
+            <h2 style="text-align:center;font-weight:300;font-size:40px;margin-top:40px">[[title]]</h2>
           </template>
         </template>
         <template is="dom-if" if="[[!image]]">
           <div style="height:50px"></div>
-          <h2 style="text-align:center;font-weight: 300; font-size: 20px;">[[title]]</h2>
+          <h2 style="text-align:center;font-weight:300;font-size:20px;">[[title]]</h2>
           <div>[[desc]]</div>
         </template>
       </div>
@@ -105,7 +104,7 @@
         <paper-button raised on-tap="delete" style="color:red">delete</paper-button>
       </div>
       <template is="dom-if" if="[[pillar.view]]">
-        <!-- Desktop -->
+        <!-- Desktop Opened -->
         <template is="dom-if" if="{{wide}}">
           <div class="box">
             <div class="leftMargin"></div>
@@ -117,7 +116,7 @@
             <div class="rightMargin"></div>
           </div>
         </template>
-        <!-- Mobile -->
+        <!-- Mobile Opened -->
         <template is="dom-if" if="{{!wide}}">
           <div class="box">
             <div class="leftMarginmob"></div>
