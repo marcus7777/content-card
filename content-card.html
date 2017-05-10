@@ -74,13 +74,15 @@
         <template is="dom-if" if="[[image]]">
           <!-- Desktop -->
           <template is="dom-if" if="{{wide}}">
-            <img style="width:100%;max-height:120px" src="[[image]]">
+            <template is="dom-if" if="[[image]]">
+              <img style="max-width:100%;max-height:120px" src="[[image]]">
+            </template>
             <h2 style="text-align:center;font-weight: 300; font-size: 20px; margin-top: 20px;">[[title]]</h2>
           </template>
           <!-- Mobile -->
           <template is="dom-if" if="{{!wide}}">
             <template is="dom-if" if="[[image]]">
-              <img style="width:100%;max-height:200px;" src="[[image]]">
+              <img style="max-width:100%;max-height:200px;" src="[[image]]">
             </template>
             <h2 style="text-align:center;font-weight: 300; font-size: 40px; margin-top: 40px">[[title]]</h2>
           </template>
@@ -108,7 +110,7 @@
           <div class="box">
             <div class="leftMargin"></div>
             <div class="view">
-              <img src="[[image]]" style="max-height:400px" class="viewSection">
+              <img src="[[image]]" style="max-height:400px" class="viewSection" />
               <div id="viewText" class="viewSection">[[desc]]</div>
               <polymer-quill-html-render class="viewSection" content="[[html]]" style="max-height:95vh"></polymer-quill-html-render>
             </div>
@@ -120,7 +122,7 @@
           <div class="box">
             <div class="leftMarginmob"></div>
             <div class="view">
-              <img src="[[image]]" class="viewSection">
+              <img src="[[image]]" class="viewSection" />
               <div id="viewText" class="viewSection">[[desc]]</div>
               <polymer-quill-html-render class="viewSection" content="[[html]]" style="max-height:95vh"></polymer-quill-html-render>
             </div>
