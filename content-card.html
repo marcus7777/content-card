@@ -95,7 +95,7 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
-        <card-meta-edit title="{{title}}" image="{{Image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
+        <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
         <template is="dom-if" if="[[restamp]]" restamp>
           <polymer-quill id="editor" syntax use-content-reset content="[[article]]" html="{{html}}" content="[[article]]" toolbar-type="auto" on-change="save" on-update="apiSave"></polymer-quill>
         </template>
@@ -267,7 +267,7 @@
           if (!that.localData[name]) {
             that.localData[name] = {}
           }
-          that.localData[name].value = this.decode(value,this.localData[name])
+          that.localData[name].value = that.decode(value,that.localData[name])
           that.localData[name].update = time
         }
       }
