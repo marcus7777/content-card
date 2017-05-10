@@ -1,14 +1,14 @@
-<link rel="import" href="../card-meta-edit/card-meta-edit.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../polymer-quill/polymer-quill-html-render.html">
-<link rel="import" href="../polymer-quill/polymer-quill.html">
 <link rel="import" href="../iron-localstorage/iron-localstorage.html">
 <link rel="import" href="../browserify-delta/browserify-delta.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
+<link rel="import" href="../card-meta-edit/card-meta-edit.html">
+<link rel="import" href="../polymer-quill/polymer-quill.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-media-query/iron-media-query.html">
-<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
 <!--
   `<content-card></content-card>`
   @demo demo.html
@@ -79,11 +79,8 @@
           </template>
           <!-- Mobile -->
           <template is="dom-if" if="{{!wide}}">
-            <template is="dom-if" if="[[!bigImage]]">
-              <img style="width:100%;max-height:200px;" src="[[image]]">
-            </template>
             <template is="dom-if" if="[[image]]">
-              <img style="width:100%;max-height:200px;" src="[[bigImage]]">
+              <img style="width:100%;max-height:200px;" src="[[image]]">
             </template>
             <h2 style="text-align:center;font-weight: 300; font-size: 40px; margin-top: 40px">[[title]]</h2>
           </template>
@@ -207,7 +204,7 @@
         value: "",
       },
       _updateFirebaseCardImage: {
-        computed: "updateFirebase(deck,key,opened,'Image',image,0,edit,uid)"
+        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid)"
       },
       _updateFirebaseCardBigImage: {
         computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid)"
