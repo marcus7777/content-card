@@ -238,9 +238,6 @@
       }
     },
     updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
-      if (!this.localData) {
-        this.localData = {}
-      }
       if (!time) {
         time = Date.now()
       }
@@ -264,6 +261,9 @@
           }
           return firebase.database().ref().update(updates)
         } else {
+          if (!that.localData) {
+            that.localData = {}
+          }
           if (!that.localData[name]) {
             that.localData[name] = {}
           }
@@ -271,6 +271,7 @@
           that.localData[name].update = time
         }
       }
+      
       clearTimeout(updateTimer)
       updateTimer = setTimeout(updatePeriodically, updateInterval)
     },
