@@ -74,12 +74,17 @@
         <template is="dom-if" if="[[image]]">
           <!-- Desktop -->
           <template is="dom-if" if="{{wide}}">
-            <img  style="width: 100%; height: 120px;" src="[[image]]">
+            <img style="width:100%;max-height:120px" src="[[image]]">
             <h2 style="text-align:center;font-weight: 300; font-size: 20px; margin-top: 20px;">[[title]]</h2>
           </template>
           <!-- Mobile -->
           <template is="dom-if" if="{{!wide}}">
-            <img  style="width: 100%; height: 200px;" src="[[image]]">
+            <template is="dom-if" if="[[!bigImage]]">
+              <img style="width:100%;max-height:200px;" src="[[image]]">
+            </template>
+            <template is="dom-if" if="[[image]]">
+              <img style="width:100%;max-height:200px;" src="[[bigImage]]">
+            </template>
             <h2 style="text-align:center;font-weight: 300; font-size: 40px; margin-top: 40px">[[title]]</h2>
           </template>
         </template>
@@ -92,7 +97,7 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
-        <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
+        <card-meta-edit title="{{title}}" image="{{Image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
         <template is="dom-if" if="[[restamp]]" restamp>
           <polymer-quill id="editor" syntax use-content-reset content="[[article]]" html="{{html}}" content="[[article]]" toolbar-type="auto" on-change="save" on-update="apiSave"></polymer-quill>
         </template>
@@ -106,9 +111,9 @@
           <div class="box">
             <div class="leftMargin"></div>
             <div class="view">
-                <img src="[[image]]" style="height:400px" class="viewSection">
-                <div id="viewText" class="viewSection">[[desc]]</div>
-                <polymer-quill-html-render class="viewSection" content="[[html]]" style="max-height:95vh"></polymer-quill-html-render>
+              <img src="[[image]]" style="height:400px" class="viewSection">
+              <div id="viewText" class="viewSection">[[desc]]</div>
+              <polymer-quill-html-render class="viewSection" content="[[html]]" style="max-height:95vh"></polymer-quill-html-render>
             </div>
             <div class="rightMargin"></div>
           </div>
@@ -118,9 +123,9 @@
           <div class="box">
             <div class="leftMarginmob"></div>
             <div class="view">
-                <img src="[[image]]" class="viewSection">
-                <div id="viewText" class="viewSection">[[desc]]</div>
-                <polymer-quill-html-render class="viewSection" content="[[html]]" style="max-height:95vh"></polymer-quill-html-render>
+              <img src="[[image]]" class="viewSection">
+              <div id="viewText" class="viewSection">[[desc]]</div>
+              <polymer-quill-html-render class="viewSection" content="[[html]]" style="max-height:95vh"></polymer-quill-html-render>
             </div>
             <div class="rightMarginmob"></div>
           </div>
@@ -163,6 +168,10 @@
         type:Boolean,
         value:false,
       },
+      wide: {
+        type:Boolean,
+        value:false,
+      },
       saved: {
         type:Boolean,
         value:false,
@@ -177,6 +186,9 @@
       },
       _loadValue: {
         computed: "loadFirebase(key,opened,'article',pillar)",
+      },
+      _loadValueBigImage: {
+        computed: "loadFirebase(key,opened,'bigImage',pillar)",
       },
       _loadReadable: {
         // computed: "loadFirebase(key,opened,'readable',pillar)",
@@ -198,7 +210,7 @@
         computed: "updateFirebase(deck,key,opened,'Image',image,0,edit,uid)"
       },
       _updateFirebaseCardBigImage: {
-        computed: "updateFirebase(deck,key,opened,'BigImage',bigImage,1,edit,uid)"
+        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid)"
       },
       _updateFirebaseCardTitle: {
         computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid)"
@@ -291,7 +303,7 @@
         }
         this.sub[key + name] = true
         return firebase.database().ref(path+"/").on('value', update)
-      }
+      } 
     },
     decode: function(val){
       var ops = new Delta()
