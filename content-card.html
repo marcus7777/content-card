@@ -244,28 +244,34 @@
       if (!time) {
         time = Date.now()
       }
-      if (opened && firebase && edit && deck && value && uid && uid != null) {
-        var path = "/Decks/" + deck + "/cards/" + key
-        var updates = {}
-        if (!cardOnly) {
-          updates[path + "/" + name + "/"] = value
+      var updateTimer
+      var updateInterval = 4000
+      var updatePeriodically = function() {
+        if (opened && firebase && edit && deck && name && value && uid && uid != null) {
+          var path = "/Decks/" + deck + "/cards/" + key
+          var updates = {}
+          if (!cardOnly) {
+            updates[path + "/" + name + "/"] = value
+          }
+          updates["Cards/" + key + "/" + name + "/" + time + "q" + uid] = {
+            value: value,
+            time: firebase.database.ServerValue.TIMESTAMP,
+            user: uid,
+          }
+          if (this.online) {// && diff.ops.length) {
+            this.saved = true
+          }
+          return firebase.database().ref().update(updates)
+        } else {
+          if (!this.localData[name]) {
+            this.localData[name] = {}
+          }
+          this.localData[name].value = this.decode(value,this.localData[name])
+          this.localData[name].update = time
         }
-        updates["Cards/" + key + "/" + name + "/" + time + "q" + uid] = {
-          value: value,
-          time: firebase.database.ServerValue.TIMESTAMP,
-          user: uid,
-        }
-        if (this.online) {// && diff.ops.length) {
-          this.saved = true
-        }
-        return firebase.database().ref().update(updates)
-      } else {
-        if (!this.localData[name]) {
-          this.localData[name] = {}
-        }
-        this.localData[name].value = this.decode(value,this.localData[name])
-        this.localData[name].update = time
       }
+      clearTimeout(updateTimer)
+      updateTimer = setTimeout(updatePeriodically, updateInterval)
     },
     getPillars: function(title,edit) {
       var pillars = [{view: true,selected: true,color: "#f2d123",name: title}]
