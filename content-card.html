@@ -92,7 +92,7 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
-        <card-meta-edit title="{{title}}" image="{{image}}" desc="{{desc}}"></card-meta-edit>
+        <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
         <template is="dom-if" if="[[restamp]]" restamp>
           <polymer-quill id="editor" syntax use-content-reset content="[[article]]" html="{{html}}" content="[[article]]" toolbar-type="auto" on-change="save" on-update="apiSave"></polymer-quill>
         </template>
@@ -196,6 +196,9 @@
       },
       _updateFirebaseCardImage: {
         computed: "updateFirebase(deck,key,opened,'Image',image,0,edit,uid)"
+      },
+      _updateFirebaseCardBigImage: {
+        computed: "updateFirebase(deck,key,opened,'BigImage',bigImage,0,edit,uid)"
       },
       _updateFirebaseCardTitle: {
         computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid)"
