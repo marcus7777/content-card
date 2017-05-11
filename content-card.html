@@ -283,9 +283,6 @@
       }
     },
     loadFirebase: function(key, opened, name){
-      if (!this.localData) {
-        this.localData = {}
-      }
       if (firebase && opened && (!this.sub || !this.sub[key + name])) {
         var that = this
         var path = "Cards/" + key + "/" + name
@@ -295,7 +292,7 @@
         var update = function(snapshot) {
           var val = snapshot.val()
           if (val) {
-           if (!that.localData) {
+            if (!that.localData) {
               that.localData = {}
             }
             if (!that.localData[name]) {
@@ -310,22 +307,20 @@
         return firebase.database().ref(path+"/").on('value', update)
       } 
     },
-    decode: function(val){
+    decode: function(val,localVal,theDate){
       var ops = new Delta()
-      for (var edit in val) {
-        if (typeof val[edit].value == 'object') {
+      if (typeof val.value == 'object') {
+        for (var edit in val) {
           var editOps = []
           for (var op in val[edit].value.ops) {
             editOps.push(val[edit].value.ops[op])
           }
           ops = ops.compose({ops: editOps})
-        } else {
-          if (typeof val[edit].value == 'string') {
-            return val[edit].value
-          } else {
-            return val
-          }
         }
+      } else if (typeof val[edit].value == 'string') {
+        return val[edit].value
+      } else {
+        return val
       }
       return ops.ops
     },
