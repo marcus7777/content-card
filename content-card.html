@@ -309,18 +309,18 @@
     },
     decode: function(val,localVal,theDate){
       var ops = new Delta()
-      if (typeof val.value == 'object') {
-        for (var edit in val) {
+      for (var edit in val) {
+        if (typeof val[edit].value == 'object') {
           var editOps = []
           for (var op in val[edit].value.ops) {
             editOps.push(val[edit].value.ops[op])
           }
           ops = ops.compose({ops: editOps})
+        } else if (typeof val[edit].value == 'string') {
+          return val[edit].value
+        } else {
+          return val
         }
-      } else if (typeof val[edit].value == 'string') {
-        return val[edit].value
-      } else {
-        return val
       }
       return ops.ops
     },
