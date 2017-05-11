@@ -130,7 +130,7 @@
         </template>
       </template>
     </template>
-    <iron-localstorage value="{{localData}}" name="[[key]]"></iron-localstorage>
+    <iron-localstorage on-iron-localstorage-load-empty="initializeLocalData" value="{{localData}}" name="[[key]]"></iron-localstorage>
   </template>
 </dom-module>
 <script>
@@ -183,16 +183,16 @@
         value:false,
       },
       _loadValue: {
-        computed: "loadFirebase(key,opened,'article',pillar)",
+        computed: "loadFirebase(key,opened,'article',pillar,localData)",
       },
       _loadValueBigImage: {
-        computed: "loadFirebase(key,opened,'bigImage',pillar)",
+        computed: "loadFirebase(key,opened,'bigImage',pillar,localData)",
       },
       _loadReadable: {
         // computed: "loadFirebase(key,opened,'readable',pillar)",
       },
       _loadWritable: {
-        computed: "loadFirebase(key,opened,'writable',pillar)",
+        computed: "loadFirebase(key,opened,'writable',pillar,localData)",
       },
       writable: Object,
       image: {
@@ -205,16 +205,16 @@
         value: "",
       },
       _updateFirebaseCardImage: {
-        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid)"
+        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid,localData)"
       },
       _updateFirebaseCardBigImage: {
-        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid)"
+        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid,localData)"
       },
       _updateFirebaseCardTitle: {
-        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid)"
+        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid,localData)"
       },
       _updateFirebaseCardDesc: {
-        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid)"
+        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid,localData)"
       },
     },
     delete: function(){
@@ -237,7 +237,12 @@
         return writable.all
       }
     },
-    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
+    initializeLocalData: function(){
+      if (!this.localData) {
+        this.localData = {}
+      }
+    },
+    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time,localData){
       if (!time) {
         time = Date.now()
       }
@@ -282,10 +287,10 @@
         return pillars
       }
     },
-    loadFirebase: function(key, opened, name){
+    loadFirebase: function(key, opened, name, localData){
       if (firebase && opened && (!this.sub || !this.sub[key + name])) {
         var that = this
-        var path = "Cards/" + key + "/" + name
+        var path = "/Cards/" + key + "/" + name
         if (!this.sub) {
           this.sub = {}
         }
@@ -315,7 +320,12 @@
       } 
     },
     decode: function(val,localVal,theDate){
-      var ops = new Delta()
+      var ops
+      if (localVal.ops) {
+        ops = new Delta(localVal.ops)
+      } else {
+        ops = new Delta()
+      }
       for (var edit in val) {
         if (typeof val[edit].value == 'object') {
           var editOps = []
