@@ -74,14 +74,14 @@
           <!-- Desktop Closed -->
           <template is="dom-if" if="{{wide}}">
             <template is="dom-if" if="[[image]]">
-              <img style="max-width:100%;max-height:120px" src="[[image]]">
+              <img style="max-width:100%;max-height:120px" src="[[image]]" />
             </template>
             <h2 style="text-align:center;font-weight:300;font-size:20px;margin-top:20px">[[title]]</h2>
           </template>
           <!-- Mobile Closed -->
           <template is="dom-if" if="{{!wide}}">
             <template is="dom-if" if="[[image]]">
-              <img style="max-width:100%;max-height:200px;" src="[[image]]">
+              <img style="max-width:100%;max-height:200px;" src="[[image]]" />
             </template>
             <h2 style="text-align:center;font-weight:300;font-size:40px;margin-top:40px">[[title]]</h2>
           </template>
@@ -266,7 +266,7 @@
           if (!that.localData[name]) {
             that.localData[name] = {}
           }
-          that.localData[name].value = that.decode(value,that.localData[name])
+          that.localData[name].value = that.decode(value, that.localData[name].value, that.localData[name].updated)
           that.localData[name].update = time
         }
       }
@@ -329,7 +329,12 @@
           return val
         }
       }
-      return ops.ops
+      if (ops.ops) {
+        return ops.ops
+      }
+      if (localVal) {
+        return localVal
+      }
     },
     save: function(e,d){
       if (this.opened && this.pillar.edit) {
