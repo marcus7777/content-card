@@ -76,7 +76,7 @@
             <template is="dom-if" if="[[image]]">
               <img style="max-width:100%;max-height:120px" src="[[image]]">
             </template>
-            <h2 style="text-align:center;font-weight: 300; font-size: 20px; margin-top: 20px;">[[title]]</h2>
+            <h2 style="text-align:center;font-weight:300;font-size:20px;margin-top:20px">[[title]]</h2>
           </template>
           <!-- Mobile Closed -->
           <template is="dom-if" if="{{!wide}}">
@@ -304,7 +304,14 @@
           }
         }
         this.sub[key + name] = true
-        return firebase.database().ref(path+"/").on('value', update)
+        if (that.localData[name].updated) {
+          // Get up to date with the server
+          firebase.database().ref(path + "/").orderByChild("time").startAt(that.localData[name].updated).once('value', update)
+        } else {
+          // No local data get complete document
+          firebase.database().ref(path + "/").once('value', update)
+        }
+        return firebase.database().ref(path + "/").on('"child_added"', update)
       } 
     },
     decode: function(val,localVal,theDate){
