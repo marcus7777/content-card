@@ -321,7 +321,7 @@
     },
     decode: function(val,localVal,theDate){
       var ops
-      if (localVal.ops) {
+      if (localVal && localVal.ops) {
         ops = new Delta(localVal.ops)
       } else {
         ops = new Delta()
