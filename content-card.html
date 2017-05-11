@@ -242,7 +242,6 @@
         time = Date.now()
       }
       var that = this
-      var updateTimer
       var updateInterval = 4000
       var updatePeriodically = function() {
         if (opened && firebase && edit && deck && name && value && uid && uid != null) {
@@ -272,8 +271,8 @@
         }
       }
       
-      clearTimeout(updateTimer)
-      updateTimer = setTimeout(updatePeriodically, updateInterval)
+      clearTimeout(this.updateTimer)
+      this.updateTimer = setTimeout(updatePeriodically, updateInterval)
     },
     getPillars: function(title,edit) {
       var pillars = [{view: true,selected: true,color: "#f2d123",name: title}]
