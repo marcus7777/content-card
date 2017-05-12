@@ -130,7 +130,7 @@
         </template>
       </template>
     </template>
-    <iron-localstorage on-iron-localstorage-load-empty="initializeLocalData" value="{{localData}}" name="[[key]]"></iron-localstorage>
+    <iron-localstorage on-iron-localstorage-load-empty="initializeLocalData" value="{{localData}}" error-message="{{error}}" name="[[key]]"></iron-localstorage>
   </template>
 </dom-module>
 <script>
@@ -316,7 +316,7 @@
           // No local data get complete document
           firebase.database().ref(path + "/").once('value', update)
         }
-        return firebase.database().ref(path + "/").on('"child_added"', update)
+        return firebase.database().ref(path + "/").on('child_added', update)
       } 
     },
     decode: function(val,localVal,theDate){
