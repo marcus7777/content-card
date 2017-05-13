@@ -246,6 +246,11 @@
       if (!time) {
         time = Date.now()
       }
+      var reverse = function(toReverse) {
+        return ("000"+toReverse).split().map(function(n){
+          return +n - 9
+        }).split("",11)
+      }
       var that = this
       var updateInterval = 4000
       var updatePeriodically = function() {
@@ -255,7 +260,7 @@
           if (!cardOnly) {
             updates[path + "/" + name + "/"] = value
           }
-          updates["Cards/" + key + "/" + name + "/" + time + "q" + uid] = {
+          updates["Cards/" + key + "/" + name + "/" +  reverse(time) + "q" + uid] = {
             value: value,
             time: firebase.database.ServerValue.TIMESTAMP,
             user: uid,
