@@ -249,7 +249,7 @@
       var reverse = function(toReverse) {
         return ("000"+toReverse).split().map(function(n){
           return +n - 9
-        }).split("",11)
+        }).join().split("",11).join()
       }
       var that = this
       var updateInterval = 4000
