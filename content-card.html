@@ -247,9 +247,9 @@
         time = Date.now()
       }
       var reverse = function(toReverse) {
-        return ("000"+toReverse).split().map(function(n){
-          return +n - 9
-        }).join().split("",11).join()
+        return ("00"+toReverse).split("").map(function(n){
+          return 9 - +n
+        }).splice(-14).join("")
       }
       var that = this
       var updateInterval = 4000
