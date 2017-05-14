@@ -260,7 +260,7 @@
           if (!cardOnly) {
             updates[path + "/" + name + "/"] = value
           }
-          updates["Cards/" + key + "/" + name + "/" +  reverse(time) + "q" + uid] = {
+          updates["/Cards/" + key + "/" + name + "/" +  reverse(time) + uid] = {
             value: value,
             time: firebase.database.ServerValue.TIMESTAMP,
             user: uid,
