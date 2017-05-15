@@ -254,11 +254,11 @@
       var that = this
       var updateInterval = 2000
       var updatePeriodically = function() {
-        
-        var oldValue = that.decode(null, that.localData[name].value, that.localData[name].updated)
-        var newValue = that.decode(value, that.localData[name].value, that.localData[name].updated)
-        
-        if (opened && firebase && edit && deck && name && value && uid && uid != null && that.localData && that.localData[name] && JSON.stringify(value) !== JSON.stringify(that.localData[name].value)) {
+        if (that.localData && that.localData[name]) {
+          var oldValue = that.decode(false, that.localData[name].value, that.localData[name].updated)
+          var newValue = that.decode(value, that.localData[name].value, that.localData[name].updated)
+        }
+        if (opened && firebase && edit && deck && name && value && uid && uid != null && oldValue && JSON.stringify(oldValue) !== JSON.stringify(newValue)) {
           var path = "/Decks/" + deck + "/cards/" + key
           var updates = {}
           if (!cardOnly) {
@@ -335,25 +335,27 @@
       } else {
         ops = new Delta()
       }
-      if (typeof val == 'object') {
-        for (var edit in val) {
-          if (typeof val[edit].value == 'object') {
-            var editOps = []
-            for (var op in val[edit].value.ops) {
-              editOps.push(val[edit].value.ops[op])
+      if (val !== false) {
+        if (typeof val == 'object') {
+          for (var edit in val) {
+            if (typeof val[edit].value == 'object') {
+              var editOps = []
+              for (var op in val[edit].value.ops) {
+                editOps.push(val[edit].value.ops[op])
+              }
+              ops = ops.compose({ops: editOps})
+            } else if (typeof val[edit].value == 'string') {
+              return val[edit].value
             }
-            ops = ops.compose({ops: editOps})
-          } else if (typeof val[edit].value == 'string') {
-            return val[edit].value
           }
+          if (ops.ops.length) {
+            return ops.ops
+          }
+        } else if (typeof val == 'string') {
+          return val
+        } else if (localVal) {
+          return localVal
         }
-        if (ops.ops.length) {
-          return ops.ops
-        }
-      } else if (typeof val == 'string') {
-        return val
-      } else if (localVal) {
-        return localVal
       } else {
         return null
       }
