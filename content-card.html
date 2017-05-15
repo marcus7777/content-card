@@ -338,7 +338,8 @@
       } else if (localVal && localVal.ops) {
         ops = new Delta(localVal.ops)
       } else if (val && val.ops){
-        ops = new Delta(val.ops)
+        // think out
+        ops = new Delta()
       } else {
         ops = new Delta()
       }
