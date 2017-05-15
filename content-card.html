@@ -254,23 +254,21 @@
       var that = this
       var updateInterval = 2000
       var updatePeriodically = function() {
-        if (opened && firebase && edit && deck && name && value && uid && uid != null) {
+        if (opened && firebase && edit && deck && name && value && uid && uid != null && that.localData && that.localData[name] && JSON.stringify(value) !== JSON.stringify(that.localData[name].value)) {
           var path = "/Decks/" + deck + "/cards/" + key
-          if (that.localData && that.localData[name] && JSON.stringify(value) !== JSON.stringify(that.localData[name].value)) {
-            var updates = {}
-            if (!cardOnly) {
-              updates[path + "/" + name + "/"] = value
-            }
-            updates["/Cards/" + key + "/" + name + "/" +  reverse(time) + uid] = {
-              value: value,
-              time: firebase.database.ServerValue.TIMESTAMP,
-              user: uid,
-            }
-            if (that.online) {// && diff.ops.length) {
-              that.saved = true
-            }
-            return firebase.database().ref().update(updates)
+          var updates = {}
+          if (!cardOnly) {
+            updates[path + "/" + name + "/"] = value
           }
+          updates["/Cards/" + key + "/" + name + "/" +  reverse(time) + uid] = {
+            value: value,
+            time: firebase.database.ServerValue.TIMESTAMP,
+            user: uid,
+          }
+          if (that.online) {// && diff.ops.length) {
+            that.saved = true
+          }
+          return firebase.database().ref().update(updates)
         } else {
           if (!that.localData) {
             that.localData = {}
