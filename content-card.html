@@ -330,13 +330,18 @@
     },
     decode: function(val,localVal,theDate){
       var ops
-      if (localVal && localVal.ops) {
+      if (Array.isArray(localVal)) {
+        ops = new Delta(localVal)
+      } else if (localVal.ops) {
         ops = new Delta(localVal.ops)
       } else {
         ops = new Delta()
       }
       if (val !== false) {
         if (typeof val == 'object') {
+          debugger
+          //val keys
+          //val
           for (var edit in val) {
             if (typeof val[edit].value == 'object') {
               var editOps = []
