@@ -345,18 +345,18 @@
             ops = ops.compose({ops: editOps})
           } else if (typeof val[edit].value == 'string') {
             return val[edit].value
-          } else {
-            return val
           }
         }
         if (ops.ops.length) {
           return ops.ops
         }
-      }
-      if (localVal) {
+      } else if (typeof val == 'string') {
+        return val
+      } else if (localVal) {
         return localVal
+      } else {
+        return null
       }
-      return null
     },
     save: function(e,d){
       if (this.opened && this.pillar.edit) {
