@@ -256,7 +256,7 @@
       var updatePeriodically = function() {
         if (opened && firebase && edit && deck && name && value && uid && uid != null) {
           var path = "/Decks/" + deck + "/cards/" + key
-          if (that.localData && that.localData[name] && JSON.stringify(value) !== JSON.stringify(that.localData[name]) {
+          if (that.localData && that.localData[name] && JSON.stringify(value) !== JSON.stringify(that.localData[name])) {
             var updates = {}
             if (!cardOnly) {
               updates[path + "/" + name + "/"] = value
