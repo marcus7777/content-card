@@ -337,6 +337,8 @@
         ops = new Delta(localVal)
       } else if (localVal && localVal.ops) {
         ops = new Delta(localVal.ops)
+      } else if (val && val.ops){
+        ops = new Delta(val.ops)
       } else {
         ops = new Delta()
       }
