@@ -255,7 +255,7 @@
       var updateInterval = 2000
       var updatePeriodically = function() {
         if (that.localData && that.localData[name]) {
-          var oldValue = that.decode(false, that.localData[name].value, that.localData[name].updated)
+          var oldValue = that.localData[name].value
           var newValue = that.decode(value, that.localData[name].value, that.localData[name].updated)
         }
         if (opened && firebase && edit && deck && name && value && uid && uid != null && oldValue && JSON.stringify(oldValue) !== JSON.stringify(newValue)) {
