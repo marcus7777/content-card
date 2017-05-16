@@ -341,7 +341,6 @@
         return firebase.database().ref(path + "/").on('child_added', update)
       }
     },
-    
     decode: function(val,localVal,theDate){
       var byChild = "time"
       var sortByChild = function(a,b){
@@ -370,7 +369,6 @@
       }
       if (val !== false) {
         if (typeof val == 'object') {
-          debugger
           //1 val keys
           //2 val.hasOwnProperty('time')
           //3 val.ops
