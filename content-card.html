@@ -378,7 +378,7 @@
             for (var entry in val) {
               unsorted.push(val[entry])
             }
-            var sorted = sortByChild(unsorted)
+            var sorted = unsorted.sort(sortByChild)
             editOps = sorted.map(function(a){
               return a.value.ops
             })
