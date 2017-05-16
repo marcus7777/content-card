@@ -332,7 +332,7 @@
     decode: function(val,localVal,theDate){
       var ops
       if (typeof val == 'object' && val.value) {
-        this.decode(val.value,localVal,theDate)
+        return this.decode(val.value,localVal,theDate)
       }
       if (localVal && Array.isArray(localVal)) {
         ops = new Delta(localVal)
