@@ -345,8 +345,8 @@
       var byChild = "time"
       var sortByChild = function(a,b){
         if (a.hasOwnProperty(byChild) && b.hasOwnProperty(byChild)) {
-          var A = a[byChild].toUpperCase()
-          var B = b[byChild].toUpperCase()
+          var A = +a[byChild]
+          var B = +b[byChild]
         
           if (A < B) { return -1 }
           if (A > B) { return 1 }
