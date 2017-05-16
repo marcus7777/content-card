@@ -329,7 +329,19 @@
         return firebase.database().ref(path + "/").on('child_added', update)
       }
     },
+    
     decode: function(val,localVal,theDate){
+      var byChild = "time"
+      var sortByChild = function(a,b){
+        if (a.hasOwnProperty(byChild) && b.hasOwnProperty(byChild)) {
+          var A = a[byChild].toUpperCase()
+          var B = b[byChild].toUpperCase()
+        
+          if (A < B) { return -1 }
+          if (A > B) { return 1 }
+        }
+        return 0
+      }
       var ops
       if (typeof val == 'object' && val.value) {
         return this.decode(val.value,localVal,theDate)
@@ -348,17 +360,31 @@
         if (typeof val == 'object') {
           debugger
           //1 val keys
-          //2 val
+          //2 val.hasOwnProperty('time')
           //3 val.ops
-          for (var edit in val) {
-            if (typeof val[edit].value == 'object') {
-              var editOps = []
-              for (var op in val[edit].value.ops) {
-                editOps.push(val[edit].value.ops[op])
+          var editOps
+          if (val[Object.keys(val)[0]].hasOwnProperty(byChild)) { 
+            var unsorted = []
+            for (var entry in val) {
+              unsorted.push(entry)
+            
+            }
+            var sorted = unsorted.sortByChild()
+            editOps = sorted.map(function(a){
+              return a.value.ops
+            })
+            ops = ops.compose({ops: editOps})
+          } else {
+            for (var edit in val) {
+              if (typeof val[edit].value == 'object') {
+                editOps = []
+                for (var op in val[edit].value.ops) {
+                  editOps.push(val[edit].value.ops[op])
+                }
+                ops = ops.compose({ops: editOps})
+              } else if (typeof val[edit].value == 'string') {
+                return val[edit].value
               }
-              ops = ops.compose({ops: editOps})
-            } else if (typeof val[edit].value == 'string') {
-              return val[edit].value
             }
           }
           if (ops.ops.length) {
