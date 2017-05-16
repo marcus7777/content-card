@@ -376,8 +376,7 @@
           if (val[Object.keys(val)[0]].hasOwnProperty(byChild)) { 
             var unsorted = []
             for (var entry in val) {
-              unsorted.push(entry)
-            
+              unsorted.push(val[entry])
             }
             var sorted = unsorted.sortByChild()
             editOps = sorted.map(function(a){
