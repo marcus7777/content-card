@@ -184,16 +184,16 @@
         value:false,
       },
       _loadValue: {
-        computed: "loadFirebase(key,opened,'article',pillar,localData)",
+        computed: "loadFirebase(key,opened,'article',pillar)",
       },
       _loadValueBigImage: {
-        computed: "loadFirebase(key,opened,'bigImage',pillar,localData)",
+        computed: "loadFirebase(key,opened,'bigImage',pillar)",
       },
       _loadReadable: {
         // computed: "loadFirebase(key,opened,'readable',pillar)",
       },
       _loadWritable: {
-        computed: "loadFirebase(key,opened,'writable',pillar,localData)",
+        computed: "loadFirebase(key,opened,'writable',pillar)",
       },
       writable: Object,
       image: {
@@ -206,17 +206,27 @@
         value: "",
       },
       _updateFirebaseCardImage: {
-        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid,0,localData)"
+        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid,0)"
       },
       _updateFirebaseCardBigImage: {
-        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid,0,localData)"
+        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid,0)"
       },
       _updateFirebaseCardTitle: {
-        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid,0,localData)"
+        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid,0)"
       },
       _updateFirebaseCardDesc: {
-        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid,0,localData)"
+        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid,0)"
       },
+      _useLocalData: {
+        computed: "useLocalData(deck,key,opened,'desc',desc,0,edit,uid,0)"
+      }
+    },
+    useLocalData: function(localData){
+      if (localData) {
+        if (localData.title && localData.title != this.title) {
+          this.title = localData.title
+        }
+      }
     },
     delete: function(){
       var path = "/Decks/" + this.deck + "/cards/" + this.key 
@@ -243,7 +253,7 @@
         this.localData = {}
       }
     },
-    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time,localData){
+    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
       if (!time) {
         time = Date.now()
       }
@@ -313,7 +323,9 @@
             if (!that.localData[name]) {
               that.localData[name] = {}
             }
+            
             that[name] = that.decode(val,that.localData[name].value,that.localData[name].updated)
+            
             that.localData[name].value = that[name]
             that.localData[name].updated = Date.now()
           }
