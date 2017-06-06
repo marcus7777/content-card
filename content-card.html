@@ -273,6 +273,7 @@
           var oldValue = that.localData[name].value
           var newValue = that.decode(value, that.localData[name].value, that.localData[name].updated)
         }
+        console.log(oldValue,newValue)
         if (opened && firebase && edit && deck && name && value && uid && uid != null && oldValue && JSON.stringify(oldValue) !== JSON.stringify(newValue)) {
           var path = "/Decks/" + deck + "/cards/" + key
           var updates = {}
@@ -287,6 +288,7 @@
           if (that.online) {// && diff.ops.length) {
             that.saved = true
           }
+          console.log(updates)
           return firebase.database().ref().update(updates)
         } else {
           if (!that.localData) {
