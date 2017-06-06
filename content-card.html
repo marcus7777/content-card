@@ -206,16 +206,16 @@
         computed: "loadFirebase(key,opened,'writable',pillar)",
       },
       _loadLocalArticle: {
-        loadLocalvalues(article,localData.article,'article')
+        computed: "loadLocalvalues(article,localData.article,'article')",
       },
       _loadLocalBigImage: {
-        loadLocalvalues(bigImage,localData.bigImage,'bigImage')
+        computed: "loadLocalvalues(bigImage,localData.bigImage,'bigImage')",
       },
       _loadLocalReadable: {
-       // loadLocalvalues(readable,localData.readable,'readable')
+       // computed: "loadLocalvalues(readable,localData.readable,'readable')",
       },
       _loadLocalWritable: {
-        loadLocalvalues(writable,localData.writable,'writable')
+        computed: "loadLocalvalues(writable,localData.writable,'writable')",
       },
       writable: Object,
       bigImage: {
