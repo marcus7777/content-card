@@ -293,15 +293,17 @@
         time = Date.now()
       }
       var saveLocal = function(){
-        if (!that.localData) {
-          that.localData = {}
+        if (value) {
+          if (!that.localData) {
+            that.localData = {}
+          }
+          if (!that.localData[name]) {
+            that.localData[name] = {}
+          }
+          that.localData[name].value = that.decode(value, that.localData[name].value, that.localData[name].updated)
+          that.localData[name].updated = time
+          that.$$("#theLocalData").save()
         }
-        if (!that.localData[name]) {
-          that.localData[name] = {}
-        }
-        that.localData[name].value = that.decode(value, that.localData[name].value, that.localData[name].updated)
-        that.localData[name].updated = time
-        that.$$("#theLocalData").save()
       }
       var reverse = function(toReverse) {
         return ("00"+toReverse).split("").map(function(n){
