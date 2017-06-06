@@ -100,6 +100,7 @@
           <polymer-quill id="editor" syntax use-content-reset content="[[article]]" html="{{html}}" content="[[article]]" toolbar-type="auto" on-change="save" on-update="apiSave"></polymer-quill>
         </template>
         <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
+        <paper-toast text="Error" opened="{{notSaved}}"></paper-toast>
         <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
         <paper-button raised on-tap="delete" style="color:red">delete</paper-button>
       </div>
@@ -133,7 +134,7 @@
         </template>
       </template>
     </template>
-    <iron-localstorage on-iron-localstorage-load-empty="initializeLocalData" value="{{localData}}" error-message="{{error}}" name="[[key]]"></iron-localstorage>
+    <iron-localstorage on-iron-localstorage-load-empty="initializeLocalData" value="{{localData}}" id="theLocalData" name="[[key]]"></iron-localstorage>
   </template>
 </dom-module>
 <script>
@@ -270,6 +271,7 @@
         }
         that.localData[name].value = that.decode(value, that.localData[name].value, that.localData[name].updated)
         that.localData[name].updated = time
+        that.$$("#theLocalData").save()
       }
       var reverse = function(toReverse) {
         return ("00"+toReverse).split("").map(function(n){
