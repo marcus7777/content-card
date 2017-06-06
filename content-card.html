@@ -303,7 +303,7 @@
             
          // }
           console.log(updates)
-          return firebase.database().ref().update(updates).than(function() {
+          return firebase.database().ref().update(updates).then(function() {
             console.log("saved")
             that.saved = true
           }).catch(function(r) {
