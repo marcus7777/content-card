@@ -289,11 +289,11 @@
             
          // }
           console.log(updates)
-          firebase.database().ref().update(updates).than(function() {
+          return firebase.database().ref().update(updates).than(function() {
             console.log("saved")
             that.saved = true
           }).catch(function(r) {
-            console.log(r)
+            console.log("not saved",r,updates)
           })
         } else {
           if (!that.localData) {
