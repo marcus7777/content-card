@@ -285,11 +285,16 @@
             time: firebase.database.ServerValue.TIMESTAMP,
             user: uid,
           }
-          if (that.online) {// && diff.ops.length) {
-            that.saved = true
-          }
+         // if (that.online) {// && diff.ops.length) {
+            
+         // }
           console.log(updates)
-          return firebase.database().ref().update(updates)
+          firebase.database().ref().update(updates).than(function() {
+            console.log("saved")
+            that.saved = true
+          }).catch(function(r) {
+            console.log(r)
+          })
         } else {
           if (!that.localData) {
             that.localData = {}
