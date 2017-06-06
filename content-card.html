@@ -205,6 +205,18 @@
       _loadWritable: {
         computed: "loadFirebase(key,opened,'writable',pillar)",
       },
+      _loadLocalArticle: {
+        loadLocalvalues(article,localData.article,'article')
+      },
+      _loadLocalBigImage: {
+        loadLocalvalues(bigImage,localData.bigImage,'bigImage')
+      },
+      _loadLocalReadable: {
+       // loadLocalvalues(readable,localData.readable,'readable')
+      },
+      _loadLocalWritable: {
+        loadLocalvalues(writable,localData.writable,'writable')
+      },
       writable: Object,
       bigImage: {
         value: "",
@@ -232,6 +244,11 @@
       },
       _useLocalData: {
         computed: "useLocalData(localData)"
+      }
+    },
+    loadLocalvalues: function(dataVal,localDataVal,key) {
+      if (JSON.stringify(dataVal) != JSON.stringify(localDataVal) ){
+        this[key] == localDataVal
       }
     },
     useLocalData: function(localData){
