@@ -261,6 +261,16 @@
       if (!time) {
         time = Date.now()
       }
+      var saveLocal = function(){
+        if (!that.localData) {
+          that.localData = {}
+        }
+        if (!that.localData[name]) {
+          that.localData[name] = {}
+        }
+        that.localData[name].value = that.decode(value, that.localData[name].value, that.localData[name].updated)
+        that.localData[name].updated = time
+      }
       var reverse = function(toReverse) {
         return ("00"+toReverse).split("").map(function(n){
           return 9 - +n
@@ -272,6 +282,10 @@
         if (that.localData && that.localData[name]) {
           var oldValue = that.localData[name].value
           var newValue = that.decode(value, that.localData[name].value, that.localData[name].updated)
+        } else {
+          saveLocal()
+          oldValue = ""
+          newValue = value
         }
         console.log(oldValue,newValue)
         if (opened && firebase && edit && deck && name && value && uid && uid != null && oldValue && JSON.stringify(oldValue) !== JSON.stringify(newValue)) {
@@ -296,14 +310,7 @@
             console.log("not saved",r,updates)
           })
         } else {
-          if (!that.localData) {
-            that.localData = {}
-          }
-          if (!that.localData[name]) {
-            that.localData[name] = {}
-          }
-          that.localData[name].value = that.decode(value, that.localData[name].value, that.localData[name].updated)
-          that.localData[name].updated = time
+          saveLocal()
         }
       }
       
