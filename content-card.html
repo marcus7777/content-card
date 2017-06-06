@@ -304,7 +304,7 @@
          // }
           console.log(updates)
           return firebase.database().ref().update(updates).then(function() {
-            console.log("saved")
+            console.log("saved", updates)
             that.saved = true
           }).catch(function(r) {
             console.log("not saved",r,updates)
