@@ -110,9 +110,16 @@
           <div class="box">
             <div class="leftMargin"></div>
             <div class="view">
-              <img src="[[bigImage]]" title="bigImage" style="max-height:400px" class="viewSection" />
-              <img src="[[image]]" title="image" style="max-height:400px" class="viewSection" />
-              <img src="[[Image]]" title="Image" style="max-height:400px" class="viewSection" />
+              <template is="dom-if" if="[[bigImage]]">
+                <img src="[[bigImage]]" title="bigImage" style="max-height:400px" class="viewSection" />
+              </template>
+              
+              <template is="dom-if" if="[[!bigImage]]">
+                <template is="dom-if" if="[[image]]">
+                  <img src="[[image]]" title="image" style="max-height:400px" class="viewSection" />
+                </template>
+              </template>
+              
               <div id="viewText" class="viewSection">[[desc]]</div>
               <polymer-quill-html-render class="viewSection" content="[[html]]" style="max-height:95vh"></polymer-quill-html-render>
             </div>
@@ -199,6 +206,9 @@
         computed: "loadFirebase(key,opened,'writable',pillar)",
       },
       writable: Object,
+      bigImage: {
+        value: "",
+      },
       image: {
         value: "",
       },
