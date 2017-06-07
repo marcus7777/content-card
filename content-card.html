@@ -397,8 +397,12 @@
       if (typeof val == 'string') {
         return val
       }
-      if (typeof val == 'object' && typeof val.value == 'string' && val.time > theDate ) {
-        return val.value
+      if (typeof val == 'object' && typeof val.value == 'string') {
+        if (val.time > theDate || val.value == localVal) {
+          return val.value
+        } else {
+          return localVal
+        }
       }
       var byChild = "time"
       var sortByChild = function(a,b){
