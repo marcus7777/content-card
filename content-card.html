@@ -397,6 +397,9 @@
       if (typeof val == 'string') {
         return val
       }
+      if (typeof val == 'object' && typeof val.value == 'string' && val.time > theDate ) {
+        return val.value
+      }
       var byChild = "time"
       var sortByChild = function(a,b){
         if (a.hasOwnProperty(byChild) && b.hasOwnProperty(byChild)) {
