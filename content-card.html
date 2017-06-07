@@ -398,7 +398,7 @@
         return val
       }
       if (typeof val == 'object' && typeof val.value == 'string') {
-        if (val.time > theDate || val.value == localVal) {
+        if (val.time > theDate || val.value == localVal || !localVal) {
           return val.value
         } else {
           return localVal
