@@ -233,20 +233,23 @@
       desc: {
         value: "",
       },
+      updateTimer: {
+        value: {},
+      },
       _updateFirebaseCardImage: {
-        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid,0)"
+        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid,0)",
       },
       _updateFirebaseCardBigImage: {
-        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid,0)"
+        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid,0)",
       },
       _updateFirebaseCardTitle: {
-        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid,0)"
+        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid,0)",
       },
       _updateFirebaseCardDesc: {
-        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid,0)"
+        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid,0)",
       },
       _useLocalData: {
-        computed: "useLocalData(localData)"
+        computed: "useLocalData(localData)",
       }
     },
     loadLocalvalues: function(dataVal,localDataVal,key) {
@@ -348,8 +351,8 @@
         }
       }
       
-      clearTimeout(this.updateTimer)
-      this.updateTimer = setTimeout(updatePeriodically, updateInterval)
+      clearTimeout(this.updateTimer[name])
+      this.updateTimer[name] = setTimeout(updatePeriodically, updateInterval)
     },
     getPillars: function(title,edit) {
       var pillars = [{view: true,selected: true,color: "#f2d123",name: title}]
