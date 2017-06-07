@@ -394,6 +394,9 @@
       }
     },
     decode: function(val,localVal,theDate){
+      if (typeof val == 'string') {
+        return val
+      }
       var byChild = "time"
       var sortByChild = function(a,b){
         if (a.hasOwnProperty(byChild) && b.hasOwnProperty(byChild)) {
@@ -451,8 +454,6 @@
           if (ops.ops.length) {
             return ops.ops
           }
-        } else if (typeof val == 'string') {
-          return val
         } else if (localVal) {
           return localVal
         }
