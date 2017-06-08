@@ -316,9 +316,15 @@
       var that = this
       var updateInterval = 2000
       var updatePeriodically = function() {
+        var oldValue
+        var newValue
         if (that.localData && that.localData[name]) {
-          var oldValue = that.localData[name].value
-          var newValue = that.decode(value, that.localData[name].value, that.localData[name].updated)
+          if (that.localData[name].value) {
+            oldValue = that.localData[name].value
+          } else {
+            oldValue = ""
+          }
+          newValue = that.decode(value, that.localData[name].value, that.localData[name].updated)
         } else {
           saveLocal()
           oldValue = ""
