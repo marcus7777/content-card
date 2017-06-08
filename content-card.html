@@ -259,8 +259,8 @@
     },
     useLocalData: function(localData){
       if (localData) {
-        if (localData.title && localData.title != this.title) {
-          this.title = localData.title
+        if (localData.title && localData.title.value != this.title) {
+          this.title = localData.title.value
         }
       }
     },
