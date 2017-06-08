@@ -330,8 +330,8 @@
           oldValue = ""
           newValue = value
         }
-        console.log("oldValue.length",oldValue.length,"newValue.length",newValue.length)
-        if (opened && firebase && edit && deck && name && value && uid && uid != null && JSON.stringify(oldValue) !== JSON.stringify(newValue)) {
+         // console.log("oldValue.length",oldValue.length,"newValue.length",newValue.length)
+        if (opened && firebase && edit && deck && name && value && uid && uid != null ) { // && JSON.stringify(oldValue) !== JSON.stringify(newValue)) {
           var path = "/Decks/" + deck + "/cards/" + key
           var updates = {}
           if (!cardOnly) {
