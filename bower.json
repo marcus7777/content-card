@@ -8,9 +8,9 @@
     "web-components"
   ],
   "dependencies": {
-    "polymer": "polymer/polymer#~1.7.1",
+    "polymer": "polymer/polymer#~1.9.1",
     "iron-image": "PolymerElements/iron-image#~1.2.5",
-    "polymer-quill": "marcus7777/polymer-quill#two-way-data",
+    "polymer-quill": "marcus7777/quill-js",
     "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable",
     "card-meta-edit": "Hi9Here/card-meta-edit",
     "browserify-delta": "marcus7777/browserify-delta",
