@@ -479,17 +479,17 @@
     },
     save: function(e,d){
       if (this.opened && this.pillar.edit) {
-        if (!this.localData) {
-          this.localData = {}
-        }
-        if (!this.localData.article) {
-          this.localData.article = {}
-        }
+//        if (!this.localData) {
+//          this.localData = {}
+//        }
+//        if (!this.localData.article) {
+//          this.localData.article = {}
+//        }
         var diff = e.detail.delta
         if (diff.ops.length) {
-          this.localData.article.value = d.entireDelta.ops
+//          this.localData.article.value = d.entireDelta.ops
           var time = Date.now()
-          this.localData.article.updated = time
+//          this.localData.article.updated = time
           this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true, this.edit, this.uid, time)
         }
       }
