@@ -95,9 +95,7 @@
     <template is="dom-if" if="[[opened]]">
       <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
         <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
-        <template is="dom-if" if="[[restamp]]" restamp>
-          <quill-js id="editor" value="{{article}}"></quill-js>
-        </template>
+        <quill-js id="editor" value="{{article}}"></quill-js>
         <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
         <paper-toast text="Error" opened="{{notSaved}}"></paper-toast>
         <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
@@ -132,7 +130,7 @@
             <div class="view">
               <img src="[[bigImage]]" class="viewSection" />
               <div id="viewText" class="viewSection">[[desc]]</div>
-              <quill-js class="viewSection" value="[[article]]" style="max-height:95vh"></quill-js>
+              <quill-js class="viewSection" value="[[article]]" toolbar="[]" style="max-height:95vh"></quill-js>
               [[error]]
             </div>
             <div class="rightMarginmob"></div>
@@ -319,22 +317,7 @@
       var that = this
       var updateInterval = 2000
       var updatePeriodically = function() {
-        var oldValue
-        var newValue
-        if (that.localData && that.localData[name]) {
-          if (that.localData[name].value) {
-            oldValue = that.localData[name].value
-          } else {
-            oldValue = ""
-          }
-          newValue = that.decode(value, that.localData[name].value, that.localData[name].updated)
-        } else {
-          saveLocal()
-          oldValue = ""
-          newValue = value
-        }
-         // console.log("oldValue.length",oldValue.length,"newValue.length",newValue.length)
-        if (opened && firebase && edit && deck && name && value && uid && uid != null ) { // && JSON.stringify(oldValue) !== JSON.stringify(newValue)) {
+        if (opened && firebase && edit && deck && name && value && uid && uid != null ) {
           var path = "/Decks/" + deck + "/cards/" + key
           var updates = {}
           if (!cardOnly) {
