@@ -92,7 +92,7 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
-        <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
+        <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}" go="{{go}}"></card-meta-edit>
         <quill-js id="editor" value="{{article}}" go="{{go}}"></quill-js>
         <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
         <paper-toast text="Error" opened="{{notSaved}}"></paper-toast>
@@ -148,8 +148,12 @@
       uid: {
         computed:"getIt(user.uid)"
       },
+      go: {
+        type:Boolean,
+      },
       online: {
         type:Boolean,
+        notify:true,
       },
       html: {
         value:""
@@ -212,27 +216,20 @@
         value: {},
       },
       _updateFirebaseCardImage: {
-        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid,0,updateTimer)",
+        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid,0,updateTimer,go)",
       },
       _updateFirebaseCardBigImage: {
-        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid,0,updateTimer)",
+        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid,0,updateTimer,go)",
       },
       _updateFirebaseCardTitle: {
-        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid,0,updateTimer)",
+        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid,0,updateTimer,go)",
       },
       _updateFirebaseCardDesc: {
-        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid,0,updateTimer)",
+        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid,0,updateTimer,go)",
       },
       _updateFirebaseArticle: {
-        computed: "updateFirebase(deck,key,opened,'article',article,1,edit,uid,0,updateTimer)",
+        computed: "updateFirebase(deck,key,opened,'article',article,1,edit,uid,0,updateTimer,go)",
       },
-    },
-    useLocalData: function(localData){
-      if (localData) {
-        if (localData.title && localData.title.value != this.title) {
-          this.title = localData.title.value
-        }
-      }
     },
     delete: function(){
       var path = "/Decks/" + this.deck + "/cards/" + this.key 
