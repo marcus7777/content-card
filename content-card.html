@@ -1,5 +1,4 @@
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../iron-localstorage/iron-localstorage.html">
 <link rel="import" href="../browserify-delta/browserify-delta.html">
 <link rel="import" href="../iron-media-query/iron-media-query.html">
 <link rel="import" href="../card-meta-edit/card-meta-edit.html">
@@ -138,8 +137,6 @@
         </template>
       </template>
     </template>
- <!--   <iron-localstorage on-iron-localstorage-load-empty="initializeLocalData" value="{{localData}}" id="theLocalData" name="[[key]]"></iron-localstorage>
--->
   </template>
 </dom-module>
 <script>
@@ -192,31 +189,16 @@
         value:false,
       },
       _loadValue: {
-        computed: "loadFirebase(key,opened,'article',pillar)",
+        computed: "loadFirebase(key,opened,'article')",
       },
       _loadValueBigImage: {
-        computed: "loadFirebase(key,opened,'bigImage',pillar)",
+        computed: "loadFirebase(key,opened,'bigImage')",
       },
       _loadReadable: {
-        // computed: "loadFirebase(key,opened,'readable',pillar)",
+        // computed: "loadFirebase(key,opened,'readable')",
       },
       _loadWritable: {
-        computed: "loadFirebase(key,opened,'writable',pillar)",
-      },
-      _loadLocalArticle: {
-        // computed: "loadLocalvalues(article,localData.article.value,'article')",
-      },
-      _loadLocalBigImage: {
-        // computed: "loadLocalvalues(bigImage,localData.bigImage.value,'bigImage')",
-      },
-      _loadLocalReadable: {
-       // computed: "loadLocalvalues(readable,localData.readable.value,'readable')",
-      },
-      _loadLocalWritable: {
-        // computed: "loadLocalvalues(writable,localData.writable.value,'writable')",
-      },     
-      _loadLocalTitle: {
-        // computed: "loadLocalvalues(title,localData.title.value,'title')",
+        computed: "loadFirebase(key,opened,'writable')",
       },
       writable: Object,
       bigImage: {
@@ -253,11 +235,6 @@
         computed: "useLocalData(localData)",
       }
     },
-    loadLocalvalues: function(dataVal,localDataVal,key) {
-      if (JSON.stringify(dataVal) != JSON.stringify(localDataVal) ){
-        this[key] == localDataVal
-      }
-    },
     useLocalData: function(localData){
       if (localData) {
         if (localData.title && localData.title.value != this.title) {
@@ -285,28 +262,10 @@
         return writable.all
       }
     },
-    initializeLocalData: function(){
-      if (!this.localData) {
-        this.localData = {}
-      }
-    },
     updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
       
       if (!time) {
         time = Date.now()
-      }
-      var saveLocal = function(){
-        if (value) {
-//          if (!that.localData) {
-//            that.localData = {}
-//          }
-//          if (!that.localData[name]) {
-//            that.localData[name] = {}
-//          }
-//          that.localData[name].value = that.decode(value, that.localData[name].value, that.localData[name].updated)
-//          that.localData[name].updated = time
-          // that.$$("#theLocalData").save()
-        }
       }
       var reverse = function(toReverse) {
         return ("00"+toReverse).split("").map(function(n){
@@ -328,14 +287,12 @@
             time: firebase.database.ServerValue.TIMESTAMP,
             user: uid,
           }
-         // if (that.online) {// && diff.ops.length) {
-            
-         // }
           console.log(updates)
           return firebase.database().ref().update(updates).then(function() {
             console.log("saved", updates)
             that.saved = true
           }).catch(function(r) {
+            that.error = true
             console.log("not saved",r,updates)
           })
         }
@@ -362,23 +319,13 @@
         var update = function(snapshot) {
           var val = snapshot.val()
           if (val) {
-            if (!that.localData) {
-              that.localData = {}
-            }
-            if (!that.localData[name]) {
-              that.localData[name] = {}
-            }
-            
-            that[name] = that.decode(val,that.localData[name].value,that.localData[name].updated)
-            
-            that.localData[name].value = that[name]
-            that.localData[name].updated = Date.now()
+            that[name] = that.decode(val,that[name],Date.now())
           }
         }
         this.sub[key + name] = true
-        if (that.localData && that.localData.hasOwnProperty(name) && that.localData[name].updated) {
+        if (this[name] && this.updateOn) {
           // Get up to date with the server
-          firebase.database().ref(path + "/").orderByChild("time").startAt(that.localData[name].updated).once('value', update)
+          firebase.database().ref(path + "/").orderByChild("time").startAt(this.updateOn).once('value', update)
         } else {
           // No local data get complete document
           firebase.database().ref(path + "/").once('value', update)
@@ -465,12 +412,6 @@
     },
     save: function(e,d){
       if (this.opened && this.pillar.edit) {
-//        if (!this.localData) {
-//          this.localData = {}
-//        }
-//        if (!this.localData.article) {
-//          this.localData.article = {}
-//        }
         var diff = e.detail.delta
         if (diff.ops.length) {
 //          this.localData.article.value = d.entireDelta.ops
