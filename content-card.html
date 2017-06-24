@@ -393,7 +393,11 @@
             }
             var sorted = unsorted.sort(sortByChild)
             editOps = sorted.map(function(a){
-              return a.value.ops
+              if (a && a.value && a.value.ops) {
+                return a.value.ops
+              } else {
+                return []
+              }
             })
             ops = ops.compose({ops: editOps})
           } else {
