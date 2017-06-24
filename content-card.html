@@ -230,13 +230,22 @@
       _updateFirebaseArticle: {
         computed: "updateFirebase(deck,key,opened,'article',article,1,edit,uid,0,updateTimer,go)",
       },
+      changes: {
+        value: new Delta()
+      },
     },
     delete: function(){
       var path = "/Decks/" + this.deck + "/cards/" + this.key 
       var updates = {}
       updates[path] = null
       updates["/Cards/" + this.key] = null
-      this.fire("deleted",firebase.database().ref().update(updates))
+      this.fire("deleted",firebase.database().ref().update(updates).then(
+        function() {
+          console.log("deleted", updates)
+        }).catch(function(r) {
+          console.log("not deleted",r,updates)
+        })
+      )
     },
     getIt:function(it){
       return it
