@@ -291,7 +291,6 @@
       }
     },
     updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
-      console.log(deck,key,opened,name,value.length,cardOnly,edit,uid,time)
       
       if (!time) {
         time = Date.now()
@@ -318,6 +317,7 @@
       var updateInterval = 2000
       var updatePeriodically = function() {
         if (opened && firebase && edit && deck && name && value && uid && uid != null ) {
+          console.log(deck,key,opened,name,value.length,cardOnly,edit,uid,time)
           var path = "/Decks/" + deck + "/cards/" + key
           var updates = {}
           if (!cardOnly) {
