@@ -335,11 +335,7 @@
             console.log("not loaded")
           })
         }
-        return firebase.database().ref(path + "/").on('child_added', update).then(function() {
-          console.log("loaded child_added")
-        }).catch(function(r) {
-          console.log("not loaded child_added")
-        })
+        return firebase.database().ref(path + "/").on('child_added', update)
       }
     },
     decode: function(val,localVal,theDate){
