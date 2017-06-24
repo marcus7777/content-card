@@ -96,7 +96,7 @@
       <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
         <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
         <template is="dom-if" if="[[restamp]]" restamp>
-          <quill-js id="editor" content="{{article}}" on-change="save" on-update="apiSave"></quill-js>
+          <quill-js id="editor" value="{{article}}" on-change="save" on-update="apiSave"></quill-js>
         </template>
         <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
         <paper-toast text="Error" opened="{{notSaved}}"></paper-toast>
@@ -206,19 +206,19 @@
         computed: "loadFirebase(key,opened,'writable',pillar)",
       },
       _loadLocalArticle: {
-        computed: "loadLocalvalues(article,localData.article.value,'article')",
+        // computed: "loadLocalvalues(article,localData.article.value,'article')",
       },
       _loadLocalBigImage: {
-        computed: "loadLocalvalues(bigImage,localData.bigImage.value,'bigImage')",
+        // computed: "loadLocalvalues(bigImage,localData.bigImage.value,'bigImage')",
       },
       _loadLocalReadable: {
        // computed: "loadLocalvalues(readable,localData.readable.value,'readable')",
       },
       _loadLocalWritable: {
-        computed: "loadLocalvalues(writable,localData.writable.value,'writable')",
+        // computed: "loadLocalvalues(writable,localData.writable.value,'writable')",
       },     
       _loadLocalTitle: {
-        computed: "loadLocalvalues(title,localData.title.value,'title')",
+        // computed: "loadLocalvalues(title,localData.title.value,'title')",
       },
       writable: Object,
       bigImage: {
