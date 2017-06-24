@@ -93,7 +93,7 @@
     <template is="dom-if" if="[[opened]]">
       <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
         <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
-        <quill-js id="editor" value="{{article}}"></quill-js>
+        <quill-js id="editor" value="{{article}}" go="{{go}}"></quill-js>
         <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
         <paper-toast text="Error" opened="{{notSaved}}"></paper-toast>
         <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
