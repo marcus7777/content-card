@@ -143,10 +143,6 @@
   Polymer({
     is: "content-card",
     properties:{
-      restamp:{
-        type:Boolean,
-        value:true,
-      },
       edit: {
         computed:"isEditable(writable,user)"
       },
@@ -217,23 +213,20 @@
         value: {},
       },
       _updateFirebaseCardImage: {
-        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid,0)",
+        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid,0,updateTimer)",
       },
       _updateFirebaseCardBigImage: {
-        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid,0)",
+        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid,0,updateTimer)",
       },
       _updateFirebaseCardTitle: {
-        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid,0)",
+        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid,0,updateTimer)",
       },
       _updateFirebaseCardDesc: {
-        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid,0)",
+        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid,0,updateTimer)",
       },
       _updateFirebaseArticle: {
-        computed: "updateFirebase(deck,key,opened,'article',article,1,edit,uid,0)",
+        computed: "updateFirebase(deck,key,opened,'article',article,1,edit,uid,0,updateTimer)",
       },
-      _useLocalData: {
-        computed: "useLocalData(localData)",
-      }
     },
     useLocalData: function(localData){
       if (localData) {
@@ -262,8 +255,7 @@
         return writable.all
       }
     },
-    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
-      
+    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time,updateTimer){
       if (!time) {
         time = Date.now()
       }
@@ -346,7 +338,6 @@
       }
     },
     decode: function(val,localVal,theDate){
-
       if (typeof val == 'string') {
         try {
           return JSON.parse(localVal);
@@ -431,22 +422,6 @@
         }
       } else {
         return null
-      }
-    },
-    save: function(e,d){
-      if (this.opened && this.pillar.edit) {
-        var diff = e.detail.delta
-        if (diff.ops.length) {
-//          this.localData.article.value = d.entireDelta.ops
-          var time = Date.now()
-//          this.localData.article.updated = time
-          this.updateFirebase(this.deck,this.key,this.opened,'article',d.delta, true, this.edit, this.uid, time)
-        }
-      }
-    },
-    apiSave: function(e,d){
-      if (this.opened && this.article && this.pillar.edit) {
-        this.apiSaved = true
       }
     },
     open: function(){
