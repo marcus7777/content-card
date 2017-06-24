@@ -1,5 +1,4 @@
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../browserify-delta/browserify-delta.html">
 <link rel="import" href="../iron-media-query/iron-media-query.html">
 <link rel="import" href="../card-meta-edit/card-meta-edit.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
@@ -338,6 +337,7 @@
       }
     },
     decode: function(val,localVal,theDate){
+      var Delta = Quill.import('delta')
       if (typeof val == 'string') {
         try {
           return JSON.parse(localVal);
