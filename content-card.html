@@ -346,8 +346,19 @@
       }
     },
     decode: function(val,localVal,theDate){
+
       if (typeof val == 'string') {
-        return val
+        try {
+          return JSON.parse(localVal);
+        } catch(e) {
+          return val
+        }
+      } 
+      if(localVal) {
+        try {
+          localVal = JSON.parse(localVal);
+        } catch(e) {
+        }
       }
       if (typeof val == 'object' && typeof val.value == 'string') {
         if (val.time > theDate || val.value == localVal || !localVal) {
