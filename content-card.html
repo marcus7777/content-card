@@ -332,14 +332,14 @@
             console.log("not loaded")
           })
         }
-        return firebase.database().ref(path + "/").on('child_added', update)
+        return firebase.database().ref(path + "/").limitToLast(1).on('child_added', update)
       }
     },
     decode: function(val,localVal,theDate){
       var Delta = Quill.import('delta')
       if (typeof val == 'string') {
         try {
-          return JSON.parse(localVal);
+          return JSON.parse(val);
         } catch(e) {
           return val
         }
@@ -362,7 +362,6 @@
         if (a.hasOwnProperty(byChild) && b.hasOwnProperty(byChild)) {
           var A = +a[byChild]
           var B = +b[byChild]
-        
           if (A < B) { return -1 }
           if (A > B) { return 1 }
         }
