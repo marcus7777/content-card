@@ -8,16 +8,14 @@
     "web-components"
   ],
   "dependencies": {
-    "polymer": "polymer/polymer#~1.9.1",
-    "iron-image": "PolymerElements/iron-image#~1.2.5",
     "quill-js": "marcus7777/quill-js",
-    "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable",
+    "polymer": "polymer/polymer#~1.9.1",
     "card-meta-edit": "Hi9Here/card-meta-edit",
-    "browserify-delta": "marcus7777/browserify-delta",
+    "iron-image": "PolymerElements/iron-image#~1.2.5",
     "paper-toast": "PolymerElements/paper-toast#~1.3.0",
-    "iron-localstorage": "PolymerElements/iron-localstorage#~1.0.6",
+    "iron-media-query": "PolymerElements/iron-media-query#^1.0.8",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.3.7",
-    "iron-media-query": "PolymerElements/iron-media-query#^1.0.8"
+    "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable"
   },
   "devDependencies": {
     "iron-test-helpers": "*",
