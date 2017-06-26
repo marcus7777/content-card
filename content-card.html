@@ -388,6 +388,7 @@
       if (typeof val == 'object' && val.value) {
         return this.decode(val.value,localVal,theDate)
       }
+      
       if (localVal && Array.isArray(localVal)) {
         ops = new Delta(localVal)
       } else if (localVal && localVal.ops) {
@@ -395,6 +396,11 @@
       } else if (val && val.ops){
         // think out
         ops = new Delta()
+      } else if (typeof localVal == 'object' && !Array.isArray(localVal)) {
+        for (var attrname in val) {
+          localVal[attrname] = val[attrname]
+        }
+        return localVal
       } else {
         ops = new Delta()
       }
