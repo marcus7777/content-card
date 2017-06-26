@@ -114,9 +114,10 @@
                   <img src="[[image]]" title="image" style="max-height:400px" class="viewSection" />
                 </template>
               </template>
-              
               <div id="viewText" class="viewSection">[[desc]]</div>
-              <quill-js class="viewSection" value="[[article]]" show style="max-height:95vh"></quill-js>
+              <template is="dom-if" if="[[article]]">
+                <quill-js class="viewSection" value="[[article]]" show style="max-height:95vh"></quill-js>
+              </template>
             </div>
             <div class="rightMargin"></div>
           </div>
