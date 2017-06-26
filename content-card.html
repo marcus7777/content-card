@@ -332,7 +332,8 @@
             console.log("not loaded")
           })
         }
-        // sub
+        // sub 
+        console.log("sub to ", path)
         firebase.database().ref(path + "/").on('child_changed', update)
       }
     },
