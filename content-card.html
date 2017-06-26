@@ -319,14 +319,14 @@
         this.sub[key + name] = true
         if (this[name] && this.updateOn) {
           // Get up to date with the server
-          firebase.database().ref(path + "/").limitToLast(1).orderByChild("time").startAt(this.updateOn).once('value', update).then(function() {
+          firebase.database().ref(path + "/").limitToLast(2).orderByChild("time").startAt(this.updateOn).once('value', update).then(function() {
             console.log("loaded")
           }).catch(function(r) {
             console.log("not loaded")
           })
         } else {
           // No local data get complete document
-          firebase.database().ref(path + "/").limitToLast(1).once('value', update).then(function() {
+          firebase.database().ref(path + "/").limitToLast(2).once('value', update).then(function() {
             console.log("loaded")
           }).catch(function(r) {
             console.log("not loaded")
