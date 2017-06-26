@@ -332,7 +332,8 @@
             console.log("not loaded")
           })
         }
-        return firebase.database().ref(path + "/").limitToLast(1).on('child_changed', update)
+        // sub
+        firebase.database().ref(path + "/").on('child_changed', update)
       }
     },
     decode: function(val,localVal,theDate){
