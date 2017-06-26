@@ -349,7 +349,7 @@
     decode: function(val,localVal,theDate){
       if (typeof val == 'object' && !val.value) {
         if (Object.keys(val)[0].length == 42) {
-          return decode(val[Object.keys(val)[0]],localVal,theDate)
+          return this.decode(val[Object.keys(val)[0]],localVal,theDate)
         }
       }
       var Delta = Quill.import('delta')
