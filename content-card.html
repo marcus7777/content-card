@@ -269,7 +269,7 @@
       var that = this
       var updateInterval = 2000
       var updatePeriodically = function() {
-        if (opened && firebase && edit && deck && name && value && uid && uid != null ) {
+        if (opened && firebase && edit && deck && name && value && uid && uid != null && JSON.stringify(that[name]) != JSON.stringify(value)) {
           console.log(deck,key,opened,name,value.length,cardOnly,edit,uid,time)
           var path = "/Decks/" + deck + "/cards/" + key
           var updates = {}
