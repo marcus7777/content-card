@@ -316,6 +316,13 @@
             that[name] = that.decode(val,that[name],Date.now())
           }
         }
+        var update2 = function(snapshot) {
+          var val = snapshot.val()
+          console.log("on child_changed", val)
+          if (val) {
+            that[name] = that.decode(val,that[name],Date.now())
+          }
+        }
         this.sub[key + name] = true
         if (this[name] && this.updateOn) {
           // Get up to date with the server
@@ -334,7 +341,8 @@
         }
         // sub 
         console.log("sub to ", path)
-        firebase.database().ref(path + "/").on('child_changed', update)
+       var ref = firebase.database().ref(path + "/")
+       ref.on('child_changed', update2)
       }
     },
     decode: function(val,localVal,theDate){
