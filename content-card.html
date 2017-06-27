@@ -319,7 +319,9 @@
             if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
               that[name] = valueWithTime.value
               that.firebaseSaveAt[name] = valueWithTime.time
-            }
+            } 
+          } else {
+            that.firebaseSaveAt[name] = Date.now()
           }
         }
         var ref = firebase.database().ref(path + "/").limitToFirst(1)
