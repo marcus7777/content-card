@@ -323,8 +323,8 @@
             }
           }
         }
-        var ref = firebase.database().ref(path + "/")
-        ref.limitTo(1).once('value', update).then(function() {
+        var ref = firebase.database().ref(path + "/").limitToFirst(1)
+        ref.once('value', update).then(function() {
           that.sub[key + name] = true
           ref.on('child_changed', update)
           console.log("loaded","sub to ", path)
