@@ -323,26 +323,14 @@
             }
           }
         }
-        this.sub[key + name] = true
-        if (this[name] && this.updateOn) {
-          // Get up to date with the server
-          firebase.database().ref(path + "/").limitToLast(1).orderByChild("time").startAt(this.updateOn).once('value', update).then(function() {
-            console.log("loaded")
-          }).catch(function(r) {
-            console.log("not loaded")
-          })
-        } else {
-          // No local data get complete document
-          firebase.database().ref(path + "/").limitToLast(1).once('value', update).then(function() {
-            console.log("loaded")
-          }).catch(function(r) {
-            console.log("not loaded")
-          })
-        }
-        // sub 
-        console.log("sub to ", path)
         var ref = firebase.database().ref(path + "/")
-        ref.on('child_changed', update)
+        ref.limitTo(1).once('value', update).then(function() {
+          that.sub[key + name] = true
+          ref.on('child_changed', update)
+          console.log("loaded","sub to ", path)
+        }).catch(function(r) {
+          console.log("not loaded")
+        })
       }
     },
    /**
