@@ -189,16 +189,16 @@
         value:false,
       },
       _loadValue: {
-        computed: "loadFirebase(key,opened,'article')",
+        computed: "loadFirebase(key,opened,'article',firebaseSaveAt)",
       },
       _loadValueBigImage: {
-        computed: "loadFirebase(key,opened,'bigImage')",
+        computed: "loadFirebase(key,opened,'bigImage',firebaseSaveAt)",
       },
       _loadReadable: {
         // computed: "loadFirebase(key,opened,'readable')",
       },
       _loadWritable: {
-        computed: "loadFirebase(key,opened,'writable')",
+        computed: "loadFirebase(key,opened,'writable',firebaseSaveAt:)",
       },
       writable: Object,
       bigImage: {
