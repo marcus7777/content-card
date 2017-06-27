@@ -284,7 +284,6 @@
             time: firebase.database.ServerValue.TIMESTAMP,
             user: uid,
           }
-          console.log(updates)
           return firebase.database().ref().update(updates).then(function() {
             console.log("saved", updates)
             that.saved = true
