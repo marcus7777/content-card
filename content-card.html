@@ -331,7 +331,7 @@
             var valueWithTime = that.decode(val,that[name],Date.now())
             if (valueWithTime) {
               that[name] = valueWithTime.value
-              that.firebaseLoadedOn[name] = valueWithTime.time
+              that.firebaseSaveAt[name] = valueWithTime.time
             }
           }
         }
