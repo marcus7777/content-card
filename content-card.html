@@ -273,8 +273,7 @@
       var that = this
       var updateInterval = 2000
       var updatePeriodically = function() {
-        if (opened && firebase && edit && deck && name && value && uid && uid != null) {
-          console.log(deck,key,opened,name,value.length,cardOnly,edit,uid,time)
+        if (opened && firebase && edit && deck && name && value && uid && uid != null && that.firebaseSaveAt && that.firebaseSaveAt[name]) {
           var path = "/Decks/" + deck + "/cards/" + key
           var updates = {}
           if (!cardOnly) {
@@ -318,18 +317,7 @@
           var val = snapshot.val()
           if (val) {
             var valueWithTime = that.decode(val,that[name],Date.now())
-            if (valueWithTime) {
-              that[name] = valueWithTime.value
-              that.firebaseSaveAt[name] = valueWithTime.time
-            }
-          }
-        }
-        var update2 = function(snapshot) {
-          var val = snapshot.val()
-          console.log("on child_changed", val)
-          if (val) {
-            var valueWithTime = that.decode(val,that[name],Date.now())
-            if (valueWithTime) {
+            if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
               that[name] = valueWithTime.value
               that.firebaseSaveAt[name] = valueWithTime.time
             }
@@ -354,7 +342,7 @@
         // sub 
         console.log("sub to ", path)
        var ref = firebase.database().ref(path + "/")
-       ref.on('child_changed', update2)
+       ref.on('child_changed', update)
       }
     },
    /**
