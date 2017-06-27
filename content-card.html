@@ -306,7 +306,7 @@
         return pillars
       }
     },
-    loadFirebase: function(key, opened, name, localData, firebaseSaveAt){
+    loadFirebase: function(key, opened, name){
       if (firebase && opened && (!this.sub || !this.sub[key + name])) {
         var that = this
         var path = "/Cards/" + key + "/" + name
@@ -341,8 +341,8 @@
         }
         // sub 
         console.log("sub to ", path)
-       var ref = firebase.database().ref(path + "/")
-       ref.on('child_changed', update)
+        var ref = firebase.database().ref(path + "/")
+        ref.on('child_changed', update)
       }
     },
    /**
