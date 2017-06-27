@@ -307,7 +307,7 @@
       }
     },
     loadFirebase: function(key, opened, name){
-      if (firebase && opened && (!this.sub || !this.sub[key + name])) {
+      if (firebase && opened) { // && (!this.sub || !this.sub[key + name])
         var that = this
         var path = "/Cards/" + key + "/" + name
         if (!this.sub) {
