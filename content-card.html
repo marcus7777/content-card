@@ -216,6 +216,9 @@
       updateTimer: {
         value: {},
       },
+      firebaseSaveAt: {
+        value: {},
+      },
       _updateFirebaseCardImage: {
         computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid,0,updateTimer,go)",
       },
@@ -304,7 +307,7 @@
         return pillars
       }
     },
-    loadFirebase: function(key, opened, name, localData, firebaseLoadedOn){
+    loadFirebase: function(key, opened, name, localData, firebaseSaveAt){
       if (firebase && opened && (!this.sub || !this.sub[key + name])) {
         var that = this
         var path = "/Cards/" + key + "/" + name
@@ -317,7 +320,7 @@
             var valueWithTime = that.decode(val,that[name],Date.now())
             if (valueWithTime) {
               that[name] = valueWithTime.value
-              that.firebaseLoadedOn[name] = valueWithTime.time
+              that.firebaseSaveAt[name] = valueWithTime.time
             }
           }
         }
