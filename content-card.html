@@ -304,7 +304,7 @@
         return pillars
       }
     },
-    loadFirebase: function(key, opened, name, localData){
+    loadFirebase: function(key, opened, name, localData, firebaseLoadedOn){
       if (firebase && opened && (!this.sub || !this.sub[key + name])) {
         var that = this
         var path = "/Cards/" + key + "/" + name
@@ -314,14 +314,22 @@
         var update = function(snapshot) {
           var val = snapshot.val()
           if (val) {
-            that[name] = that.decode(val,that[name],Date.now())
+            var valueWithTime = that.decode(val,that[name],Date.now())
+            if (valueWithTime) {
+              that[name] = valueWithTime.value
+              that.firebaseLoadedOn[name] = valueWithTime.time
+            }
           }
         }
         var update2 = function(snapshot) {
           var val = snapshot.val()
           console.log("on child_changed", val)
           if (val) {
-            that[name] = that.decode(val,that[name],Date.now())
+            var valueWithTime = that.decode(val,that[name],Date.now())
+            if (valueWithTime) {
+              that[name] = valueWithTime.value
+              that.firebaseLoadedOn[name] = valueWithTime.time
+            }
           }
         }
         this.sub[key + name] = true
@@ -346,6 +354,11 @@
        ref.on('child_changed', update2)
       }
     },
+   /**
+    *
+    * @return {value:array|string,time: number}|false
+    *
+    **/
     decode: function(val,localVal,theDate){
       if (typeof val == 'object' && !val.value) {
         if (Object.keys(val)[0].length == 42) {
@@ -366,92 +379,20 @@
         } catch(e) {
         }
       }
-      if (typeof val == 'object' && typeof val.value == 'string') {
+      if (typeof val == 'object' && (typeof val.value == 'string' || Array.isArray(val.value)) && +val.time) {
         if (val.value !== localVal || !localVal) {
-          return val.value
-        } else {
-          return localVal
-        }
-      } else if (typeof val == 'object' && Array.isArray(val.value)){
-        if (JSON.stringify(val.value) !== JSON.stringify(localVal)) {
-          return val.value
-        } else {
-          return localVal
-        }
-      }
-      var byChild = "time"
-      var sortByChild = function(a,b){
-        if (a.hasOwnProperty(byChild) && b.hasOwnProperty(byChild)) {
-          var A = +a[byChild]
-          var B = +b[byChild]
-          if (A < B) { return -1 }
-          if (A > B) { return 1 }
-        }
-        return 0
-      }
-      var ops
-      if (typeof val == 'object' && val.value) {
-        return this.decode(val.value,localVal,theDate)
-      }
-      
-      if (localVal && Array.isArray(localVal)) {
-        ops = new Delta(localVal)
-      } else if (localVal && localVal.ops) {
-        ops = new Delta(localVal.ops)
-      } else if (val && val.ops){
-        // think out
-        ops = new Delta()
-      } else if (typeof localVal == 'object' && !Array.isArray(localVal)) {
-        for (var attrname in val) {
-          localVal[attrname] = val[attrname]
-        }
-        return localVal
-      } else {
-        ops = new Delta()
-      }
-      if (val !== false) {
-        if (typeof val == 'object') {
-          //1 val keys
-          //2 val.hasOwnProperty('time')
-          //3 val.ops
-          var editOps
-          if (val[Object.keys(val)[0]].hasOwnProperty(byChild)) { 
-            var unsorted = []
-            for (var entry in val) {
-              unsorted.push(val[entry])
-            }
-            var sorted = unsorted.sort(sortByChild)
-            editOps = sorted.map(function(a){
-              if (a && a.value && a.value.ops) {
-                return a.value.ops
-              } else {
-                return []
-              }
-            })
-            ops = ops.compose({ops: editOps})
-          } else {
-            for (var edit in val) {
-              if (typeof val[edit].value == 'object') {
-                editOps = []
-                for (var op in val[edit].value.ops) {
-                  editOps.push(val[edit].value.ops[op])
-                }
-                ops = ops.compose({ops: editOps})
-              } else if (typeof val[edit].value == 'string') {
-                return val[edit].value
-              }
-            }
+          return {
+            value: val.value,
+            time:  +val.time,
           }
-          if (ops.ops.length) {
-            return ops.ops
+        } else {
+          return {
+            value: localVal,
+            time:  +theDate,
           }
-        } else if (localVal) {
-          return localVal
-        } else if (val) {
-          return val
         }
       } else {
-        return null
+        return false
       }
     },
     open: function(){
