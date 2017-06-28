@@ -191,15 +191,19 @@
       writable: Object,
       bigImage: {
         value: "",
+        observer: '_update',
       },
       image: {
         value: "",
+        observer: '_update',
       },
       title: {
         value: "",
+        observer: '_update',
       },
       desc: {
         value: "",
+        observer: '_update',
       },
       updateTimer: {
         value: {},
@@ -222,6 +226,9 @@
       _updateFirebaseArticle: {
         computed: "updateFirebase(deck,key,opened,'article',article,1,edit,uid,0,updateTimer)",
       },
+    },
+    _update: function(a,b,c){
+      console.log(a,b,c)
     },
     delete: function(){
       var path = "/Decks/" + this.deck + "/cards/" + this.key 
