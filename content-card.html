@@ -265,10 +265,8 @@
       if (!time) {
         time = Date.now()
       }
-      var reverse = function(toReverse) {
-        return ("00"+toReverse).split("").map(function(n){
-          return 9 - +n
-        }).splice(-14).join("")
+      var pad = function(toPad) {
+        return ("00"+toPad).split("").splice(-14).join("")
       }
       var that = this
       var updateInterval = 2000
@@ -279,7 +277,7 @@
           if (!cardOnly) {
             updates[path + "/" + name + "/"] = value
           }
-          updates["/Cards/" + key + "/" + name + "/" +  reverse(time) + uid] = {
+          updates["/Cards/" + key + "/" + name + "/" +  pad(time) + uid] = {
             value: value,
             time: firebase.database.ServerValue.TIMESTAMP,
             user: uid,
@@ -320,7 +318,7 @@
               that[name] = valueWithTime.value
               that.firebaseSaveAt[name] = valueWithTime.time
             } 
-          } else {
+          } else if (val == null){
             that.firebaseSaveAt[name] = Date.now()
           }
         }
