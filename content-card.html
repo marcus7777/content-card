@@ -191,19 +191,22 @@
       writable: Object,
       bigImage: {
         value: "",
-        observer: '_update',
+        observer: '_updateBigImage',
       },
       image: {
         value: "",
-        observer: '_update',
+        observer: '_updateImage',
       },
       title: {
         value: "",
-        observer: '_update',
+        observer: '_updateTitle',
       },
       desc: {
         value: "",
-        observer: '_update',
+        observer: '_updateDesc',
+      },
+      article:{
+        observer: '_updateArticle',
       },
       updateTimer: {
         value: {},
@@ -211,25 +214,33 @@
       firebaseSaveAt: {
         value: {},
       },
-      _updateFirebaseCardImage: {
-        computed: "updateFirebase(deck,key,opened,'image',image,0,edit,uid,0,updateTimer)",
-      },
-      _updateFirebaseCardBigImage: {
-        computed: "updateFirebase(deck,key,opened,'bigImage',bigImage,1,edit,uid,0,updateTimer)",
-      },
-      _updateFirebaseCardTitle: {
-        computed: "updateFirebase(deck,key,opened,'title',title,0,edit,uid,0,updateTimer)",
-      },
-      _updateFirebaseCardDesc: {
-        computed: "updateFirebase(deck,key,opened,'desc',desc,0,edit,uid,0,updateTimer)",
-      },
-      _updateFirebaseArticle: {
-        computed: "updateFirebase(deck,key,opened,'article',article,1,edit,uid,0,updateTimer)",
-      },
     },
-    _update: function(a,b,c){
-      console.log(a,b,c)
+    _updateImage: function(image){ 
+      if (image) {
+        this.updateFirebase(this.deck,this.key,this.opened,'image',image,0,this.edit,this.uid,0)
+      }
     },
+    _updateBigImage: function(bigImage){ 
+      if (bigImage) {
+        this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
+      }
+    },
+    _updateTitle: function(title){ 
+      if (title) {
+        this.updateFirebase(this.deck,this.key,this.opened,'title',title,0,this.edit,this.uid,0)
+      }
+    },
+    _updateDesc: function(desc){ 
+      if (desc) {
+        this.updateFirebase(this.deck,this.key,this.opened,'desc',desc,0,this.edit,this.uid,0)
+      }
+    },
+    _updateArticle: function(article){ 
+      if (article) {
+        this.updateFirebase(this.deck,this.key,this.opened,'article',article,1,this.edit,this.uid,0)
+      }
+    },
+    
     delete: function(){
       var path = "/Decks/" + this.deck + "/cards/" + this.key 
       var updates = {}
