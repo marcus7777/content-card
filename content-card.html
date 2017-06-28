@@ -188,17 +188,8 @@
         type:Boolean,
         value:false,
       },
-      _loadValue: {
-        computed: "loadFirebase(key,opened,'article',firebaseSaveAt)",
-      },
-      _loadValueBigImage: {
-        computed: "loadFirebase(key,opened,'bigImage',firebaseSaveAt)",
-      },
-      _loadReadable: {
-        // computed: "loadFirebase(key,opened,'readable')",
-      },
-      _loadWritable: {
-        computed: "loadFirebase(key,opened,'writable',firebaseSaveAt)",
+      _loadValues: {
+        computed: "loadAllFirebase(key,opened,firebaseSaveAt)",
       },
       writable: Object,
       bigImage: {
@@ -302,6 +293,14 @@
       } else {
         return pillars
       }
+    },
+    loadAllFirebase: function(key, opened) {
+      this.loadFirebase(key,opened,'bigImage')
+      this.loadFirebase(key,opened,'title')
+      this.loadFirebase(key,opened,'image')
+      this.loadFirebase(key,opened,'desc')
+      //this.loadFirebase(key,opened,'readable')
+      this.loadFirebase(key,opened,'writable')
     },
     loadFirebase: function(key, opened, name){
       if (firebase && opened) { // && (!this.sub || !this.sub[key + name])
