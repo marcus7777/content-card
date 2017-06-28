@@ -186,7 +186,7 @@
         value:false,
       },
       _loadValues: {
-        computed: "loadAllFirebase(key,opened,firebaseSaveAt)",
+        computed: "loadAllFirebase(key,opened,firebaseSaveAt,deck,key)",
       },
       writable: Object,
       bigImage: {
@@ -213,31 +213,30 @@
       },
     },
     _updateImage: function(image){ 
-      if (image) {
+      if (image && this.firebaseSaveAt && this.firebaseSaveAt['image']) {
         this.updateFirebase(this.deck,this.key,this.opened,'image',image,0,this.edit,this.uid,0)
       }
     },
     _updateBigImage: function(bigImage){ 
-      if (bigImage) {
+      if (bigImage && this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
         this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
       }
     },
     _updateTitle: function(title){ 
-      if (title) {
+      if (title && this.firebaseSaveAt && this.firebaseSaveAt['title']) {
         this.updateFirebase(this.deck,this.key,this.opened,'title',title,0,this.edit,this.uid,0)
       }
     },
     _updateDesc: function(desc){ 
-      if (desc) {
+      if (desc && this.firebaseSaveAt && this.firebaseSaveAt['desc']) {
         this.updateFirebase(this.deck,this.key,this.opened,'desc',desc,0,this.edit,this.uid,0)
       }
     },
     _updateArticle: function(article){ 
-      if (article) {
+      if (article && this.firebaseSaveAt && this.firebaseSaveAt['article']) {
         this.updateFirebase(this.deck,this.key,this.opened,'article',article,1,this.edit,this.uid,0)
       }
     },
-    
     delete: function(){
       var path = "/Decks/" + this.deck + "/cards/" + this.key 
       var updates = {}
@@ -274,7 +273,7 @@
       var that = this
       var updateInterval = 2000
       var updatePeriodically = function() {
-        if (opened && firebase && edit && deck && name && value && uid && uid != null && that.firebaseSaveAt && that.firebaseSaveAt[name]) {
+        if (opened && firebase && edit && deck && name && value && uid && uid != null) {
           var path = "/Decks/" + deck + "/cards/" + key
           var updates = {}
           if (!cardOnly) {
