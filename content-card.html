@@ -208,9 +208,6 @@
       article:{
         observer: '_updateArticle',
       },
-      updateTimer: {
-        value: {},
-      },
       firebaseSaveAt: {
         value: {},
       },
@@ -267,7 +264,7 @@
         return writable.all
       }
     },
-    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time,updateTimer){
+    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
       if (!time) {
         time = Date.now()
       }
@@ -297,7 +294,9 @@
           })
         }
       }
-      
+      if (!this.updateTimer) {
+        this.updateTimer = {}
+      }
       clearTimeout(this.updateTimer[name])
       this.updateTimer[name] = setTimeout(updatePeriodically, updateInterval)
     },
