@@ -344,7 +344,7 @@
             that.firebaseSaveAt[name] = Date.now()
           }
         }
-        var ref = firebase.database().ref(path + "/").limitToFirst(1)
+        var ref = firebase.database().ref(path + "/").limitToLast(1)
         ref.once('value', update).then(function() {
           that.sub[key + name] = true
           ref.on('child_changed', update)
