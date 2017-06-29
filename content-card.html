@@ -215,15 +215,15 @@
     _updateImage: function(image){ 
       if (image && this.firebaseSaveAt && this.firebaseSaveAt['image']) {
         this.updateFirebase(this.deck,this.key,this.opened,'image',image,0,this.edit,this.uid,0)
-      } else if (this.key && this.opened){
-        this.loadFirebase(this.key,this.opened,'image')
+      //} else if (this.key && this.opened){
+      //  this.loadFirebase(this.key,this.opened,'image')
       }
     },
     _updateBigImage: function(bigImage){ 
       if (bigImage && this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
         this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
-      } else if (this.key && this.opened){
-        this.loadFirebase(this.key,this.opened,'bigImage')
+      //} else if (this.key && this.opened){
+      //  this.loadFirebase(this.key,this.opened,'bigImage')
       }
     },
     _updateTitle: function(title){ 
