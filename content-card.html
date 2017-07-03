@@ -319,11 +319,10 @@
     },
     loadAllFirebase: function(key, opened) {
       this.async(this.loadFirebase(key,opened,'bigImage'))
-      this.async(this.loadFirebase(key,opened,'bigImage'))
       this.async(this.loadFirebase(key,opened,'title'))
-      this.async(this.loadFirebase(key,opened,'image'))
+      // this.async(this.loadFirebase(key,opened,'image'))
       this.async(this.loadFirebase(key,opened,'desc'))
-      //this.loadFirebase(key,opened,'readable')
+      // this.loadFirebase(key,opened,'readable')
       this.async(this.loadFirebase(key,opened,'writable'))
     },
     loadFirebase: function(key, opened, name){
