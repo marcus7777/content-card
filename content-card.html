@@ -220,9 +220,10 @@
       }
     },
     _updateBigImage: function(bigImage){ 
-      if (bigImage && bigImage !== null && this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
-        this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
+      var time = Date.now()
+      if (bigImage && bigImage !== null && this.firebaseSaveAt && this.firebaseSaveAt['bigImage'] && (this.sendForUpdate.bigImage < time - 2000)) {
         this.sendForUpdate.bigImage = Date.now()
+        this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
       } else if (this.key && this.opened){
         this.loadFirebase(this.key,this.opened,'bigImage')
       } 
