@@ -330,14 +330,14 @@
           writable: time,
         }
       }
-      this.async(this.loadFirebase(key,opened,'bigImage'))
-      this.async(this.loadFirebase(key,opened,'title'))
-      // this.async(this.loadFirebase(key,opened,'image'))
-      this.async(this.loadFirebase(key,opened,'desc'))
-      // this.loadFirebase(key,opened,'readable')
-      this.async(this.loadFirebase(key,opened,'writable'))
+      this.async(this.loadFirebase(key,opened,'bigImage'), time)
+      this.async(this.loadFirebase(key,opened,'title'), time)
+      // this.async(this.loadFirebase(key,opened,'image'), time)
+      this.async(this.loadFirebase(key,opened,'desc'), time)
+      // this.loadFirebase(key,opened,'readable', time)
+      this.async(this.loadFirebase(key,opened,'writable'), time)
     },
-    loadFirebase: function(key, opened, name){
+    loadFirebase: function(key, opened, name, time){
       if (firebase && opened) { // && (!this.sub || !this.sub[key + name])
         var that = this
         var path = "/Cards/" + key + "/" + name
@@ -348,7 +348,7 @@
           console.log(that.sendForUpdate.bigImage)
           var val = snapshot.val()
           if (val) {
-            var valueWithTime = that.decode(val, that[name], Date.now())
+            var valueWithTime = that.decode(val, that[name], time)
             if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
               that[name] = valueWithTime.value
               that.firebaseSaveAt[name] = valueWithTime.time
