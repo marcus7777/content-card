@@ -222,6 +222,10 @@
     _updateBigImage: function(bigImage){ 
       if (bigImage && bigImage !== null && this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
         this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
+        if (!this.sendForUpdate) {
+          this.sendForUpdate = {}
+        }
+        this.sendForUpdate['bigImage'] = Date.now()
       } else if (this.key && this.opened){
         this.loadFirebase(this.key,this.opened,'bigImage')
       } 
@@ -333,6 +337,7 @@
           this.sub = {}
         }
         var update = function(snapshot) {
+          console.log(that.sendForUpdate.bigImage)
           var val = snapshot.val()
           if (val) {
             var valueWithTime = that.decode(val, that[name], Date.now())
