@@ -213,8 +213,10 @@
       },
     },
     _updateImage: function(image){ 
-      if (image && this.firebaseSaveAt && this.firebaseSaveAt['image']) {
+      // if (image && this.firebaseSaveAt && this.firebaseSaveAt['image']) {
+      if (this.edit) {
         this.updateFirebase(this.deck,this.key,this.opened,'image',image,0,this.edit,this.uid,0)
+      }
       //} else if (this.key && this.opened){
       //  this.loadFirebase(this.key,this.opened,'image')
       }
