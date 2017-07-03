@@ -341,7 +341,7 @@
               that.firebaseSaveAt[name] = valueWithTime.time
             } 
           } else if (val == null){
-            that.firebaseSaveAt[name] = 0 // not got a value from firebase
+            that.firebaseSaveAt[name] = 1 // not got a value from firebase
           }
         }
         var ref = firebase.database().ref(path + "/").limitToLast(1)
