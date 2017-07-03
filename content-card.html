@@ -224,9 +224,9 @@
       if (bigImage && bigImage !== null && this.firebaseSaveAt && this.firebaseSaveAt['bigImage'] && (this.sendForUpdate.bigImage < time - 2000)) {
         this.sendForUpdate.bigImage = Date.now()
         this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
-      } else if (this.key && this.opened){
+      } else if (this.key && this.opened && !(this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) ){
         this.loadFirebase(this.key,this.opened,'bigImage')
-      } 
+      }
     },
     _updateTitle: function(title){ 
       if (title && this.firebaseSaveAt && this.firebaseSaveAt['title']) {
