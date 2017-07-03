@@ -190,7 +190,7 @@
       },
       writable: Object,
       bigImage: {
-        value: "",
+        value: null,
         observer: '_updateBigImage',
       },
       image: {
@@ -220,11 +220,11 @@
       }
     },
     _updateBigImage: function(bigImage){ 
-      if (bigImage && this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
+      if (bigImage && bigImage !== null && this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
         this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
       } else if (this.key && this.opened){
         this.loadFirebase(this.key,this.opened,'bigImage')
-      }
+      } 
     },
     _updateTitle: function(title){ 
       if (title && this.firebaseSaveAt && this.firebaseSaveAt['title']) {
@@ -335,13 +335,13 @@
         var update = function(snapshot) {
           var val = snapshot.val()
           if (val) {
-            var valueWithTime = that.decode(val,that[name],Date.now())
+            var valueWithTime = that.decode(val, that[name], Date.now())
             if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
               that[name] = valueWithTime.value
               that.firebaseSaveAt[name] = valueWithTime.time
             } 
           } else if (val == null){
-            that.firebaseSaveAt[name] = Date.now()
+            that.firebaseSaveAt[name] = 0 // not got a value from firebase
           }
         }
         var ref = firebase.database().ref(path + "/").limitToLast(1)
