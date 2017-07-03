@@ -222,10 +222,7 @@
     _updateBigImage: function(bigImage){ 
       if (bigImage && bigImage !== null && this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
         this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
-        if (!this.sendForUpdate) {
-          this.sendForUpdate = {}
-        }
-        this.sendForUpdate['bigImage'] = Date.now()
+        this.sendForUpdate.bigImage = Date.now()
       } else if (this.key && this.opened){
         this.loadFirebase(this.key,this.opened,'bigImage')
       } 
@@ -322,6 +319,17 @@
       }
     },
     loadAllFirebase: function(key, opened) {
+      var time = Date.now()
+      
+      if (!this.sendForUpdate) {
+        this.sendForUpdate = {
+          bigImage: time,
+          image: time,
+          title: time,
+          desc: time,
+          writable: time,
+        }
+      }
       this.async(this.loadFirebase(key,opened,'bigImage'))
       this.async(this.loadFirebase(key,opened,'title'))
       // this.async(this.loadFirebase(key,opened,'image'))
