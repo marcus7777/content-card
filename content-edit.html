@@ -154,7 +154,7 @@
     },
     _updateBigImage: function(bigImage){ 
       var time = Date.now()
-      if (bigImage && bigImage !== null && this.firebaseSaveAt && this.firebaseSaveAt['bigImage'] && (this.sendForUpdate.bigImage < time - 2000)) {
+      if (bigImage && bigImage !== null && this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
         this.sendForUpdate.bigImage = Date.now()
         this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
       } else if (this.key && this.opened && !(this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) ){
@@ -252,7 +252,7 @@
         return pillars
       }
     },
-    loadAllFirebase: function(key, opened) {
+    loadAllFirebase: function(key) {
       var time = Date.now()
       
       if (!this.sendForUpdate) {
@@ -264,15 +264,15 @@
           writable: time,
         }
       }
-      this.async(this.loadFirebase(key,opened,'bigImage'), time)
-      this.async(this.loadFirebase(key,opened,'title'), time)
-      // this.async(this.loadFirebase(key,opened,'image'), time)
-      this.async(this.loadFirebase(key,opened,'desc'), time)
-      // this.loadFirebase(key,opened,'readable', time)
-      this.async(this.loadFirebase(key,opened,'writable'), time)
+      this.async(this.loadFirebase(key,'bigImage'))
+      this.async(this.loadFirebase(key,'title'))
+      // this.async(this.loadFirebase(key,opened,'image'))
+      this.async(this.loadFirebase(key,'desc'))
+      // this.loadFirebase(key,opened,'readable')
+      this.async(this.loadFirebase(key,'writable'))
     },
-    loadFirebase: function(key, opened, name, time){
-      if (firebase && opened) { // && (!this.sub || !this.sub[key + name])
+    loadFirebase: function(key, name){
+      if (firebase) { // && (!this.sub || !this.sub[key + name])
         var that = this
         var path = "/Cards/" + key + "/" + name
         if (!this.sub) {
