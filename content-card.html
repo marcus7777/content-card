@@ -91,10 +91,10 @@
       </div>
     </template>
     <template is="dom-if" if="[[opened]]">
-      <template is="dom-if" if="[[!edit]]">
+      <template is="dom-if" if="[[!pillar.edit]]">
         <content-view key="[[key]]" deck="[[deck]]" uid="[[uid]]" ></content-view>
       </template>
-      <template is="dom-if" if="[[edit]]">
+      <template is="dom-if" if="[[pillar.edit]]">
         <content-edit key="[[key]]" deck="[[deck]]" uid="[[uid]]" ></content-edit>
       </template>
     </template>
