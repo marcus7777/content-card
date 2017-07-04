@@ -275,7 +275,7 @@
       this.updateTimer[name] = setTimeout(updatePeriodically, updateInterval)
     },
     getPillars: function(title,edit) {
-      var pillars = [{view: true,selected: true,color: "#f2d123",name: title}]
+      var pillars = [{view: true,selected: true,color: "#f2d123",name: "view"}]
       if (edit) {
         return pillars.concat([{name: "Edit",edit: true,color: "#1d1e30"}])
       } else {
