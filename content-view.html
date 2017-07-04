@@ -177,7 +177,6 @@
           this.sub = {}
         }
         var update = function(snapshot) {
-          console.log(that.sendForUpdate.bigImage)
           var val = snapshot.val()
           if (val) {
             var valueWithTime = that.decode(val, that[name], 0)
