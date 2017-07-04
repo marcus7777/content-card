@@ -95,7 +95,7 @@
         <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
         <quill-js id="editor" value="{{article}}" go="{{go}}"></quill-js>
         <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
-        <paper-toast text="Error" opened="{{notSaved}}"></paper-toast>
+        <paper-toast text="Error not saving" opened="{{notSaved}}"></paper-toast>
         <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
         <paper-button raised on-tap="delete" style="color:red">delete</paper-button>
       </div>
@@ -190,7 +190,7 @@
       },
       writable: Object,
       bigImage: {
-        value: null,
+        value: "",
         observer: '_updateBigImage',
       },
       image: {
