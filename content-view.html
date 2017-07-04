@@ -64,47 +64,12 @@
     </style>
 
     <iron-media-query query="(min-width:700px)" query-matches="{{wide}}"></iron-media-query>
-    
-    <template is="dom-if" if="[[!opened]]">
-      <div on-tap="open" class="container">
-        <template is="dom-if" if="[[image]]">
-          <!-- Desktop Closed -->
-          <template is="dom-if" if="{{wide}}">
-            <template is="dom-if" if="[[image]]">
-              <img style="max-width:100%;max-height:120px" src="[[image]]" />
-            </template>
-            <h2 style="text-align:center;font-weight:300;font-size:20px;margin-top:20px">[[title]]</h2>
-          </template>
-          <!-- Mobile Closed -->
-          <template is="dom-if" if="{{!wide}}">
-            <template is="dom-if" if="[[image]]">
-              <img style="max-width:100%;max-height:200px;" src="[[image]]" />
-            </template>
-            <h2 style="text-align:center;font-weight:300;font-size:40px;margin-top:40px">[[title]]</h2>
-          </template>
-        </template>
-        <template is="dom-if" if="[[!image]]">
-          <div style="height:50px"></div>
-          <h2 style="text-align:center;font-weight:300;font-size:20px;">[[title]]</h2>
-          <div>[[desc]]</div>
-        </template>
-      </div>
-    </template>
-    <template is="dom-if" if="[[opened]]">
-      <div hidden="[[!pillar.edit]]" style="width:100%;float:right">
-        <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
-        <quill-js id="editor" value="{{article}}" go="{{go}}"></quill-js>
-        <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
-        <paper-toast text="Error not saving" opened="{{notSaved}}"></paper-toast>
-        <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
-        <paper-button raised on-tap="delete" style="color:red">delete</paper-button>
-      </div>
-      <template is="dom-if" if="[[pillar.view]]">
         <!-- Desktop Opened -->
         <template is="dom-if" if="{{wide}}">
           <div class="box">
             <div class="leftMargin"></div>
             <div class="view">
+              
               <template is="dom-if" if="[[bigImage]]">
                 <img src="[[bigImage]]" title="bigImage" style="max-height:400px" class="viewSection" />
               </template>
@@ -130,25 +95,17 @@
               <img src="[[bigImage]]" class="viewSection" />
               <div id="viewText" class="viewSection">[[desc]]</div>
               <quill-js class="viewSection" value="[[article]]" show style="max-height:95vh"></quill-js>
-              [[error]]
             </div>
             <div class="rightMarginmob"></div>
           </div>
         </template>
       </template>
-    </template>
-  </template>
+  
 </dom-module>
 <script>
   Polymer({
     is: "content-card",
     properties:{
-      edit: {
-        computed:"isEditable(writable,user)"
-      },
-      uid: {
-        computed:"getIt(user.uid)"
-      },
       online: {
         type:Boolean,
         notify:true,
@@ -157,10 +114,6 @@
         value:""
       },
       pillar:Object,
-      pillars: {
-        computed:"getPillars(title,edit)",
-        notify:true,
-      },
       value: {
         value:"{}",
         type:String,
@@ -188,68 +141,9 @@
       _loadValues: {
         computed: "loadAllFirebase(key,opened,firebaseSaveAt,deck)",
       },
-      writable: Object,
-      bigImage: {
-        value: "",
-        observer: '_updateBigImage',
-      },
-      image: {
-        value: "",
-        observer: '_updateImage',
-      },
-      title: {
-        value: "",
-        observer: '_updateTitle',
-      },
-      desc: {
-        value: "",
-        observer: '_updateDesc',
-      },
-      article:{
-        observer: '_updateArticle',
-      },
       firebaseSaveAt: {
         value: {},
       },
-    },
-    _updateImage: function(image){ 
-      // if (image && this.firebaseSaveAt && this.firebaseSaveAt['image']) {
-      if (this.edit) {
-        this.updateFirebase(this.deck,this.key,this.opened,'image',image,0,this.edit,this.uid,0)
-      }
-      //} else if (this.key && this.opened){
-      //  this.loadFirebase(this.key,this.opened,'image')
-      //}
-    },
-    _updateBigImage: function(bigImage){ 
-      var time = Date.now()
-      if (bigImage && bigImage !== null && this.firebaseSaveAt && this.firebaseSaveAt['bigImage'] && (this.sendForUpdate.bigImage < time - 2000)) {
-        this.sendForUpdate.bigImage = Date.now()
-        this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
-      } else if (this.key && this.opened && !(this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) ){
-        this.loadFirebase(this.key,this.opened,'bigImage')
-      }
-    },
-    _updateTitle: function(title){ 
-      if (title && this.firebaseSaveAt && this.firebaseSaveAt['title']) {
-        this.updateFirebase(this.deck,this.key,this.opened,'title',title,0,this.edit,this.uid,0)
-      } else if (this.key && this.opened){
-        this.loadFirebase(this.key,this.opened,'title')
-      }
-    },
-    _updateDesc: function(desc){ 
-      if (desc && this.firebaseSaveAt && this.firebaseSaveAt['desc']) {
-        this.updateFirebase(this.deck,this.key,this.opened,'desc',desc,0,this.edit,this.uid,0)
-      } else if (this.key && this.opened){
-        this.loadFirebase(this.key,this.opened,'desc')
-      }
-    },
-    _updateArticle: function(article){ 
-      if (article && this.firebaseSaveAt && this.firebaseSaveAt['article']) {
-        this.updateFirebase(this.deck,this.key,this.opened,'article',article,1,this.edit,this.uid,0)
-      } else if (this.key && this.opened){
-        this.loadFirebase(this.key,this.opened,'article')
-      }
     },
     delete: function(){
       var path = "/Decks/" + this.deck + "/cards/" + this.key 
@@ -266,16 +160,6 @@
     },
     getIt:function(it){
       return it
-    },
-    isEditable: function(writable,user){
-      if (user && user !== null) { 
-        if (typeof writable === "string") {
-          writable = JSON.purse(writable)
-        }
-        return writable[user.uid] || writable.all
-      } else {
-        return writable.all
-      }
     },
     updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
       if (!time) {
@@ -312,14 +196,6 @@
       }
       clearTimeout(this.updateTimer[name])
       this.updateTimer[name] = setTimeout(updatePeriodically, updateInterval)
-    },
-    getPillars: function(title,edit) {
-      var pillars = [{view: true,selected: true,color: "#f2d123",name: title}]
-      if (edit) {
-        return pillars.concat([{name: "Edit",edit: true,color: "#1d1e30"}])
-      } else {
-        return pillars
-      }
     },
     loadAllFirebase: function(key, opened) {
       var time = Date.now()
@@ -362,7 +238,7 @@
         }
         var ref = firebase.database().ref(path + "/").limitToLast(1)
         ref.once('value', update).then(function() {
-          if (!that.edit) {
+          if (!that.sub[key + name]) {
             that.sub[key + name] = true
             ref.on('child_changed', update)
             console.log("loaded","sub to ", path)
