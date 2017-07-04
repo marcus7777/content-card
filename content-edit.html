@@ -276,7 +276,7 @@
           console.log(that.sendForUpdate.bigImage)
           var val = snapshot.val()
           if (val) {
-            var valueWithTime = that.decode(val, that[name], time)
+            var valueWithTime = that.decode(val, that[name],1)
             if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
               that[name] = valueWithTime.value
               that.firebaseSaveAt[name] = valueWithTime.time
