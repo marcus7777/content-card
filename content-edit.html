@@ -130,7 +130,7 @@
     },
     _updateImage: function(image){ 
       // if (image && this.firebaseSaveAt && this.firebaseSaveAt['image']) {
-        this.updateFirebase(this.deck,this.key,'image',image,0,this.edit,this.uid,0)
+        this.updateFirebase(this.deck,this.key,'image',image,0,this.uid,0)
       //} else if (this.key && this.opened){
       //  this.loadFirebase(this.key,'image')
       //}
@@ -139,7 +139,7 @@
       var time = Date.now()
       if (bigImage && bigImage !== null && this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
         this.sendForUpdate.bigImage = Date.now()
-        this.updateFirebase(this.deck,this.key,'bigImage',bigImage,1,this.edit,this.uid,0)
+        this.updateFirebase(this.deck,this.key,'bigImage',bigImage,1,this.uid,0)
       } else if (this.key && this.opened && !(this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) ){
         this.loadFirebase(this.key,'bigImage')
       }
@@ -180,16 +180,6 @@
     },
     getIt:function(it){
       return it
-    },
-    isEditable: function(writable,user){
-      if (user && user !== null) { 
-        if (typeof writable === "string") {
-          writable = JSON.purse(writable)
-        }
-        return writable[user.uid] || writable.all
-      } else {
-        return writable.all
-      }
     },
     updateFirebase: function(deck,key,name,value,cardOnly,uid,time){
       if (!time) {
