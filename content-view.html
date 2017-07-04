@@ -69,7 +69,7 @@
           <div class="box">
             <div class="leftMargin"></div>
             <div class="view">
-              
+              <h1>[[title]]</h1>
               <template is="dom-if" if="[[bigImage]]">
                 <img src="[[bigImage]]" title="bigImage" style="max-height:400px" class="viewSection" />
               </template>
@@ -139,7 +139,7 @@
         value:false,
       },
       _loadValues: {
-        computed: "loadAllFirebase(key,opened,firebaseSaveAt,deck)",
+        computed: "loadAllFirebase(key)",
       },
       firebaseSaveAt: {
         value: {},
@@ -161,63 +161,16 @@
     getIt:function(it){
       return it
     },
-    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
-      if (!time) {
-        time = Date.now()
-      }
-      var pad = function(toPad) {
-        return ("00"+toPad).split("").splice(-14).join("")
-      }
-      var that = this
-      var updateInterval = 2000
-      var updatePeriodically = function() {
-        if (opened && firebase && edit && deck && name && value && uid && uid != null) {
-          var path = "/Decks/" + deck + "/cards/" + key
-          var updates = {}
-          if (!cardOnly) {
-            updates[path + "/" + name + "/"] = value
-          }
-          updates["/Cards/" + key + "/" + name + "/" +  pad(time) + uid] = {
-            value: value,
-            time: firebase.database.ServerValue.TIMESTAMP,
-            user: uid,
-          }
-          return firebase.database().ref().update(updates).then(function() {
-            console.log("saved", updates)
-            that.saved = true
-          }).catch(function(r) {
-            that.notSaved = true
-            console.log("not saved",r,updates)
-          })
-        }
-      }
-      if (!this.updateTimer) {
-        this.updateTimer = {}
-      }
-      clearTimeout(this.updateTimer[name])
-      this.updateTimer[name] = setTimeout(updatePeriodically, updateInterval)
+    loadAllFirebase: function(key) {
+      this.async(this.loadFirebase(key,'bigImage'))
+      this.async(this.loadFirebase(key,'title'))
+      // this.async(this.loadFirebase(key,opened,'image'))
+      this.async(this.loadFirebase(key,'article'))
+      this.async(this.loadFirebase(key,'desc'))
+      // this.loadFirebase(key,opened,'readable')
     },
-    loadAllFirebase: function(key, opened) {
-      var time = Date.now()
-      
-      if (!this.sendForUpdate) {
-        this.sendForUpdate = {
-          bigImage: time,
-          image: time,
-          title: time,
-          desc: time,
-          writable: time,
-        }
-      }
-      this.async(this.loadFirebase(key,opened,'bigImage'), time)
-      this.async(this.loadFirebase(key,opened,'title'), time)
-      // this.async(this.loadFirebase(key,opened,'image'), time)
-      this.async(this.loadFirebase(key,opened,'desc'), time)
-      // this.loadFirebase(key,opened,'readable', time)
-      this.async(this.loadFirebase(key,opened,'writable'), time)
-    },
-    loadFirebase: function(key, opened, name, time){
-      if (firebase && opened) { // && (!this.sub || !this.sub[key + name])
+    loadFirebase: function(key, name){
+      if (firebase) { // && (!this.sub || !this.sub[key + name])
         var that = this
         var path = "/Cards/" + key + "/" + name
         if (!this.sub) {
@@ -227,7 +180,7 @@
           console.log(that.sendForUpdate.bigImage)
           var val = snapshot.val()
           if (val) {
-            var valueWithTime = that.decode(val, that[name], time)
+            var valueWithTime = that.decode(val, that[name], 0)
             if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
               that[name] = valueWithTime.value
               that.firebaseSaveAt[name] = valueWithTime.time
