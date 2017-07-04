@@ -117,7 +117,7 @@
         value:false,
       },
       _loadValues: {
-        computed: "loadAllFirebase(key,opened,firebaseSaveAt,deck)",
+        computed: "loadAllFirebase(key,firebaseSaveAt,deck)",
       },
       writable: Object,
       bigImage: {
@@ -293,11 +293,7 @@
         }
         var ref = firebase.database().ref(path + "/").limitToLast(1)
         ref.once('value', update).then(function() {
-          if (!that.edit) {
-            that.sub[key + name] = true
-            ref.on('child_changed', update)
-            console.log("loaded","sub to ", path)
-          }
+          console.log("loaded")
         }).catch(function(r) {
           console.log("not loaded")
         })
