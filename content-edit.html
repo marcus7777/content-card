@@ -134,7 +134,6 @@
     _updateBigImage: function(bigImage){ 
       var time = Date.now()
       if (this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
-        this.sendForUpdate.bigImage = Date.now()
         this.updateFirebase(this.deck,this.key,'bigImage',bigImage,1,this.uid,0)
       } else if (this.key){
         this.loadFirebase(this.key,'bigImage')
