@@ -97,10 +97,6 @@
         type:Boolean,
         value:false,
       },
-      locked: {
-        type:Boolean,
-        value:false,
-      },
       _loadValues: {
         computed: "loadAllFirebase(key)",
       },
@@ -218,20 +214,9 @@
       this.updateTimer[name] = setTimeout(updatePeriodically, updateInterval)
     },
     loadAllFirebase: function(key) {
-      var time = Date.now()
-      
-      if (!this.sendForUpdate) {
-        this.sendForUpdate = {
-          bigImage: time,
-          image: time,
-          title: time,
-          desc: time,
-          writable: time,
-        }
-      }
       this.async(this.loadFirebase(key,'bigImage'))
       this.async(this.loadFirebase(key,'title'))
-      // this.async(this.loadFirebase(key,opened,'image'))
+      this.async(this.loadFirebase(key,'image'))
       this.async(this.loadFirebase(key,'desc'))
       // this.loadFirebase(key,opened,'readable')
       this.async(this.loadFirebase(key,'writable'))
@@ -303,13 +288,6 @@
         }
       } else {
         return false
-      }
-    },
-    open: function(){
-      if (this.locked) {
-        this.fire("open","content-card")
-      } else {
-        this.fire("open",this)
       }
     },
     ready: function() {
