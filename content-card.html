@@ -117,7 +117,7 @@
       },
       pillar:Object,
       pillars: {
-        computed:"getPillars(title,edit)",
+        computed:"getPillars(edit)",
         notify:true,
       },
       opened: {
@@ -154,7 +154,7 @@
         return writable.all
       }
     },
-    getPillars: function(title,edit) {
+    getPillars: function(edit) {
       var pillars = [{view: true,selected: true,color: "#f2d123",name: "view"}]
       if (edit) {
         return pillars.concat([{name: "Edit",edit: true,color: "#1d1e30"}])
