@@ -130,35 +130,35 @@
       if (this.firebaseSaveAt && this.firebaseSaveAt['image']) {
         this.updateFirebase(this.deck,this.key,'image',image,0,this.uid,0)
       } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'image'))
+        this.async(this.loadFirebase(this.key,'image'),2000)
       }
     },
     _updateBigImage: function(bigImage){
       if (this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
         this.updateFirebase(this.deck,this.key,'bigImage',bigImage,1,this.uid,0)
       } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'bigImage'))
+        this.async(this.loadFirebase(this.key,'bigImage'),2000)
       }
     },
     _updateTitle: function(title){ 
       if (this.firebaseSaveAt && this.firebaseSaveAt['title']) {
         this.updateFirebase(this.deck,this.key,'title',title,0,this.uid,0)
       } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'title'))
+        this.async(this.loadFirebase(this.key,'title'),2000)
       }
     },
     _updateDesc: function(desc){ 
       if (this.firebaseSaveAt && this.firebaseSaveAt['desc']) {
         this.updateFirebase(this.deck,this.key,'desc',desc,0,this.uid,0)
       } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'desc'))
+        this.async(this.loadFirebase(this.key,'desc'),2000)
       }
     },
     _updateArticle: function(article){ 
       if (this.firebaseSaveAt && this.firebaseSaveAt['article']) {
         this.updateFirebase(this.deck,this.key,'article',article,1,this.uid,0)
       } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'article'))
+        this.async(this.loadFirebase(this.key,'article'),2000)
       }
     },
     delete: function(){
@@ -215,10 +215,10 @@
     },
     loadAllFirebase: function(key) {
       this.async(this.loadFirebase(key,'bigImage'))
-      this.async(this.loadFirebase(key,'title'))
-      this.async(this.loadFirebase(key,'image'))
-      this.async(this.loadFirebase(key,'desc'))
-      this.async(this.loadFirebase(key,'article'))
+      this.async(this.loadFirebase(key,'title'),  100)
+      this.async(this.loadFirebase(key,'image'),  200)
+      this.async(this.loadFirebase(key,'desc'),   300)
+      this.async(this.loadFirebase(key,'article'),400)
       // this.loadFirebase(key,opened,'readable')
       // this.async(this.loadFirebase(key,'writable'))
     },
