@@ -1,8 +1,4 @@
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../iron-media-query/iron-media-query.html">
-<link rel="import" href="../card-meta-edit/card-meta-edit.html">
-<link rel="import" href="../paper-dialog/paper-dialog.html">
-<link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../quill-js/quill-js.html">
 <link rel="import" href="../polymer/polymer.html">
@@ -62,8 +58,6 @@
         object-fit: cover;
       };
     </style>
-
-    <iron-media-query query="(min-width:700px)" query-matches="{{wide}}"></iron-media-query>
         <!-- Desktop Opened -->
         <template is="dom-if" if="{{wide}}">
           <div class="box">
@@ -146,28 +140,15 @@
         value: {},
       },
     },
-    delete: function(){
-      var path = "/Decks/" + this.deck + "/cards/" + this.key 
-      var updates = {}
-      updates[path] = null
-      updates["/Cards/" + this.key] = null
-      this.fire("deleted",firebase.database().ref().update(updates).then(
-        function() {
-          console.log("deleted", updates)
-        }).catch(function(r) {
-          console.log("not deleted",r,updates)
-        })
-      )
-    },
     getIt:function(it){
       return it
     },
     loadAllFirebase: function(key) {
-      this.async(this.loadFirebase(key,'bigImage'))
-      this.async(this.loadFirebase(key,'title'))
-      // this.async(this.loadFirebase(key,opened,'image'))
-      this.async(this.loadFirebase(key,'article'))
-      this.async(this.loadFirebase(key,'desc'))
+      this.async(this.loadFirebase(key, 'bigImage'))
+      this.async(this.loadFirebase(key, 'title'))
+      this.async(this.loadFirebase(key, 'image'))
+      this.async(this.loadFirebase(key, 'article'))
+      this.async(this.loadFirebase(key, 'desc'))
       // this.loadFirebase(key,opened,'readable')
     },
     loadFirebase: function(key, name){
@@ -249,18 +230,5 @@
         this.fire("open",this)
       }
     },
-    ready: function() {
-      this.user = firebase.auth().currentUser
-      if (this.online !== true || this.online !== false) {
-        var that = this
-        firebase.database().ref(".info/connected").on("value", function(snap) {
-          if (snap.val() === true) {
-            that.online = true
-          } else {
-            that.online = false
-          }
-        })
-      }
-    }
   })
 </script>
