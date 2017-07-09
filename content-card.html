@@ -141,41 +141,8 @@
         type:Boolean,
         value:false,
       },
-      _writable: {
-        computer: "_getPermissions(key)",
-      }
-    },
-    _getPermissions: function(key){
-      this.async(this.loadFirebase(key, 'writable'))
-     // this.async(this.loadFirebase(key, 'readable'))
-    },
-    loadFirebase: function(key, name){
-      if (firebase) { // && (!this.sub || !this.sub[key + name])
-        var that = this
-        var path = "/Cards/" + key + "/" + name
-        if (!this.sub) {
-          this.sub = {}
-        }
-        var update = function(snapshot) {
-          console.log(that.sendForUpdate.bigImage)
-          var val = snapshot.val()
-          if (val) {
-            var valueWithTime = that.decode(val, that[name],1)
-            if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
-              that[name] = valueWithTime.value
-              that.firebaseSaveAt[name] = valueWithTime.time
-            } 
-          } else if (val == null){
-            that.firebaseSaveAt[name] = 1 // not got a value from firebase
-          }
-        }
-        var ref = firebase.database().ref(path + "/").limitToLast(1)
-        ref.once('value', update).then(function() {
-          console.log("loaded")
-        }).catch(function(r) {
-          console.log("not loaded")
-        })
-      }
+      writable: Object,
+      readable: Object,
     },
     getIt:function(it){
       return it
