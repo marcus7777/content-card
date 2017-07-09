@@ -154,7 +154,7 @@
       }
     },
     _updateArticle: function(article){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['article']) {
+      if (this.firebaseSaveAt && this.firebaseSaveAt['article'] && JSON.stringify(article) !== '[{"insert":"\n"}]') {
         this.updateFirebase(this.deck,this.key,'article',article,1,this.uid,0)
       } else if (this.key){
         this.loadFirebase(this.key,'article')
