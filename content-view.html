@@ -1,5 +1,4 @@
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../quill-js/quill-js.html">
 <link rel="import" href="../polymer/polymer.html">
 <!--
@@ -58,44 +57,42 @@
         object-fit: cover;
       };
     </style>
-        <!-- Desktop Opened -->
-        <template is="dom-if" if="{{wide}}">
-          <div class="box">
-            <div class="leftMargin"></div>
-            <div class="view">
-              <h1>[[title]]</h1>
-              <template is="dom-if" if="[[bigImage]]">
-                <img src="[[bigImage]]" title="bigImage" style="max-height:400px" class="viewSection" />
-              </template>
-              
-              <template is="dom-if" if="[[!bigImage]]">
-                <template is="dom-if" if="[[image]]">
-                  <img src="[[image]]" title="image" style="max-height:400px" class="viewSection" />
-                </template>
-              </template>
-              <div id="viewText" class="viewSection">[[desc]]</div>
-              <template is="dom-if" if="[[article]]">
-                <quill-js class="viewSection" value="[[article]]" show style="max-height:95vh"></quill-js>
-              </template>
-            </div>
-            <div class="rightMargin"></div>
-          </div>
-        </template>
-        <!-- Mobile Opened -->
-        <template is="dom-if" if="{{!wide}}">
-          <div class="box">
-            <div class="leftMarginmob"></div>
-            <div class="view">
-              <h1>[[title]]</h1>
-              <img src="[[bigImage]]" class="viewSection" />
-              <div id="viewText" class="viewSection">[[desc]]</div>
-              <quill-js class="viewSection" value="[[article]]" show style="max-height:95vh"></quill-js>
-            </div>
-            <div class="rightMarginmob"></div>
-          </div>
-        </template>
-      </template>
-  
+    <!-- Desktop Opened -->
+    <template is="dom-if" if="{{wide}}">
+      <div class="box">
+        <div class="leftMargin"></div>
+        <div class="view">
+          <h1>[[title]]</h1>
+          <template is="dom-if" if="[[bigImage]]">
+            <img src="[[bigImage]]" title="bigImage" style="max-height:400px" class="viewSection" />
+          </template>    
+          <template is="dom-if" if="[[!bigImage]]">
+            <template is="dom-if" if="[[image]]">
+              <img src="[[image]]" title="image" style="max-height:400px" class="viewSection" />
+            </template>
+          </template>
+          <div id="viewText" class="viewSection">[[desc]]</div>
+          <template is="dom-if" if="[[article]]">
+            <quill-js class="viewSection" value="[[article]]" show style="max-height:95vh"></quill-js>
+          </template>
+        </div>
+        <div class="rightMargin"></div>
+      </div>
+    </template>
+    <!-- Mobile Opened -->
+    <template is="dom-if" if="{{!wide}}">
+      <div class="box">
+        <div class="leftMarginmob"></div>
+        <div class="view">
+          <h1>[[title]]</h1>
+          <img src="[[bigImage]]" class="viewSection" />
+          <div id="viewText" class="viewSection">[[desc]]</div>
+          <quill-js class="viewSection" value="[[article]]" show style="max-height:95vh"></quill-js>
+        </div>
+        <div class="rightMarginmob"></div>
+      </div>
+    </template>
+  </template>
 </dom-module>
 <script>
   Polymer({
@@ -109,23 +106,7 @@
         value:""
       },
       pillar:Object,
-      value: {
-        value:"{}",
-        type:String,
-      },
-      opened: {
-        type:Boolean,
-        value:false,
-      },
       wide: {
-        type:Boolean,
-        value:false,
-      },
-      saved: {
-        type:Boolean,
-        value:false,
-      },
-      apiSaved:{
         type:Boolean,
         value:false,
       },
