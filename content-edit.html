@@ -117,6 +117,7 @@
         observer: '_updateDesc',
       },
       article:{
+        value: [{insert:"\n"}],
         observer: '_updateArticle',
       },
       firebaseSaveAt: {
@@ -154,7 +155,7 @@
       }
     },
     _updateArticle: function(article){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['article'] && JSON.stringify(article) !== '[{"insert":"\n"}]') {
+      if (this.firebaseSaveAt && this.firebaseSaveAt['article'] ) {
         this.updateFirebase(this.deck,this.key,'article',article,1,this.uid,0)
       } else if (this.key){
         this.loadFirebase(this.key,'article')
