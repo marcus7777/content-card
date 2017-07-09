@@ -114,7 +114,11 @@
       },
       pillar:Object,
       pillars: {
-        computed:"getPillars(edit)",
+        computed:"getPillars(isEdit)",
+        notify:true,
+      },
+      isEdit: {
+        computed:"isEditable(writable,user)",
         notify:true,
       },
       opened: {
