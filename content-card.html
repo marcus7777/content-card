@@ -90,10 +90,10 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <template is="dom-if" if="[[!pillar.edit]]">
-        <content-view key="[[key]]" deck="[[deck]]" uid="[[uid]]" ></content-view>
+        <content-view key="[[key]]" deck="[[deck]]" uid="[[uid]]" wide="[[wide]]" ></content-view>
       </template>
       <template is="dom-if" if="[[pillar.edit]]">
-        <content-edit key="[[key]]" deck="[[deck]]" uid="[[uid]]" ></content-edit>
+        <content-edit key="[[key]]" deck="[[deck]]" uid="[[uid]]" wide="[[wide]]" ></content-edit>
       </template>
     </template>
   </template>
@@ -139,32 +139,6 @@
       locked: {
         type:Boolean,
         value:false,
-      },
-      _loadValues: {
-        computed: "loadAllFirebase(key,opened,firebaseSaveAt,deck)",
-      },
-      writable: Object,
-      bigImage: {
-        value: "",
-        observer: '_updateBigImage',
-      },
-      image: {
-        value: "",
-        observer: '_updateImage',
-      },
-      title: {
-        value: "",
-        observer: '_updateTitle',
-      },
-      desc: {
-        value: "",
-        observer: '_updateDesc',
-      },
-      article:{
-        observer: '_updateArticle',
-      },
-      firebaseSaveAt: {
-        value: {},
       },
     },
     getIt:function(it){
