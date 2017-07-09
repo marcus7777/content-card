@@ -100,10 +100,6 @@
       _loadValues: {
         computed: "loadAllFirebase(key)",
       },
-      writable:{
-        type: Object,
-        notify:true,
-      },
       bigImage: {
         value: "",
         observer: '_updateBigImage',
@@ -126,6 +122,8 @@
       firebaseSaveAt: {
         value: {},
       },
+      writable: Object,
+      readable: Object,
     },
     _updateImage: function(image){ 
       if (this.firebaseSaveAt && this.firebaseSaveAt['image']) {
@@ -221,7 +219,7 @@
       this.async(this.loadFirebase(key,'image'))
       this.async(this.loadFirebase(key,'desc'))
       // this.loadFirebase(key,opened,'readable')
-      this.async(this.loadFirebase(key,'writable'))
+      // this.async(this.loadFirebase(key,'writable'))
     },
     loadFirebase: function(key, name){
       if (firebase) { // && (!this.sub || !this.sub[key + name])
