@@ -73,7 +73,7 @@
           </template>
           <div id="viewText" class="viewSection">[[desc]]</div>
           <template is="dom-if" if="[[article]]">
-            <quill-js class="viewSection" value="[[article]]" show style="max-height:95vh"></quill-js>
+            <quill-js class="viewSection" value="[[article]]" testshow style="max-height:95vh"></quill-js>
           </template>
         </div>
         <div class="rightMargin"></div>
@@ -132,8 +132,8 @@
       this.async(this.loadFirebase(key, 'image'))
       this.async(this.loadFirebase(key, 'article'))
       this.async(this.loadFirebase(key, 'desc'))
-      this.async(this.loadFirebase(key, 'writable'))
-      // this.loadFirebase(key,opened,'readable')
+    // this.async(this.loadFirebase(key, 'writable'))
+    // this.loadFirebase(key,opened,'readable')
     },
     loadFirebase: function(key, name){
       if (firebase) { // && (!this.sub || !this.sub[key + name])
