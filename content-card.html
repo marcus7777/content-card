@@ -90,7 +90,7 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <template is="dom-if" if="[[!pillar.edit]]">
-        <content-view key="[[key]]" deck="[[deck]]" uid="[[uid]]" wide="[[wide]]" ></content-view>
+        <content-view key="[[key]]" uid="[[uid]]" wide="[[wide]]" ></content-view>
       </template>
       <template is="dom-if" if="[[pillar.edit]]">
         <content-edit key="[[key]]" deck="[[deck]]" uid="[[uid]]" wide="[[wide]]" ></content-edit>
