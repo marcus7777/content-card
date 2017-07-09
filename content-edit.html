@@ -100,7 +100,10 @@
       _loadValues: {
         computed: "loadAllFirebase(key)",
       },
-      writable: Object,
+      writable:{
+        type: Object,
+        notify:true,
+      },
       bigImage: {
         value: "",
         observer: '_updateBigImage',
