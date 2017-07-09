@@ -169,5 +169,8 @@
         this.fire("open",this)
       }
     },
+    ready: function() {
+      this.user = firebase.auth().currentUser
+    },
   })
 </script>
