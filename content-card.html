@@ -90,9 +90,11 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <template is="dom-if" if="[[!pillar.edit]]">
+        view
         <content-view key="[[key]]" uid="[[uid]]" wide="[[wide]]" ></content-view>
       </template>
       <template is="dom-if" if="[[pillar.edit]]">
+        edit
         <content-edit key="[[key]]" deck="[[deck]]" uid="[[uid]]" wide="[[wide]]" ></content-edit>
       </template>
     </template>
@@ -145,7 +147,7 @@
     getIt:function(it){
       return it
     },
-    isEditable: function(writable,user){
+    isEditable: function(writable, user){
       if (user && user !== null) { 
         if (typeof writable === "string") {
           writable = JSON.purse(writable)
