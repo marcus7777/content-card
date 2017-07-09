@@ -102,9 +102,6 @@
   Polymer({
     is: "content-card",
     properties:{
-      edit: {
-        computed:"isEditable(writable,user)"
-      },
       uid: {
         computed:"getIt(user.uid)"
       },
@@ -137,6 +134,10 @@
         value:false,
       },
       locked: {
+        type:Boolean,
+        value:false,
+      },
+      edit: {
         type:Boolean,
         value:false,
       },
