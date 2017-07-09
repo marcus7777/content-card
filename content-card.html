@@ -64,7 +64,7 @@
     <iron-media-query query="(min-width:700px)" query-matches="{{wide}}"></iron-media-query>
     
     <template is="dom-if" if="[[!opened]]">
-      <div on-tap="open" class="container">
+      <div on-tap="open" class$="container [[key]]">
         <template is="dom-if" if="[[image]]">
           <!-- Desktop Closed -->
           <template is="dom-if" if="{{wide}}">
