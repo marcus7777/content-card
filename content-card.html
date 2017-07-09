@@ -120,10 +120,6 @@
         computed:"getPillars(title,edit)",
         notify:true,
       },
-      value: {
-        value:"{}",
-        type:String,
-      },
       opened: {
         type:Boolean,
         value:false,
@@ -171,57 +167,6 @@
         value: {},
       },
     },
-    _updateImage: function(image){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['image']) {
-        this.updateFirebase(this.deck,this.key,this.opened,'image',image,0,this.edit,this.uid,0)
-      }
-      //} else if (this.key){
-      //  this.loadFirebase(this.key,this.opened,'image')
-      //}
-    },
-    _updateBigImage: function(bigImage){ 
-      var time = Date.now()
-      if (this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
-        this.sendForUpdate.bigImage = Date.now()
-        this.updateFirebase(this.deck,this.key,this.opened,'bigImage',bigImage,1,this.edit,this.uid,0)
-      } else if (this.key){
-        this.loadFirebase(this.key,this.opened,'bigImage')
-      }
-    },
-    _updateTitle: function(title){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['title']) {
-        this.updateFirebase(this.deck,this.key,this.opened,'title',title,0,this.edit,this.uid,0)
-      } else if (this.key){
-        this.loadFirebase(this.key,this.opened,'title')
-      }
-    },
-    _updateDesc: function(desc){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['desc']) {
-        this.updateFirebase(this.deck,this.key,this.opened,'desc',desc,0,this.edit,this.uid,0)
-      } else if (this.key){
-        this.loadFirebase(this.key,this.opened,'desc')
-      }
-    },
-    _updateArticle: function(article){ 
-      if (article && this.firebaseSaveAt && this.firebaseSaveAt['article']) {
-        this.updateFirebase(this.deck,this.key,this.opened,'article',article,1,this.edit,this.uid,0)
-      } else if (this.key){
-        this.loadFirebase(this.key,this.opened,'article')
-      }
-    },
-    delete: function(){
-      var path = "/Decks/" + this.deck + "/cards/" + this.key 
-      var updates = {}
-      updates[path] = null
-      updates["/Cards/" + this.key] = null
-      this.fire("deleted",firebase.database().ref().update(updates).then(
-        function() {
-          console.log("deleted", updates)
-        }).catch(function(r) {
-          console.log("not deleted",r,updates)
-        })
-      )
-    },
     getIt:function(it){
       return it
     },
@@ -235,140 +180,12 @@
         return writable.all
       }
     },
-    updateFirebase: function(deck,key,opened,name,value,cardOnly,edit,uid,time){
-      if (!time) {
-        time = Date.now()
-      }
-      var pad = function(toPad) {
-        return ("00"+toPad).split("").splice(-14).join("")
-      }
-      var that = this
-      var updateInterval = 2000
-      var updatePeriodically = function() {
-        if (opened && firebase && edit && deck && name && value && uid && uid != null) {
-          var path = "/Decks/" + deck + "/cards/" + key
-          var updates = {}
-          if (!cardOnly) {
-            updates[path + "/" + name + "/"] = value
-          }
-          updates["/Cards/" + key + "/" + name + "/" +  pad(time) + uid] = {
-            value: value,
-            time: firebase.database.ServerValue.TIMESTAMP,
-            user: uid,
-          }
-          return firebase.database().ref().update(updates).then(function() {
-            console.log("saved", updates)
-            that.saved = true
-          }).catch(function(r) {
-            that.notSaved = true
-            console.log("not saved",r,updates)
-          })
-        }
-      }
-      if (!this.updateTimer) {
-        this.updateTimer = {}
-      }
-      clearTimeout(this.updateTimer[name])
-      this.updateTimer[name] = setTimeout(updatePeriodically, updateInterval)
-    },
     getPillars: function(title,edit) {
       var pillars = [{view: true,selected: true,color: "#f2d123",name: "view"}]
       if (edit) {
         return pillars.concat([{name: "Edit",edit: true,color: "#1d1e30"}])
       } else {
         return pillars
-      }
-    },
-    loadAllFirebase: function(key, opened) {
-      var time = Date.now()
-      
-      if (!this.sendForUpdate) {
-        this.sendForUpdate = {
-          bigImage: time,
-          image: time,
-          title: time,
-          desc: time,
-          writable: time,
-        }
-      }
-      this.async(this.loadFirebase(key,opened,'bigImage'), time)
-      this.async(this.loadFirebase(key,opened,'title'), time)
-      // this.async(this.loadFirebase(key,opened,'image'), time)
-      this.async(this.loadFirebase(key,opened,'desc'), time)
-      // this.loadFirebase(key,opened,'readable', time)
-      this.async(this.loadFirebase(key,opened,'writable'), time)
-    },
-    loadFirebase: function(key, opened, name, time){
-      if (firebase && opened) { // && (!this.sub || !this.sub[key + name])
-        var that = this
-        var path = "/Cards/" + key + "/" + name
-        if (!this.sub) {
-          this.sub = {}
-        }
-        var update = function(snapshot) {
-          console.log(that.sendForUpdate.bigImage)
-          var val = snapshot.val()
-          if (val) {
-            var valueWithTime = that.decode(val, that[name], time)
-            if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
-              that[name] = valueWithTime.value
-              that.firebaseSaveAt[name] = valueWithTime.time
-            } 
-          } else if (val == null){
-            that.firebaseSaveAt[name] = 1 // not got a value from firebase
-          }
-        }
-        var ref = firebase.database().ref(path + "/").limitToLast(1)
-        ref.once('value', update).then(function() {
-          if (!that.edit) {
-            that.sub[key + name] = true
-            ref.on('child_changed', update)
-            console.log("loaded","sub to ", path)
-          }
-        }).catch(function(r) {
-          console.log("not loaded")
-        })
-      }
-    },
-   /**
-    *
-    * @return {value:array|string,time: number}|false
-    *
-    **/
-    decode: function(val,localVal,theDate){
-      if (typeof val == 'object' && !val.value) {
-        if (Object.keys(val)[0].length == 42) {
-          return this.decode(val[Object.keys(val)[0]],localVal,theDate)
-        }
-      }
-      var Delta = Quill.import('delta')
-      if (typeof val == 'string') {
-        try {
-          return JSON.parse(val);
-        } catch(e) {
-          return val
-        }
-      } 
-      if(localVal) {
-        try {
-          localVal = JSON.parse(localVal);
-        } catch(e) {
-        }
-      }
-      if (typeof val == 'object' && (typeof val.value == 'string' || Array.isArray(val.value)) && +val.time) {
-        if (val.value !== localVal || !localVal) {
-          return {
-            value: val.value,
-            time:  +val.time,
-          }
-        } else {
-          return {
-            value: localVal,
-            time:  +theDate,
-          }
-        }
-      } else {
-        return false
       }
     },
     open: function(){
@@ -378,18 +195,5 @@
         this.fire("open",this)
       }
     },
-    ready: function() {
-      this.user = firebase.auth().currentUser
-      if (this.online !== true || this.online !== false) {
-        var that = this
-        firebase.database().ref(".info/connected").on("value", function(snap) {
-          if (snap.val() === true) {
-            that.online = true
-          } else {
-            that.online = false
-          }
-        })
-      }
-    }
   })
 </script>
