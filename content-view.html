@@ -142,6 +142,7 @@
         if (!this.sub) {
           this.sub = {}
         }
+        var ref = firebase.database().ref(path + "/").limitToLast(1)
         var update = function(snapshot) {
           var val = snapshot.val()
           if (val) {
@@ -151,19 +152,11 @@
               that.firebaseSaveAt[name] = valueWithTime.time
             } 
           } else if (val == null){
+            ref.off()
             that.firebaseSaveAt[name] = 1 // not got a value from firebase
           }
         }
-        var ref = firebase.database().ref(path + "/").limitToLast(1)
-        ref.once('value', update).then(function() {
-          if (!that.sub[key + name]) {
-            that.sub[key + name] = true
-            ref.on('child_changed', update)
-            console.log("loaded","sub to ", path)
-          }
-        }).catch(function(r) {
-          console.log("not loaded")
-        })
+        ref.on('value', update)
       }
     },
    /**
