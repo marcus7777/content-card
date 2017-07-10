@@ -173,11 +173,25 @@
     },
     _keyUpdate: function(key, old) {
       if (!old && key) {
-        this.updateFirebase(this.deck,key,'image',   this.image,   0,this.uid,0)
-        this.updateFirebase(this.deck,key,'bigImage',this.bigImage,1,this.uid,0)
-        this.updateFirebase(this.deck,key,'title',   this.title,   0,this.uid,0)
-        this.updateFirebase(this.deck,key,'desc',    this.desc,    0,this.uid,0)
-        this.updateFirebase(this.deck,key,'article', this.article, 1,this.uid,0)
+        var uid = this.uid
+        
+        this.updateFirebase(this.deck,key,'cardType',"content-card",       0, uid,0)
+        this.updateFirebase(this.deck,key,'icon',    "chrome-reader-mode", 0, uid,0)
+        
+        // permissions
+        var readable = {all:true}
+        readable[this.userUid] = true
+        this.updateFirebase(this.deck,key,'readable', readable,    0,uid,0)
+        
+        var writable = {all:false}
+        writable[this.userUid] = true
+        this.updateFirebase(this.deck,key,'writable', writable,    0,uid,0)    
+        
+        this.updateFirebase(this.deck,key,'image',   this.image,   0,uid,0)
+        this.updateFirebase(this.deck,key,'bigImage',this.bigImage,1,uid,0)
+        this.updateFirebase(this.deck,key,'title',   this.title,   0,uid,0)
+        this.updateFirebase(this.deck,key,'desc',    this.desc,    0,uid,0)
+        this.updateFirebase(this.deck,key,'article', this.article, 1,uid,0)
       }
     },
     delete: function(){
