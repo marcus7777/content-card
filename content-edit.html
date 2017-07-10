@@ -180,11 +180,11 @@
         
         // permissions
         var readable = {all:true}
-        readable[this.userUid] = true
+        readable[uid] = true
         this.updateFirebase(this.deck,key,'readable', readable,    0,uid,0)
         
         var writable = {all:false}
-        writable[this.userUid] = true
+        writable[uid] = true
         this.updateFirebase(this.deck,key,'writable', writable,    0,uid,0)    
         
         this.updateFirebase(this.deck,key,'image',   this.image,   0,uid,0)
