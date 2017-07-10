@@ -63,7 +63,7 @@
       };
     </style>
     <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}"></card-meta-edit>
-    <quill-js id="editor" value="{{article}}" go="{{go}}"></quill-js>
+    <quill-js value="{{article}}"></quill-js>
     <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
     <paper-toast text="Error not saving" opened="{{notSaved}}"></paper-toast>
     <paper-toast text="Updated" opened="{{apiSaved}}"></paper-toast>
@@ -193,7 +193,7 @@
       )
     },
     addCard: function(){
-      // this.key = new
+      this.key = firebase.database().ref().child('Cards').push().key
     },
     getIt: function(it){
       return it
