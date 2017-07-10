@@ -223,7 +223,7 @@
       var that = this
       var updateInterval = 2000
       var updatePeriodically = function() {
-        if (firebase && deck && name && value && uid && uid != null) {
+        if (firebase && deck && name && value && uid && uid != null && key) {
           var path = "/Decks/" + deck + "/cards/" + key
           var updates = {}
           if (!cardOnly) {
