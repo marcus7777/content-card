@@ -195,17 +195,21 @@
       }
     },
     delete: function(){
-      var path = "/Decks/" + this.deck + "/cards/" + this.key 
-      var updates = {}
-      updates[path] = null
-      updates["/Cards/" + this.key] = null
-      this.fire("deleted",firebase.database().ref().update(updates).then(
-        function() {
-          console.log("deleted", updates)
-        }).catch(function(r) {
-          console.log("not deleted",r,updates)
-        })
-      )
+      if (this.deck) {
+        var path = "/Decks/" + this.deck + "/cards/" + this.key 
+        var updates = {}
+        updates[path] = null
+        updates["/Cards/" + this.key] = null
+        this.fire("deleted",firebase.database().ref().update(updates).then(
+          function() {
+            console.log("deleted", updates)
+          }).catch(function(r) {
+            console.log("not deleted",r,updates)
+          })
+       )
+      } else {
+        throw "no deck!"
+      }
     },
     addCard: function(){
       this.key = firebase.database().ref().child('Cards').push().key
