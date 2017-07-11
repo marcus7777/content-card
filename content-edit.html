@@ -213,6 +213,7 @@
     },
     addCard: function(){
       this.key = firebase.database().ref().child('Cards').push().key
+      this.async(this.fire("close-card"))
     },
     getIt: function(it){
       return it
