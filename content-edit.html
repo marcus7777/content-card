@@ -140,35 +140,35 @@
       if (this.firebaseSaveAt && this.firebaseSaveAt['image']) {
         this.updateFirebase(this.deck,this.key,'image',image,0,this.uid,0)
       } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'image'),2000)
+        this.async(this.loadFirebase(this.key,'image'))
       }
     },
     _updateBigImage: function(bigImage){
       if (this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
         this.updateFirebase(this.deck,this.key,'bigImage',bigImage,1,this.uid,0)
       } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'bigImage'),2000)
+        this.async(this.loadFirebase(this.key,'bigImage'))
       }
     },
     _updateTitle: function(title){ 
       if (this.firebaseSaveAt && this.firebaseSaveAt['title']) {
         this.updateFirebase(this.deck,this.key,'title',title,0,this.uid,0)
       } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'title'),2000)
+        this.async(this.loadFirebase(this.key,'title'))
       }
     },
     _updateDesc: function(desc){ 
       if (this.firebaseSaveAt && this.firebaseSaveAt['desc']) {
         this.updateFirebase(this.deck,this.key,'desc',desc,0,this.uid,0)
       } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'desc'),2000)
+        this.async(this.loadFirebase(this.key,'desc'))
       }
     },
     _updateArticle: function(article){ 
       if (this.firebaseSaveAt && this.firebaseSaveAt['article']) {
         this.updateFirebase(this.deck,this.key,'article',article,1,this.uid,0)
       } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'article'),2000)
+        this.async(this.loadFirebase(this.key,'article'))
       }
     },
     _keyUpdate: function(key, old) {
