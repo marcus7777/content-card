@@ -115,7 +115,7 @@
         value:false,
       },
       _loadValues: {
-        computed: "loadAllFirebase(key, uid)",
+        computed: "loadAllFirebase(key,uid,writable)",
       },
       firebaseSaveAt: {
         value: {},
@@ -126,13 +126,13 @@
     getIt:function(it){
       return it
     },
-    loadAllFirebase: function(key, uid) {
-      this.async(this.loadFirebase(key, 'bigImage', uid))
-      this.async(this.loadFirebase(key, 'title',uid))
-      this.async(this.loadFirebase(key, 'image',uid))
-      this.async(this.loadFirebase(key, 'article',uid))
-      this.async(this.loadFirebase(key, 'desc',uid))
-    // this.async(this.loadFirebase(key, 'writable'),uid)
+    loadAllFirebase: function(key, uid, writable) {
+      this.async(this.loadFirebase(key, 'bigImage', uid, writable))
+      this.async(this.loadFirebase(key, 'title',uid, writable))
+      this.async(this.loadFirebase(key, 'image',uid, writable))
+      this.async(this.loadFirebase(key, 'article',uid, writable))
+      this.async(this.loadFirebase(key, 'desc',uid, writable))
+    // this.async(this.loadFirebase(key, 'writable',uid))
     // this.loadFirebase(key,opened,'readable')
     },
     loadFirebase: function(key, name, uid){
