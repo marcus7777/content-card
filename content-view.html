@@ -152,7 +152,7 @@
         var ref2 = firebase.database().ref(path + "/").orderByChild("user").equalTo(expertUserID).limitToLast(1)
         var ref3 = firebase.database().ref(path + "/").limitToLast(1)
         
-        var update = function(theRef) {
+        var update = function(theRef,nextRef,lastRef) {
           function(snapshot) {
             var val = snapshot.val()
             if (val) {
@@ -163,13 +163,16 @@
               } 
             } else if (val == null){
               theRef.off()
+              if (nextRef) {
+                nextRef.on('value', update(nextRef, lastRef))
+              } else {
+                lastRef.on('value', update(lastRef))
+              }
               that.firebaseSaveAt[name] = 1 // not got a value from firebase
             }
           }
         }
-        ref.on('value', update(ref))
-        ref2.on('value', update(ref2))
-        ref3.on('value', update(ref3))
+        ref.on('value', update(ref,ref2,ref3))
       }
     },
    /**
