@@ -142,36 +142,34 @@
         if (!this.sub) {
           this.sub = {}
         }
-        var ref
-        try {
-          ref = firebase.database().ref(path + "/").orderByChild("user").equalTo(uid).limitToLast(1)
-        } catch (e){
-          try {
-            var expertUserID = Object.keys(this.writable).reduce(function (a, i) {
-              if (this.writable[i]) {
-                a.push(i)
-              }
-              return a
-            },[])
-            ref = firebase.database().ref(path + "/").orderByChild("user").equalTo(expertUserID).limitToLast(1)
-          } catch (e){
-            ref = firebase.database().ref(path + "/").limitToLast(1)
+        var ref = firebase.database().ref(path + "/").orderByChild("user").equalTo(uid).limitToLast(1)
+        var expertUserID = Object.keys(this.writable).reduce(function (a, i) {
+          if (this.writable[i]) {
+            a.push(i)
+          }
+          return a
+        },[])
+        var ref2 = firebase.database().ref(path + "/").orderByChild("user").equalTo(expertUserID).limitToLast(1)
+        var ref3 = firebase.database().ref(path + "/").limitToLast(1)
+        
+        var update = function(theRef) {
+          function(snapshot) {
+            var val = snapshot.val()
+            if (val) {
+              var valueWithTime = that.decode(val, that[name], 0)
+              if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
+                that[name] = valueWithTime.value
+                that.firebaseSaveAt[name] = valueWithTime.time
+              } 
+            } else if (val == null){
+              theRef.off()
+              that.firebaseSaveAt[name] = 1 // not got a value from firebase
+            }
           }
         }
-        var update = function(snapshot) {
-          var val = snapshot.val()
-          if (val) {
-            var valueWithTime = that.decode(val, that[name], 0)
-            if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
-              that[name] = valueWithTime.value
-              that.firebaseSaveAt[name] = valueWithTime.time
-            } 
-          } else if (val == null){
-            ref.off()
-            that.firebaseSaveAt[name] = 1 // not got a value from firebase
-          }
-        }
-        ref.on('value', update)
+        ref.on('value', update(ref))
+        ref2.on('value', update(ref2))
+        ref3.on('value', update(ref3))
       }
     },
    /**
