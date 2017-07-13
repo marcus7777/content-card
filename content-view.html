@@ -165,7 +165,7 @@
               theRef.off()
               if (nextRef) {
                 nextRef.on('value', update(nextRef, lastRef))
-              } else {
+              } else if (lastRef){
                 lastRef.on('value', update(lastRef))
               }
               that.firebaseSaveAt[name] = 1 // not got a value from firebase
