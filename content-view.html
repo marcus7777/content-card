@@ -153,7 +153,7 @@
         var ref3 = firebase.database().ref(path + "/").limitToLast(1)
         
         var update = function(theRef,nextRef,lastRef) {
-          function(snapshot) {
+          return function(snapshot) {
             var val = snapshot.val()
             if (val) {
               var valueWithTime = that.decode(val, that[name], 0)
