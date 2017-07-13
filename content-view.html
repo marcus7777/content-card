@@ -115,7 +115,7 @@
         value:false,
       },
       _loadValues: {
-        computed: "loadAllFirebase(key)",
+        computed: "loadAllFirebase(key, uid)",
       },
       firebaseSaveAt: {
         value: {},
@@ -126,23 +126,38 @@
     getIt:function(it){
       return it
     },
-    loadAllFirebase: function(key) {
-      this.async(this.loadFirebase(key, 'bigImage'))
-      this.async(this.loadFirebase(key, 'title'))
-      this.async(this.loadFirebase(key, 'image'))
-      this.async(this.loadFirebase(key, 'article'))
-      this.async(this.loadFirebase(key, 'desc'))
-    // this.async(this.loadFirebase(key, 'writable'))
+    loadAllFirebase: function(key, uid) {
+      this.async(this.loadFirebase(key, 'bigImage', uid))
+      this.async(this.loadFirebase(key, 'title',uid))
+      this.async(this.loadFirebase(key, 'image',uid))
+      this.async(this.loadFirebase(key, 'article',uid))
+      this.async(this.loadFirebase(key, 'desc',uid))
+    // this.async(this.loadFirebase(key, 'writable'),uid)
     // this.loadFirebase(key,opened,'readable')
     },
-    loadFirebase: function(key, name){
+    loadFirebase: function(key, name, uid){
       if (firebase) { // && (!this.sub || !this.sub[key + name])
         var that = this
         var path = "/Cards/" + key + "/" + name
         if (!this.sub) {
           this.sub = {}
         }
-        var ref = firebase.database().ref(path + "/").limitToLast(1)
+        var ref
+        try {
+          ref = firebase.database().ref(path + "/").orderByChild("user").equalTo(uid).limitToLast(1)
+        } catch (e){
+          try {
+            var expertUserID = Object.keys(this.writable).reduce(function (a, i) {
+              if (this.writable[i]) {
+                a.push(i)
+              }
+              return a
+            },[])
+            ref = firebase.database().ref(path + "/").orderByChild("user").equalTo(expertUserID).limitToLast(1)
+          } catch (e){
+            ref = firebase.database().ref(path + "/").limitToLast(1)
+          }
+        }
         var update = function(snapshot) {
           var val = snapshot.val()
           if (val) {
