@@ -370,7 +370,7 @@
         } catch(e) {
         }
       }
-      if (typeof val == 'object' && (typeof val.value == 'string' || Array.isArray(val.value)) && +val.time) {
+      if (typeof val == 'object' && (typeof val.value == 'number' || typeof val.value == 'string' || Array.isArray(val.value)) && +val.time) {
         if (val.value !== localVal || !localVal) {
           return {
             value: val.value,
