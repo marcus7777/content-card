@@ -93,7 +93,7 @@
         <content-view writable="[[writable]]" key="[[key]]" uid="[[uid]]" wide="[[wide]]" ></content-view>
       </template>
       <template is="dom-if" if="[[pillar.edit]]">
-        <content-edit writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" wide="[[wide]]" ></content-edit>
+        <content-edit writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" wide="[[wide]]" done="doneEditing" ></content-edit>
       </template>
     </template>
   </template>
@@ -149,7 +149,11 @@
       writable: Object,
       readable: Object,
     },
-    getIt:function(it){
+    doneEditing: function(){
+      this.edit = !this.edit
+      this.edit = !this.edit
+    },
+    getIt: function(it){
       return it
     },
     isEditable: function(writable, user){
