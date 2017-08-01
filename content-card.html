@@ -150,8 +150,7 @@
       readable: Object,
     },
     doneEditing: function(){
-      this.edit = !this.edit
-      this.edit = !this.edit
+      this.fire("done-editing")
     },
     getIt: function(it){
       return it
