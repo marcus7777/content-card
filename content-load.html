@@ -61,10 +61,10 @@
       writable: Object,
       readable: Object,
       _loadedAll:{
-        computed:"loadedAll(bigImage,title,image,desc,article,exif,geoHash,mapZoom,tags,writable)"
+        computed:"loadedAll(bigImage,title,image,desc,article,geoHash,mapZoom,tags,writable)"
       }
     },
-    loadedAll: function(bigImage,title,image,desc,article,exif,geoHash,mapZoom,tags,writable){
+    loadedAll: function(bigImage,title,image,desc,article,geoHash,mapZoom,tags,writable){
       
       this.fire("done-loading",{
         bigImage: bigImage,
@@ -72,7 +72,6 @@
         image: image,
         desc: desc,
         article: article,
-        exif: exif,
         geoHash: geoHash,
         mapZoom: mapZoom,
         tags: tags,
@@ -88,10 +87,9 @@
         this.async(this.loadFirebase(key, 'image',    uid, writable),20)
         this.async(this.loadFirebase(key, 'desc',     uid, writable),30)
         this.async(this.loadFirebase(key, 'article',  uid, writable),40)
-        this.async(this.loadFirebase(key, 'exif',     uid, writable),50)
-        this.async(this.loadFirebase(key, 'geoHash',  uid, writable),60)
-        this.async(this.loadFirebase(key, 'mapZoom',  uid, writable),70)
-        this.async(this.loadFirebase(key, 'tags',     uid, writable),80)
+        this.async(this.loadFirebase(key, 'geoHash',  uid, writable),50)
+        this.async(this.loadFirebase(key, 'mapZoom',  uid, writable),60)
+        this.async(this.loadFirebase(key, 'tags',     uid, writable),70)
       }
     },
     loadFirebase: function(key, name, uid){
