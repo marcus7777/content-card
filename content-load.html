@@ -62,6 +62,26 @@
       },
       writable: Object,
       readable: Object,
+      _loadedAll:{
+        computed:"loadedAll(bigImage,title,image,desc,article,exif,geoHash,mapZoom,tags,writable)"
+      }
+    },
+    loadedAll: function(bigImage,title,image,desc,article,exif,geoHash,mapZoom,tags,writable){
+      
+      this.fire("done-loading",{
+        bigImage: bigImage,
+        title: title,
+        image: image,
+        desc: desc,
+        article: article,
+        exif: exif,
+        geoHash: geoHash,
+        mapZoom: mapZoom,
+        tags: tags,
+     // readable: readable,
+        writable: writable
+      })
+    
     },
     loadAllFirebase: function(key, uid, writable) {
       if (key && uid) {
@@ -74,8 +94,6 @@
         this.async(this.loadFirebase(key, 'geoHash',  uid, writable),60)
         this.async(this.loadFirebase(key, 'mapZoom',  uid, writable),70)
         this.async(this.loadFirebase(key, 'tags',     uid, writable),80)
-        this.loadFirebase(key,opened,'readable')
-        this.async(this.loadFirebase(key,'writable'))
       }
     },
     loadFirebase: function(key, name, uid){
@@ -156,18 +174,5 @@
         return false
       }
     },
-    ready: function() {
-      this.user = firebase.auth().currentUser
-      if (this.online !== true || this.online !== false) {
-        var that = this
-        firebase.database().ref(".info/connected").on("value", function(snap) {
-          if (snap.val() === true) {
-            that.online = true
-          } else {
-            that.online = false
-          }
-        })
-      }
-    }
   })
 </script>
