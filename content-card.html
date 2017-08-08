@@ -147,9 +147,14 @@
       edit: {
         type:Boolean,
         value:false,
+      }, 
+      loaded: {
+        type:Boolean,
+        value:false,
       },
       writable: Object,
       readable: Object,
+      
     },
     doneLoading: function(e,d){
       for (var prop in d) {
@@ -159,7 +164,7 @@
         }
       }
       this.loaded = true
-      this.$$("#editor").loaded = true
+      //this.$$("#editor").loaded = true
     },
     doneEditing: function(){
       this.fire("done-editing")
