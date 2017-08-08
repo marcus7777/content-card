@@ -154,22 +154,23 @@
     doneLoading: function(e,d){
       for (var prop in d) {
         if (this[prop] != d[prop]) {
-          this[prop] == d[prop]
+          this[prop] = d[prop]
         }
       }
       if (!this.loaded && this.$$("#editor") && this.$$("#editor") !== null) {
         this.loaded = true
         for (var prop in d) {
-          if (this[prop] != d[prop]) {
-            this.$$("#editor") == d[prop]
+          if (this.$$("#editor")[prop] != d[prop]) {
+            this.$$("#editor")[prop] = d[prop]
           }
         }
+        this.$$("#editor")[prop].loaded = true
       }
       if (!this.$$("#viewer") && this.$$("#viewer") !== null) {
         this.loaded = true
         for (var prop in d) {
-          if (this[prop] != d[prop]) {
-            this.$$("#viewer") == d[prop]
+          if (this.$$("#viewer")[prop] != d[prop]) {
+            this.$$("#viewer") = d[prop]
           }
         }
       }
