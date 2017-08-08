@@ -156,7 +156,7 @@
       if (geoHash) {
         this.updateFirebase(this.deck,this.key,'geoHash',geoHash,1,this.uid,0)
       }
-      this.async(this.updateLatLong(geoHash),1000)
+      this.debounce(this.updateLatLong(geoHash),1000)
     },
     updateLatLong: function(geoHash){
       var center = decodeGeoHash(geoHash)
