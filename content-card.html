@@ -152,9 +152,12 @@
       readable: Object,
     },
     doneLoading: function(e,d){
-      console.log(e,d)
       for (var prop in d) {
-        this[prop] == d[prop]
+        if (this[prop] != d[prop]) {
+          if (this.pillar && !this.pillar.edit) {
+            this[prop] == d[prop]
+          }
+        }
       }
     },
     doneEditing: function(){
