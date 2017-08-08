@@ -154,11 +154,7 @@
     doneLoading: function(e,d){
       for (var prop in d) {
         if (this[prop] != d[prop]) {
-          if (this.pillar && !this.pillar.edit) {
-            console.log(prop, d[prop])
-            this[prop] == d[prop]
-           // this.set(prop, d[prop])
-          }
+          this[prop] == d[prop]
         }
       }
     },
