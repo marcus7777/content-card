@@ -63,7 +63,7 @@
       };
     </style>
     <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}" exif="{{exif}}"
-      latitude="{{latitude}}" longitude="{{longitude}}" tags="{{tags}}">
+      geoHash="{{geoHash}}" tags="{{tags}}">
     </card-meta-edit>
     <quill-js value="{{article}}" placeholder="Compose your cards document here..."></quill-js>
     <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
@@ -135,13 +135,9 @@
         value: {},
         observer: '_keyExif',
       },
-      latitude: {
+      geoHash: {
         value: "",
-        observer: '_keyLatitude',
-      },
-      longitude: {
-        value: "",
-        observer: '_keyLongitude',
+        observer: '_keyGeoHash',
       },
       mapsZoom: {
         value: "",
@@ -200,18 +196,11 @@
         this.async(this.loadFirebase(this.key,'exif'))
       }
     },
-    _keyLatitude: function(longitude){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['latitude']) {
-        this.updateFirebase(this.deck,this.key,'latitude',longitude,1,this.uid,0)
+    _keyGeoHash: function(geoHash){ 
+      if (this.firebaseSaveAt && this.firebaseSaveAt['geoHash']) {
+        this.updateFirebase(this.deck,this.key,'geoHash',geoHash,1,this.uid,0)
       } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'latitude'))
-      }
-    },
-    _keyLongitude: function(longitude){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['longitude']) {
-        this.updateFirebase(this.deck,this.key,'longitude',longitude,1,this.uid,0)
-      } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'longitude'))
+        this.async(this.loadFirebase(this.key,'geoHash'))
       }
     },
     _keyMapZoom: function(mapZoom){ 
@@ -250,8 +239,7 @@
         this.updateFirebase(this.deck,key,'exif',     this.exif,      1,uid,0)
         this.updateFirebase(this.deck,key,'article',  this.article,   1,uid,0)
         this.updateFirebase(this.deck,key,'bigImage', this.bigImage,  1,uid,0)
-        this.updateFirebase(this.deck,key,'longitude',this.longitude, 1,uid,0)
-        this.updateFirebase(this.deck,key,'latitude', this.latitude,  1,uid,0)
+        this.updateFirebase(this.deck,key,'geoHash',  this.geoHash, 1,uid,0)
         this.updateFirebase(this.deck,key,'mapZoom',  this.mapZoom,   1,uid,0)
         this.updateFirebase(this.deck,key,'tags',     this.tags,      1,uid,0)
         
@@ -326,15 +314,14 @@
         this.async(this.loadFirebase(key,'desc'),      30)
         this.async(this.loadFirebase(key,'article'),   40)
         this.async(this.loadFirebase(key,'exif'),      50)
-        this.async(this.loadFirebase(key,'longitude'), 60)
-        this.async(this.loadFirebase(key,'latitude'),  70)
-        this.async(this.loadFirebase(key,'mapZoom'),   80)
-        this.async(this.loadFirebase(key,'tags'),      90)
+        this.async(this.loadFirebase(key,'geoHash'),   60)
+        this.async(this.loadFirebase(key,'mapZoom'),   70)
+        this.async(this.loadFirebase(key,'tags'),      80)
       // this.loadFirebase(key,opened,'readable')
       // this.async(this.loadFirebase(key,'writable'))
       }
     },
-    loadFirebase: function(key, name){
+    loadFirebase: function(key, name, uid){
       if (firebase) { // && (!this.sub || !this.sub[key + name])
         var that = this
         var path = "/Cards/" + key + "/" + name
@@ -344,7 +331,7 @@
         var update = function(snapshot) {
           var val = snapshot.val()
           if (val) {
-            var valueWithTime = that.decode(val, that[name],1)
+            var valueWithTime = that.decode(val, that[name],1, uid)
             if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
               that[name] = valueWithTime.value
               that.firebaseSaveAt[name] = valueWithTime.time
@@ -366,16 +353,23 @@
     * @return {value:array|string,time: number}|false
     *
     **/
-    decode: function(val,localVal,theDate){
+    decode: function(val, localVal, theDate, userID){
       if (typeof val == 'object' && !val.value) {
-        if (Object.keys(val)[0].length == 42) { // TODO if user id or user id in writeable
-          return this.decode(val[Object.keys(val)[0]],localVal,theDate)
+        if (Object.keys(val)[0] == userID) {
+          var theUsersChanges = val[Object.keys(val)[0]]]
+          var theTimesOfChanges = Object.keys(theUsersChanges)
+          var theLastChange = theTimesOfChanges[theTimesOfChanges.length - 1]
+          if (theUsersChanges[theLastChange].value) {
+            return theUsersChanges[theUsersChanges[theLastChange]]
+          } else if (theUsersChanges[theLastChange].diff) {
+            debugger // delta
+          }
         }
       }
       var Delta = Quill.import('delta')
       if (typeof val == 'string') {
         try {
-          return JSON.parse(val);
+          return JSON.parse(val)
         } catch(e) {
           return val
         }
