@@ -116,11 +116,12 @@
           }
         }
         var ref = firebase.database().ref(path + "/").limitToLast(1)
-        ref.once('value', update).then(function() {
-          console.log("loaded")
-        }).catch(function(r) {
-          console.log("not loaded")
-        })
+        ref.on('value', update)
+        // .then(function() {
+        //  console.log("loaded")
+        // }).catch(function(r) {
+        //   console.log("not loaded")
+        // })
       }
     },
    /**
