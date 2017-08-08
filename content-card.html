@@ -164,7 +164,9 @@
         }
       }
       this.loaded = true
-      //this.$$("#editor").loaded = true
+      if (this.$$("#editor")) {
+        this.$$("#editor").loaded = true
+      }
     },
     doneEditing: function(){
       this.fire("done-editing")
