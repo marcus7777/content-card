@@ -319,22 +319,25 @@
       clearTimeout(this.updateTimer[name])
       this.updateTimer[name] = setTimeout(updatePeriodically, updateInterval)
     },
-    loadAllFirebase: function(key) {
-      if (key) {
-        this.async(this.loadFirebase(key,'bigImage'))
-        this.async(this.loadFirebase(key,'title'),     10)
-        this.async(this.loadFirebase(key,'image'),     20)
-        this.async(this.loadFirebase(key,'desc'),      30)
-        this.async(this.loadFirebase(key,'article'),   40)
-        this.async(this.loadFirebase(key,'exif'),      50)
-        this.async(this.loadFirebase(key,'geoHash'),   60)
-        this.async(this.loadFirebase(key,'mapZoom'),   70)
-        this.async(this.loadFirebase(key,'tags'),      80)
+    loadAllFirebase: function(key, uid) {
+      if (key && uid) {
+        this.async(this.loadFirebase(key, 'bigImage', uid))
+        this.async(this.loadFirebase(key, 'title',    uid),10)
+        this.async(this.loadFirebase(key, 'image',    uid),20)
+        this.async(this.loadFirebase(key, 'desc',     uid),30)
+        this.async(this.loadFirebase(key, 'article',  uid),40)
+        this.async(this.loadFirebase(key, 'exif',     uid),50)
+        this.async(this.loadFirebase(key, 'geoHash',  uid),60)
+        this.async(this.loadFirebase(key, 'mapZoom',  uid),70)
+        this.async(this.loadFirebase(key, 'tags',     uid),80)
       // this.loadFirebase(key,opened,'readable')
       // this.async(this.loadFirebase(key,'writable'))
       }
     },
     loadFirebase: function(key, name, uid){
+      if (!uid) {
+         uid = this.uid
+      }
       if (firebase) { // && (!this.sub || !this.sub[key + name])
         var that = this
         var path = "/Cards/" + key + "/" + name
@@ -368,7 +371,7 @@
     **/
     decode: function(val, localVal, theDate, userID){
       if (typeof val == 'object' && !val.value) {
-        if (Object.keys(val)[0] == userID) {
+        if (Object.keys(val)[0] == userID || this.writable[Object.keys(val)[0]]) {
           var theUsersChanges = val[Object.keys(val)[0]]
           var theTimesOfChanges = Object.keys(theUsersChanges)
           var theLastChange = theTimesOfChanges[theTimesOfChanges.length - 1]
