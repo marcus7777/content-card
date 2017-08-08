@@ -127,10 +127,6 @@
         value: [{insert:"\n"}],
         observer: '_updateArticle',
       },
-      exif:{
-        value: {},
-        observer: '_keyExif',
-      },
       geoHash: {
         value: "",
         observer: '_keyGeoHash',
@@ -175,13 +171,8 @@
         this.updateFirebase(this.deck,this.key,'article',article,1,this.uid,0)
       }
     },
-    _updateExif: function(exif){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['exif']) {
-        this.updateFirebase(this.deck,this.key,'exif',exif,1,this.uid,0)
-      }
-    },
     _keyGeoHash: function(geoHash){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['geoHash']) {
+      if (geoHash) {
         this.updateFirebase(this.deck,this.key,'geoHash',geoHash,1,this.uid,0)
       }
       this.async(this.updateLatLong(geoHash),1000)
@@ -226,7 +217,6 @@
         this.updateFirebase(this.deck,key,'image',    this.image,     0,uid,0)
         this.updateFirebase(this.deck,key,'title',    this.title,     0,uid,0)
         this.updateFirebase(this.deck,key,'desc',     this.desc,      0,uid,0)
-        this.updateFirebase(this.deck,key,'exif',     this.exif,      1,uid,0)
         this.updateFirebase(this.deck,key,'article',  this.article,   1,uid,0)
         this.updateFirebase(this.deck,key,'bigImage', this.bigImage,  1,uid,0)
         this.updateFirebase(this.deck,key,'geoHash',  this.geoHash,   1,uid,0)
@@ -257,9 +247,6 @@
       this.adding = true
       this.async(this.fire("close-card"))
       this.async(this.fire("done"), 2000)
-    },
-    getIt: function(it){
-      return it
     },
     updateFirebase: function(deck,key,name,value,cardOnly,uid,time){
       if (!time) {
