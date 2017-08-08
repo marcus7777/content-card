@@ -96,7 +96,7 @@
       <template is="dom-if" if="[[pillar.edit]]">
         <content-edit loaded="[[loaded]]" id="editor" big-image="[[bigImage]]" title="[[title]]" desc="[[desc]]" article="[[article]]" geo-hash="[[geoHash]]" map-zoom="[[mapZoom]]" tags="[[tags]]" writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" on-done="doneEditing" ></content-edit>
       </template>
-      <content-load writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" on-done-loading="doneLoading" ></content-load>
+      <content-load writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" on-done-loading="doneLoading" big-image="[[bigImage]]" title="[[title]]" desc="[[desc]]" article="[[article]]" geo-hash="[[geoHash]]" map-zoom="[[mapZoom]]" tags="{{tags}}"></content-load>
     </template>
   </template>
 </dom-module>
@@ -160,13 +160,9 @@
       for (var prop in d) {
         if (this[prop] != d[prop]) {
           this[prop] = d[prop]
-          this.set(prop, d[prop])
         }
       }
       this.loaded = true
-      if (this.$$("#editor")) {
-        this.$$("#editor").loaded = true
-      }
     },
     doneEditing: function(){
       this.fire("done-editing")
