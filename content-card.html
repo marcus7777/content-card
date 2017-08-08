@@ -155,9 +155,11 @@
       for (var prop in d) {
         if (this[prop] != d[prop]) {
           this[prop] = d[prop]
+          this.set(prop, d[prop])
         }
       }
       this.loaded = true
+      this.$$("#editor").loaded = true
     },
     doneEditing: function(){
       this.fire("done-editing")
