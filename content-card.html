@@ -4,6 +4,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="content-view.html">
 <link rel="import" href="content-edit.html">
+<link rel="import" href="content-load.html">
 <!--
   `<content-card></content-card>`
   @demo demo.html
@@ -95,6 +96,7 @@
       <template is="dom-if" if="[[pillar.edit]]">
         <content-edit writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" wide="[[wide]]" on-done="doneEditing" ></content-edit>
       </template>
+      <content-load writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" on-done-loading="doneLoading" ></content-load>
     </template>
   </template>
 </dom-module>
