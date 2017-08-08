@@ -91,10 +91,10 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <template is="dom-if" if="[[!pillar.edit]]">
-        <content-view writable="[[writable]]" key="[[key]]" uid="[[uid]]" wide="[[wide]]" ></content-view>
+        <content-view big-image="[[bigImage]]" title="[[title]]" desc="[[desc]]" article="[[article]]" geo-hash="[[geoHash]]" map-zoom="[[mapZoom]]" tags="[[tags]]" writable="[[writable]]"></content-view>
       </template>
       <template is="dom-if" if="[[pillar.edit]]">
-        <content-edit writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" wide="[[wide]]" on-done="doneEditing" ></content-edit>
+        <content-edit big-image="[[bigImage]]" title="[[title]]" desc="[[desc]]" article="[[article]]" geo-hash="[[geoHash]]" map-zoom="[[mapZoom]]" tags="[[tags]]" writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" wide="[[wide]]" on-done="doneEditing" ></content-edit>
       </template>
       <content-load writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" on-done-loading="doneLoading" ></content-load>
     </template>
