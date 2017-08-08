@@ -299,10 +299,9 @@
           if (!cardOnly) {
             updates[path + "/" + name + "/"] = value
           }
-          updates["/Cards/" + key + "/" + name + "/" +  pad(time) + uid] = {
+          updates["/Cards/" + key + "/" + name + "/" + uid + "/" + pad(time)] = {
             value: value,
-            time: firebase.database.ServerValue.TIMESTAMP,
-            user: uid,
+            time: firebase.database.ServerValue.TIMESTAMP
           }
           return firebase.database().ref().update(updates).then(function() {
             console.log("saved", updates)
@@ -369,7 +368,7 @@
     **/
     decode: function(val,localVal,theDate){
       if (typeof val == 'object' && !val.value) {
-        if (Object.keys(val)[0].length == 42) {
+        if (Object.keys(val)[0].length == 42) { // TODO if user id or user id in writeable
           return this.decode(val[Object.keys(val)[0]],localVal,theDate)
         }
       }
