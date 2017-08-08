@@ -134,7 +134,7 @@
           var theTimesOfChanges = Object.keys(theUsersChanges)
           var theLastChange = theTimesOfChanges[theTimesOfChanges.length - 1]
           if (theUsersChanges[theLastChange].value) {
-            return theUsersChanges[theUsersChanges[theLastChange]]
+            return theUsersChanges[theLastChange]
           } else if (theUsersChanges[theLastChange].diff) {
             debugger // delta
           }
