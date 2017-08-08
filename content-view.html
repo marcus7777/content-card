@@ -114,117 +114,11 @@
         type:Boolean,
         value:false,
       },
-      _loadValues: {
-        computed: "loadAllFirebase(key,uid,writable)",
-      },
       firebaseSaveAt: {
         value: {},
       },
       writable: Object,
       readable: Object,
-    },
-    getIt:function(it){
-      return it
-    },
-    loadAllFirebase: function(key, uid, writable) {
-      this.async(this.loadFirebase(key, 'bigImage', uid, writable))
-      this.async(this.loadFirebase(key, 'title',    uid, writable))
-      this.async(this.loadFirebase(key, 'image',    uid, writable))
-      this.async(this.loadFirebase(key, 'article',  uid, writable))
-      this.async(this.loadFirebase(key, 'desc',     uid, writable))
-    // this.async(this.loadFirebase(key, 'writable',uid))
-    // this.loadFirebase(key,opened,'readable')
-    },
-    loadFirebase: function(key, name, uid, writable){
-      if (firebase) { // && (!this.sub || !this.sub[key + name])
-        var that = this
-        var path = "/Cards/" + key + "/" + name
-        if (!this.sub) {
-          this.sub = {}
-        }
-        var ref = firebase.database().ref(path + "/").orderByChild("user").equalTo(uid).limitToLast(1)
-        
-        var expertUserID = Object.keys(writable).reduce(function (a, i) {
-          if (writable[i]) {
-            a.push(i)
-          }
-          return a
-        },[])[0]
-        if (expertUserID) {
-          var ref2 = firebase.database().ref(path + "/").orderByChild("user").equalTo(expertUserID).limitToLast(1)
-        }
-        var ref3 = firebase.database().ref(path + "/").limitToLast(1)
-        
-        var update = function(theRef,nextRef,lastRef) {
-          return function(snapshot) {
-            var val = snapshot.val()
-            if (val) {
-              var valueWithTime = that.decode(val, that[name], 0)
-              if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
-                that[name] = valueWithTime.value
-                that.firebaseSaveAt[name] = valueWithTime.time
-              } 
-            } else if (val == null){
-              theRef.off()
-              if (nextRef) {
-                nextRef.on('value', update(nextRef, lastRef))
-              } else if (lastRef){
-                lastRef.on('value', update(lastRef))
-              }
-              that.firebaseSaveAt[name] = 1 // not got a value from firebase
-            }
-          }
-        }
-        ref.on('value', update(ref,ref2,ref3))
-      }
-    },
-   /**
-    *
-    * @return {value:array|string,time: number}|false
-    *
-    **/
-    decode: function(val,localVal,theDate){
-      if (typeof val == 'object' && !val.value) {
-        if (Object.keys(val)[0].length == 42) {
-          return this.decode(val[Object.keys(val)[0]],localVal,theDate)
-        }
-      }
-      var Delta = Quill.import('delta')
-      if (typeof val == 'string') {
-        try {
-          return JSON.parse(val);
-        } catch(e) {
-          return val
-        }
-      } 
-      if(localVal) {
-        try {
-          localVal = JSON.parse(localVal);
-        } catch(e) {
-        }
-      }
-      if (typeof val == 'object' && (typeof val.value == 'string' || Array.isArray(val.value)) && +val.time) {
-        if (val.value !== localVal || !localVal) {
-          return {
-            value: val.value,
-            time:  +val.time,
-          }
-        } else {
-          return {
-            value: localVal,
-            time:  +theDate,
-          }
-        }
-      } else {
-        return false
-      }
-    },
-    open: function(){
-      if (this.locked) {
-        this.fire("open","content-card")
-      } else {
-        this.fire("open",this)
-      }
     },
   })
 </script>
