@@ -1,0 +1,173 @@
+<link rel="import" href="../geohash-js/geohash-js.html">
+<script>
+  Polymer({
+    is: "content-edit",
+    properties:{
+      uid: {
+        computed:"getIt(user.uid)"
+      },
+      online: {
+        type:Boolean,
+        notify:true,
+      },
+      value: {
+        value:"{}",
+        type:String,
+      },
+      wide: {
+        type:Boolean,
+        value:false,
+      },
+      saved: {
+        type:Boolean,
+        value:false,
+      },
+      apiSaved:{
+        type:Boolean,
+        value:false,
+      },
+      _loadValues: {
+        computed: "loadAllFirebase(key,uid,deck)",
+      },
+      bigImage: {
+        value: "",
+      },
+      image: {
+        value: "",
+      },
+      title: {
+        value: "",
+      },
+      desc: {
+        value: "",
+      },
+      article:{
+        value: [{insert:"\n"}],
+      },
+      exif:{
+        value: {},
+      },
+      geoHash: {
+        value: "",
+      },
+      mapsZoom: {
+        value: "",
+      },
+      tags:{
+        value: "",
+      },
+      deck: String,
+      firebaseSaveAt: {
+        value: {},
+      },
+      writable: Object,
+      readable: Object,
+    },
+    loadAllFirebase: function(key, uid, writable) {
+      if (key && uid) {
+        this.async(this.loadFirebase(key, 'bigImage', uid, writable))
+        this.async(this.loadFirebase(key, 'title',    uid, writable),10)
+        this.async(this.loadFirebase(key, 'image',    uid, writable),20)
+        this.async(this.loadFirebase(key, 'desc',     uid, writable),30)
+        this.async(this.loadFirebase(key, 'article',  uid, writable),40)
+        this.async(this.loadFirebase(key, 'exif',     uid, writable),50)
+        this.async(this.loadFirebase(key, 'geoHash',  uid, writable),60)
+        this.async(this.loadFirebase(key, 'mapZoom',  uid, writable),70)
+        this.async(this.loadFirebase(key, 'tags',     uid, writable),80)
+        this.loadFirebase(key,opened,'readable')
+        this.async(this.loadFirebase(key,'writable'))
+      }
+    },
+    loadFirebase: function(key, name, uid){
+      if (!uid) {
+         uid = this.uid
+      }
+      if (firebase) { // && (!this.sub || !this.sub[key + name])
+        var that = this
+        var path = "/Cards/" + key + "/" + name
+        if (!this.sub) {
+          this.sub = {}
+        }
+        var update = function(snapshot) {
+          var val = snapshot.val()
+          if (val) {
+            var valueWithTime = that.decode(val, that[name],1, uid)
+            if (valueWithTime && JSON.stringify(that[name]) !== JSON.stringify(valueWithTime.value)) {
+              that[name] = valueWithTime.value
+              that.firebaseSaveAt[name] = valueWithTime.time
+            } 
+          } else if (val == null){
+            that.firebaseSaveAt[name] = 1 // not got a value from firebase
+          }
+        }
+        var ref = firebase.database().ref(path + "/").limitToLast(1)
+        ref.once('value', update).then(function() {
+          console.log("loaded")
+        }).catch(function(r) {
+          console.log("not loaded")
+        })
+      }
+    },
+   /**
+    *
+    * @return {value:array|string,time: number}|false
+    *
+    **/
+    decode: function(val, localVal, theDate, userID){
+      if (typeof val == 'object' && !val.value) {
+        if (Object.keys(val)[0] == userID || this.writable[Object.keys(val)[0]]) {
+          var theUsersChanges = val[Object.keys(val)[0]]
+          var theTimesOfChanges = Object.keys(theUsersChanges)
+          var theLastChange = theTimesOfChanges[theTimesOfChanges.length - 1]
+          if (theUsersChanges[theLastChange].value) {
+            return theUsersChanges[theUsersChanges[theLastChange]]
+          } else if (theUsersChanges[theLastChange].diff) {
+            debugger // delta
+          }
+        }
+      }
+      var Delta = Quill.import('delta')
+      if (typeof val == 'string') {
+        try {
+          return JSON.parse(val)
+        } catch(e) {
+          return val
+        }
+      } 
+      if(localVal) {
+        try {
+          localVal = JSON.parse(localVal);
+        } catch(e) {
+        }
+      }
+      if (typeof val == 'object' && (typeof val.value == 'number' || typeof val.value == 'string' || Array.isArray(val.value)) && +val.time) {
+        if (val.value !== localVal || !localVal) {
+          return {
+            value: val.value,
+            time:  +val.time,
+          }
+        } else {
+          return {
+            value: localVal,
+            time:  +theDate,
+          }
+        }
+      } else {
+        return false
+      }
+    },
+    ready: function() {
+      this.user = firebase.auth().currentUser
+      if (this.online !== true || this.online !== false) {
+        var that = this
+        firebase.database().ref(".info/connected").on("value", function(snap) {
+          if (snap.val() === true) {
+            that.online = true
+          } else {
+            that.online = false
+          }
+        })
+      }
+    }
+  })
+</script>
