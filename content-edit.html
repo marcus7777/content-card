@@ -189,13 +189,13 @@
       }
     },
     _keyMapZoom: function(mapZoom){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['mapZoom']) {
+      if (mapZoom) {
         this.updateFirebase(this.deck,this.key,'mapZoom',mapZoom,1,this.uid,0)
       }
     },
     _keyTags: function(tags){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['tags']) {
-        this.updateFirebase(this.deck,this.key,'tags',tags,1,this.uid,0)
+      if (tags) {
+        this.updateFirebase(this.deck, this.key, 'tags', tags, 1, this.uid, 0)
       }
     },
     _keyUpdate: function(key, old) {
