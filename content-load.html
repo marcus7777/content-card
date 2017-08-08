@@ -8,6 +8,10 @@
         type:Boolean,
         notify:true,
       },
+      tags: {
+        type:String,
+        notify:true,
+      },
       value: {
         value:"{}",
         type:String,
@@ -51,7 +55,6 @@
      // readable: readable,
         writable: writable
       })
-    
     },
     loadAllFirebase: function(key, uid, writable) {
       if (key && uid) {
