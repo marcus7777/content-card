@@ -91,10 +91,10 @@
     </template>
     <template is="dom-if" if="[[opened]]">
       <template is="dom-if" if="[[!pillar.edit]]">
-        <content-view id="viewer" big-image="[[bigImage]]" title="[[title]]" desc="[[desc]]" article="[[article]]" geo-hash="[[geoHash]]" map-zoom="[[mapZoom]]" tags="[[tags]]" writable="[[writable]]" ></content-view>
+        <content-view wide="[[wide]]" big-image="[[bigImage]]" title="[[title]]" desc="[[desc]]" article="[[article]]" geo-hash="[[geoHash]]" map-zoom="[[mapZoom]]" tags="[[tags]]" writable="[[writable]]" ></content-view>
       </template>
       <template is="dom-if" if="[[pillar.edit]]">
-        <content-edit id="editor" big-image="[[bigImage]]" title="[[title]]" desc="[[desc]]" article="[[article]]" geo-hash="[[geoHash]]" map-zoom="[[mapZoom]]" tags="[[tags]]" writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" on-done="doneEditing" ></content-edit>
+        <content-edit big-image="[[bigImage]]" title="[[title]]" desc="[[desc]]" article="[[article]]" geo-hash="[[geoHash]]" map-zoom="[[mapZoom]]" tags="[[tags]]" writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" on-done="doneEditing" ></content-edit>
       </template>
       <content-load writable="[[writable]]" key="[[key]]" deck="[[deck]]" uid="[[uid]]" big-image="{{bigImage}}" title="{{title}}" desc="{{desc}}" article="{{article}}" geo-hash="{{geoHash}}" map-zoom="{{mapZoom}}" tags="{{tags}}"></content-load>
     </template>
