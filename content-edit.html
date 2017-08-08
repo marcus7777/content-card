@@ -63,7 +63,7 @@
       };
     </style>
     <card-meta-edit title="{{title}}" image="{{image}}" big-image="{{bigImage}}" desc="{{desc}}" exif="{{exif}}"
-      geoHash="{{geoHash}}" tags="{{tags}}">
+      geoHash="{{geoHash}}" latitude="[[latitude]]" longitude="[[longitude]]" tags="{{tags}}">
     </card-meta-edit>
     <quill-js value="{{article}}" placeholder="Compose your cards document here..."></quill-js>
     <paper-toast text="Saved" opened="{{saved}}"></paper-toast>
@@ -201,6 +201,18 @@
         this.updateFirebase(this.deck,this.key,'geoHash',geoHash,1,this.uid,0)
       } else if (this.key) {
         this.async(this.loadFirebase(this.key,'geoHash'))
+        this.async(this.updateLatLong(geoHash),1000)
+      }
+    },
+    updateLatLong: function(geoHash){
+      var center = decodeGeoHash(geoHash)
+      var LatM = center.latitude[1]
+      var LngM = center.longitude[1]
+      if (this.latitude != LatM) {
+        this.latitude != LatM
+      }
+      if (this.longitude != LngM) {
+        this.longitude != LngM
       }
     },
     _keyMapZoom: function(mapZoom){ 
