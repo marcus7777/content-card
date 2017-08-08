@@ -153,6 +153,9 @@
     },
     doneLoading: function(e,d){
       console.log(e,d)
+      for (var prop in d) {
+        this[prop] == d[prop]
+      }
     },
     doneEditing: function(){
       this.fire("done-editing")
