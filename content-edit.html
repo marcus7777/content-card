@@ -319,6 +319,7 @@
       clearTimeout(this.updateTimer[name])
       this.updateTimer[name] = setTimeout(updatePeriodically, updateInterval)
     },
+    
     loadAllFirebase: function(key, uid) {
       if (key && uid) {
         this.async(this.loadFirebase(key, 'bigImage', uid))
