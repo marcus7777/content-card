@@ -151,6 +151,9 @@
       writable: Object,
       readable: Object,
     },
+    doneLoading: function(e,d){
+      console.log(e,d)
+    },
     doneEditing: function(){
       this.fire("done-editing")
     },
