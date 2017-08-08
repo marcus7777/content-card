@@ -115,9 +115,6 @@
       desc: {
         observer: '_updateDesc',
       },
-      key: {
-        observer: '_keyUpdate',
-      },
       article:{
         value: [{insert:"\n"}],
         observer: '_updateArticle',
@@ -190,32 +187,29 @@
         this.updateFirebase(this.deck, this.key, 'tags', tags, 1, this.uid, 0)
       }
     },
-    _keyUpdate: function(key, old) {
-      if (!old && key) {
-        var uid = this.uid
+    _keyUpdate: function(key) {
+      var uid = this.uid
         
-        this.updateFirebase(this.deck,key,'cardType',"content-card",       0, uid,0)
-        this.updateFirebase(this.deck,key,'icon',    "chrome-reader-mode", 0, uid,0)
+      this.updateFirebase(this.deck,key,'cardType',"content-card",       0, uid,0)
+      this.updateFirebase(this.deck,key,'icon',    "chrome-reader-mode", 0, uid,0)
         
-        // permissions
-        var readable = {all:true}
-        readable[uid] = true
-        this.updateFirebase(this.deck,key,'readable', readable,    0,uid,0)
+      // permissions
+      var readable = {all:true}
+      readable[uid] = true
+      this.updateFirebase(this.deck,key,'readable', readable,    0,uid,0)
         
-        var writable = {all:false}
-        writable[uid] = true
-        this.updateFirebase(this.deck,key,'writable', writable,    0,uid,0)    
+      var writable = {all:false}
+      writable[uid] = true
+      this.updateFirebase(this.deck,key,'writable', writable,    0,uid,0)    
         
-        this.updateFirebase(this.deck,key,'image',    this.image,     0,uid,0)
-        this.updateFirebase(this.deck,key,'title',    this.title,     0,uid,0)
-        this.updateFirebase(this.deck,key,'desc',     this.desc,      0,uid,0)
-        this.updateFirebase(this.deck,key,'article',  this.article,   1,uid,0)
-        this.updateFirebase(this.deck,key,'bigImage', this.bigImage,  1,uid,0)
-        this.updateFirebase(this.deck,key,'geoHash',  this.geoHash,   1,uid,0)
-        this.updateFirebase(this.deck,key,'mapZoom',  this.mapZoom,   1,uid,0)
-        this.updateFirebase(this.deck,key,'tags',     this.tags,      1,uid,0)
-        
-      }
+      this.updateFirebase(this.deck,key,'image',    this.image,     0,uid,0)
+      this.updateFirebase(this.deck,key,'title',    this.title,     0,uid,0)
+      this.updateFirebase(this.deck,key,'desc',     this.desc,      0,uid,0)
+      this.updateFirebase(this.deck,key,'article',  this.article,   1,uid,0)
+      this.updateFirebase(this.deck,key,'bigImage', this.bigImage,  1,uid,0)
+      this.updateFirebase(this.deck,key,'geoHash',  this.geoHash,   1,uid,0)
+      this.updateFirebase(this.deck,key,'mapZoom',  this.mapZoom,   1,uid,0)
+      this.updateFirebase(this.deck,key,'tags',     this.tags,      1,uid,0)
     },
     delete: function(){
       if (this.deck) {
@@ -237,6 +231,7 @@
     addCard: function(){
       this.key = firebase.database().ref().child('Cards').push().key
       this.adding = true
+      this._keyUpdate(this.key)
       this.async(this.fire("close-card"))
       this.async(this.fire("done"), 2000)
     },
