@@ -252,7 +252,7 @@
         this.updateFirebase(this.deck,key,'exif',     this.exif,      1,uid,0)
         this.updateFirebase(this.deck,key,'article',  this.article,   1,uid,0)
         this.updateFirebase(this.deck,key,'bigImage', this.bigImage,  1,uid,0)
-        this.updateFirebase(this.deck,key,'geoHash',  this.geoHash, 1,uid,0)
+        this.updateFirebase(this.deck,key,'geoHash',  this.geoHash,   1,uid,0)
         this.updateFirebase(this.deck,key,'mapZoom',  this.mapZoom,   1,uid,0)
         this.updateFirebase(this.deck,key,'tags',     this.tags,      1,uid,0)
         
@@ -369,7 +369,7 @@
     decode: function(val, localVal, theDate, userID){
       if (typeof val == 'object' && !val.value) {
         if (Object.keys(val)[0] == userID) {
-          var theUsersChanges = val[Object.keys(val)[0]]]
+          var theUsersChanges = val[Object.keys(val)[0]]
           var theTimesOfChanges = Object.keys(theUsersChanges)
           var theLastChange = theTimesOfChanges[theTimesOfChanges.length - 1]
           if (theUsersChanges[theLastChange].value) {
