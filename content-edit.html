@@ -153,54 +153,40 @@
       readable: Object,
     },
     _updateImage: function(image){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['image']) {
+      if (image) {
         this.updateFirebase(this.deck,this.key,'image',image,0,this.uid,0)
-      } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'image'))
       }
     },
     _updateBigImage: function(bigImage){
-      if (this.firebaseSaveAt && this.firebaseSaveAt['bigImage']) {
+      if (bigImage) {
         this.updateFirebase(this.deck,this.key,'bigImage',bigImage,1,this.uid,0)
-      } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'bigImage'))
-      }
+      } 
     },
     _updateTitle: function(title){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['title']) {
+      if (title) {
         this.updateFirebase(this.deck,this.key,'title',title,0,this.uid,0)
-      } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'title'))
-      }
+      } 
     },
     _updateDesc: function(desc){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['desc']) {
+      if (desc) {
         this.updateFirebase(this.deck,this.key,'desc',desc,0,this.uid,0)
-      } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'desc'))
       }
     },
     _updateArticle: function(article){ 
-      if (this.firebaseSaveAt && this.firebaseSaveAt['article']) {
+      if (article && JSON.stringify(article) != '[{insert:"\n"}]') {
         this.updateFirebase(this.deck,this.key,'article',article,1,this.uid,0)
-      } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'article'))
       }
     },
     _updateExif: function(exif){ 
       if (this.firebaseSaveAt && this.firebaseSaveAt['exif']) {
         this.updateFirebase(this.deck,this.key,'exif',exif,1,this.uid,0)
-      } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'exif'))
       }
     },
     _keyGeoHash: function(geoHash){ 
       if (this.firebaseSaveAt && this.firebaseSaveAt['geoHash']) {
         this.updateFirebase(this.deck,this.key,'geoHash',geoHash,1,this.uid,0)
-      } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'geoHash'))
-        this.async(this.updateLatLong(geoHash),1000)
       }
+      this.async(this.updateLatLong(geoHash),1000)
     },
     updateLatLong: function(geoHash){
       var center = decodeGeoHash(geoHash)
@@ -216,15 +202,11 @@
     _keyMapZoom: function(mapZoom){ 
       if (this.firebaseSaveAt && this.firebaseSaveAt['mapZoom']) {
         this.updateFirebase(this.deck,this.key,'mapZoom',mapZoom,1,this.uid,0)
-      } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'mapZoom'))
       }
     },
     _keyTags: function(tags){ 
       if (this.firebaseSaveAt && this.firebaseSaveAt['tags']) {
         this.updateFirebase(this.deck,this.key,'tags',tags,1,this.uid,0)
-      } else if (this.key) {
-        this.async(this.loadFirebase(this.key,'tags'))
       }
     },
     _keyUpdate: function(key, old) {
