@@ -95,10 +95,6 @@
         type:Boolean,
         value:false,
       },
-      loaded:{
-        type:Boolean,
-        value:false,
-      },
       bigImage: {
         observer: '_updateBigImage',
       },
@@ -232,43 +228,39 @@
       this.async(this.fire("done"), 2000)
     },
     updateFirebase: function(deck,key,name,value,cardOnly,uid,time){
-      if (this.loaded) {
-        if (!time) {
-          time = Date.now()
-        }
-        var pad = function(toPad) {
-          return ("00"+toPad).split("").splice(-14).join("")
-        }
-        var that = this
-        var updateInterval = 2000
-        var updatePeriodically = function() {
-          if (firebase && deck && name && value && uid && uid != null && key) {
-            var path = "/Decks/" + deck + "/cards/" + key
-            var updates = {}
-            if (!cardOnly) {
-              updates[path + "/" + name + "/"] = value
-            }
-            updates["/Cards/" + key + "/" + name + "/" + uid + "/" + pad(time)] = {
-              value: value,
-              time: firebase.database.ServerValue.TIMESTAMP
-            }
-            return firebase.database().ref().update(updates).then(function() {
-              console.log("saved", updates)
-              that.saved = true
-            }).catch(function(r) {
-              that.notSaved = true
-              console.log("not saved",r,updates)
-            })
-          }
-        }
-        if (!this.updateTimer) {
-          this.updateTimer = {}
-        }
-        clearTimeout(this.updateTimer[name])
-        this.updateTimer[name] = setTimeout(updatePeriodically, updateInterval)
-      } else {
-        console.log("not loaded?")
+      if (!time) {
+        time = Date.now()
       }
+      var pad = function(toPad) {
+        return ("00"+toPad).split("").splice(-14).join("")
+      }
+      var that = this
+      var updateInterval = 2000
+      var updatePeriodically = function() {
+        if (firebase && deck && name && value && uid && uid != null && key) {
+          var path = "/Decks/" + deck + "/cards/" + key
+          var updates = {}
+          if (!cardOnly) {
+            updates[path + "/" + name + "/"] = value
+          }
+          updates["/Cards/" + key + "/" + name + "/" + uid + "/" + pad(time)] = {
+            value: value,
+            time: firebase.database.ServerValue.TIMESTAMP
+          }
+          return firebase.database().ref().update(updates).then(function() {
+            console.log("saved", updates)
+            that.saved = true
+          }).catch(function(r) {
+            that.notSaved = true
+            console.log("not saved",r,updates)
+          })
+        }
+      }
+      if (!this.updateTimer) {
+        this.updateTimer = {}
+      }
+      clearTimeout(this.updateTimer[name])
+      this.updateTimer[name] = setTimeout(updatePeriodically, updateInterval)
     },
     ready: function() {
       this.user = firebase.auth().currentUser
