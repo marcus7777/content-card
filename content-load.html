@@ -27,33 +27,6 @@
       _loadValues: {
         computed: "loadAllFirebase(key,uid,deck)",
       },
-      bigImage: {
-        value: "",
-      },
-      image: {
-        value: "",
-      },
-      title: {
-        value: "",
-      },
-      desc: {
-        value: "",
-      },
-      article:{
-        value: [{insert:"\n"}],
-      },
-      exif:{
-        value: {},
-      },
-      geoHash: {
-        value: "",
-      },
-      mapsZoom: {
-        value: "",
-      },
-      tags:{
-        value: "",
-      },
       deck: String,
       firebaseSaveAt: {
         value: {},
@@ -142,32 +115,32 @@
           }
         }
       }
-      var Delta = Quill.import('delta')
-      if (typeof val == 'string') {
-        try {
-          return JSON.parse(val)
-        } catch(e) {
-          return val
-        }
-      } 
-      if(localVal) {
-        try {
-          localVal = JSON.parse(localVal);
-        } catch(e) {
-        }
-      }
-      if (typeof val == 'object' && (typeof val.value == 'number' || typeof val.value == 'string' || Array.isArray(val.value)) && +val.time) {
-        if (val.value !== localVal || !localVal) {
-          return {
-            value: val.value,
-            time:  +val.time,
-          }
-        } else {
-          return {
-            value: localVal,
-            time:  +theDate,
-          }
-        }
+//      var Delta = Quill.import('delta')
+//      if (typeof val == 'string') {
+//        try {
+//          return JSON.parse(val)
+//        } catch(e) {
+//          return val
+//        }
+//      } 
+//      if(localVal) {
+//        try {
+//          localVal = JSON.parse(localVal);
+//        } catch(e) {
+//        }
+//      }
+//      if (typeof val == 'object' && (typeof val.value == 'number' || typeof val.value == 'string' || Array.isArray(val.value)) && +val.time) {
+//        if (val.value !== localVal || !localVal) {
+//          return {
+//            value: val.value,
+//            time:  +val.time,
+//          }
+//        } else {
+//          return {
+//            value: localVal,
+//            time:  +theDate,
+//          }
+//        }
       } else {
         return false
       }
