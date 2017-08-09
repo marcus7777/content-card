@@ -156,23 +156,6 @@
       if (geoHash) {
         this.updateFirebase(this.deck,this.key,'geoHash',geoHash,1,this.uid,0)
       }
-      this.debounce(this.updateLatLong(geoHash),1000)
-    },
-    updateLatLong: function(geoHash){
-      var between = function(num, a, b) {
-        var min = Math.min(a, b)
-        var max = Math.max(a, b)
-        return num > min && num < max
-      }
-      var center = decodeGeoHash(geoHash)
-      var LatM = center.latitude[2]
-      var LngM = center.longitude[2]
-      if (!between(this.latitude,center.latitude[0],center.latitude[1])) {
-        this.latitude = LatM
-      }
-      if (!between(this.longitude,center.longitude[0],center.longitude[1])) {
-        this.longitude = LngM
-      }
     },
     _keyMapZoom: function(mapZoom){ 
       if (mapZoom) {
